@@ -30,3 +30,6 @@
 *.exe
 *.out
 *.app
+
+# Exclude PDF's of papers
+*.pdf
