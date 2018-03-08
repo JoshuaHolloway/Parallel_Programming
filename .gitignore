@@ -35,3 +35,4 @@
 *.pdf
 
 # Exclude original ORB-SLAM2 code
+ORB-SLAM2
