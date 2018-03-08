@@ -33,3 +33,5 @@
 
 # Exclude PDF's of papers
 *.pdf
+
+# Exclude original ORB-SLAM2 code
