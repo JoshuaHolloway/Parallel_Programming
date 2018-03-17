@@ -1,0 +1,3 @@
+/home/josh/Desktop/git_temp/Parallel_Vision_Research/Parallel_Studio/Parallel_Advisor/build/CMakeFiles/edit_cache.dir
+/home/josh/Desktop/git_temp/Parallel_Vision_Research/Parallel_Studio/Parallel_Advisor/build/CMakeFiles/main.dir
+/home/josh/Desktop/git_temp/Parallel_Vision_Research/Parallel_Studio/Parallel_Advisor/build/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/josh/Desktop/git_temp/Parallel_Vision_Research/Parallel_Studio/Parallel_Advisor/main.cpp
+iostream
+-
+cilk/cilk.h
+-
+advisor-annotate.h
+-
+

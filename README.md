@@ -1,1 +1,1 @@
-# VISUAL-SLAM
+# Parallel_Vision_Research
