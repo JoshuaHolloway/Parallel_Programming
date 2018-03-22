@@ -1,0 +1,8 @@
+
+=== Start: [2018/03/22 08:25:03] === 
+Analysis started...
+Result file: C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\My Advisor Results - Vectorization_Advisor\e000\trc000\trc000.advixe 
+Application exit code: 0 
+Result file: C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\My Advisor Results - Vectorization_Advisor\e000\trc000\trc000.advixe 
+Analysis completed
+=== End: [2018/03/22 08:25:10] === 

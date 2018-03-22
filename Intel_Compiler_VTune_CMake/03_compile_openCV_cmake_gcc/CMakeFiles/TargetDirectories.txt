@@ -1,3 +1,0 @@
-/home/josh/Desktop/test_intel_compiler/04_compile_openCV_cmake_gcc/CMakeFiles/edit_cache.dir
-/home/josh/Desktop/test_intel_compiler/04_compile_openCV_cmake_gcc/CMakeFiles/rebuild_cache.dir
-/home/josh/Desktop/test_intel_compiler/04_compile_openCV_cmake_gcc/CMakeFiles/DisplayImage.dir

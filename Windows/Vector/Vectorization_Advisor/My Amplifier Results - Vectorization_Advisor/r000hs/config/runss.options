@@ -1,0 +1,14 @@
+-r
+C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\My Amplifier Results - Vectorization_Advisor\r000hs
+--stack-stitching
+--data-limit-mb=500
+--disk-space-limit=0
+--mrte-type=java,dotnet,python
+--itt-config=frame
+--stackwalk=offline
+--mrte-mode=auto
+--type=cpu:counters:nostack
+--type=cpu:stack
+--interval=10
+--
+C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\Vector\Debug\Vectorization_Advisor.exe

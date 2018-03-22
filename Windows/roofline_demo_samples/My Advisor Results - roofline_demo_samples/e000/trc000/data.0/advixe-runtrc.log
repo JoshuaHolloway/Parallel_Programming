@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<log version="1.0" tool="runtool">
+
+<msg id="1" tool="runtool">
+  <type>log-start</type>
+  <arg>2018/03/19 23:10:00</arg>
+</msg>
+<msg id="2" tool="runtool">
+  <type>collector-starts</type>
+</msg>
+<msg id="3" tool="runtool">
+  <type>marker-file</type>
+  <arg>C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\roofline_demo_samples\My Advisor Results - roofline_demo_samples\e000\trc000\trc000.advixe</arg>
+</msg>
+<msg id="4" tool="trc">
+  <type>PROCESS_START</type>
+  <arg>C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\roofline_demo_samples\x64\Release\roofline_demo_samples.exe</arg>
+  <arg>2092</arg>
+  <severity>INFO</severity>
+  <timestamp>Mon Mar 19 23:10:01 2018</timestamp>
+</msg>
+<msg id="5" tool="trc">
+  <type>PROCESS_ANALYSIS_MODE</type>
+  <arg>full</arg>
+  <severity>INFO</severity>
+  <timestamp>Mon Mar 19 23:10:01 2018</timestamp>
+</msg>
+<msg id="6" tool="trc">
+  <type>LOAD_MODULE</type>
+  <arg>C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\roofline_demo_samples\x64\Release\roofline_demo_samples.exe</arg>
+  <arg>0x7ff7c8df0000</arg>
+  <arg>0x7ff7c8e33fff</arg>
+  <severity>INFO</severity>
+  <timestamp>Mon Mar 19 23:10:01 2018</timestamp>
+</msg>
+<msg id="7" tool="trc">
+  <type>LOAD_MODULE</type>
+  <arg>C:\WINDOWS\System32\KERNELBASE.dll</arg>
+  <arg>0x7ffb07610000</arg>
+  <arg>0x7ffb07875fff</arg>
+  <severity>INFO</severity>
+  <timestamp>Mon Mar 19 23:10:01 2018</timestamp>
+</msg>
+<msg id="8" tool="trc">
+  <type>LOAD_MODULE</type>
+  <arg>C:\WINDOWS\System32\KERNEL32.DLL</arg>
+  <arg>0x7ffb0a070000</arg>
+  <arg>0x7ffb0a11dfff</arg>
+  <severity>INFO</severity>
+  <timestamp>Mon Mar 19 23:10:01 2018</timestamp>
+</msg>
+<msg id="9" tool="trc">
+  <type>LOAD_MODULE</type>
+  <arg>C:\WINDOWS\SYSTEM32\ntdll.dll</arg>
+  <arg>0x7ffb0abb0000</arg>
+  <arg>0x7ffb0ad8ffff</arg>
+  <severity>INFO</severity>
+  <timestamp>Mon Mar 19 23:10:01 2018</timestamp>
+</msg>
+<msg id="10" tool="trc">
+  <type>LOAD_MODULE</type>
+  <arg>C:\WINDOWS\System32\ucrtbase.dll</arg>
+  <arg>0x7ffb071a0000</arg>
+  <arg>0x7ffb07295fff</arg>
+  <severity>INFO</severity>
+  <timestamp>Mon Mar 19 23:10:01 2018</timestamp>
+</msg>
+<msg id="11" tool="trc">
+  <type>LOAD_MODULE</type>
+  <arg>C:\WINDOWS\SYSTEM32\VCRUNTIME140.dll</arg>
+  <arg>0x7ffaee280000</arg>
+  <arg>0x7ffaee295fff</arg>
+  <severity>INFO</severity>
+  <timestamp>Mon Mar 19 23:10:01 2018</timestamp>
+</msg>
+<msg id="12" tool="trc">
+  <type>LOAD_MODULE</type>
+  <arg>C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll</arg>
+  <arg>0x7ffaca7d0000</arg>
+  <arg>0x7ffaca985fff</arg>
+  <severity>INFO</severity>
+  <timestamp>Mon Mar 19 23:10:01 2018</timestamp>
+</msg>
+<msg id="13" tool="trc">
+  <type>LOAD_MODULE</type>
+  <arg>C:\WINDOWS\System32\kernel.appcore.dll</arg>
+  <arg>0x7ffb06f70000</arg>
+  <arg>0x7ffb06f80fff</arg>
+  <severity>INFO</severity>
+  <timestamp>Mon Mar 19 23:10:01 2018</timestamp>
+</msg>
+<msg id="14" tool="trc">
+  <type>LOAD_MODULE</type>
+  <arg>C:\WINDOWS\System32\msvcrt.dll</arg>
+  <arg>0x7ffb0a9a0000</arg>
+  <arg>0x7ffb0aa3cfff</arg>
+  <severity>INFO</severity>
+  <timestamp>Mon Mar 19 23:10:01 2018</timestamp>
+</msg>
+<msg id="15" tool="trc">
+  <type>LOAD_MODULE</type>
+  <arg>C:\WINDOWS\System32\RPCRT4.dll</arg>
+  <arg>0x7ffb09cd0000</arg>
+  <arg>0x7ffb09deefff</arg>
+  <severity>INFO</severity>
+  <timestamp>Mon Mar 19 23:10:01 2018</timestamp>
+</msg>
+<msg id="16" tool="trc">
+  <type>UNLOAD_MODULE</type>
+  <arg>C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\roofline_demo_samples\x64\Release\roofline_demo_samples.exe</arg>
+  <severity>INFO</severity>
+  <timestamp>Mon Mar 19 23:10:01 2018</timestamp>
+</msg>
+<msg id="17" tool="trc">
+  <type>UNLOAD_MODULE</type>
+  <arg>C:\WINDOWS\System32\KERNELBASE.dll</arg>
+  <severity>INFO</severity>
+  <timestamp>Mon Mar 19 23:10:01 2018</timestamp>
+</msg>
+<msg id="18" tool="trc">
+  <type>UNLOAD_MODULE</type>
+  <arg>C:\WINDOWS\System32\KERNEL32.DLL</arg>
+  <severity>INFO</severity>
+  <timestamp>Mon Mar 19 23:10:01 2018</timestamp>
+</msg>
+<msg id="19" tool="trc">
+  <type>UNLOAD_MODULE</type>
+  <arg>C:\WINDOWS\SYSTEM32\ntdll.dll</arg>
+  <severity>INFO</severity>
+  <timestamp>Mon Mar 19 23:10:01 2018</timestamp>
+</msg>
+<msg id="20" tool="trc">
+  <type>UNLOAD_MODULE</type>
+  <arg>C:\WINDOWS\System32\ucrtbase.dll</arg>
+  <severity>INFO</severity>
+  <timestamp>Mon Mar 19 23:10:01 2018</timestamp>
+</msg>
+<msg id="21" tool="trc">
+  <type>UNLOAD_MODULE</type>
+  <arg>C:\WINDOWS\SYSTEM32\VCRUNTIME140.dll</arg>
+  <severity>INFO</severity>
+  <timestamp>Mon Mar 19 23:10:01 2018</timestamp>
+</msg>
+<msg id="22" tool="trc">
+  <type>UNLOAD_MODULE</type>
+  <arg>C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll</arg>
+  <severity>INFO</severity>
+  <timestamp>Mon Mar 19 23:10:01 2018</timestamp>
+</msg>
+<msg id="23" tool="trc">
+  <type>UNLOAD_MODULE</type>
+  <arg>C:\WINDOWS\System32\kernel.appcore.dll</arg>
+  <severity>INFO</severity>
+  <timestamp>Mon Mar 19 23:10:01 2018</timestamp>
+</msg>
+<msg id="24" tool="trc">
+  <type>UNLOAD_MODULE</type>
+  <arg>C:\WINDOWS\System32\msvcrt.dll</arg>
+  <severity>INFO</severity>
+  <timestamp>Mon Mar 19 23:10:01 2018</timestamp>
+</msg>
+<msg id="25" tool="trc">
+  <type>UNLOAD_MODULE</type>
+  <arg>C:\WINDOWS\System32\RPCRT4.dll</arg>
+  <severity>INFO</severity>
+  <timestamp>Mon Mar 19 23:10:01 2018</timestamp>
+</msg>
+<msg id="26" tool="trc">
+  <type>PROCESS_FINISH</type>
+  <arg>C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\roofline_demo_samples\x64\Release\roofline_demo_samples.exe</arg>
+  <arg>2092</arg>
+  <arg>0x0</arg>
+  <severity>INFO</severity>
+  <timestamp>Mon Mar 19 23:10:01 2018</timestamp>
+</msg>
+<msg id="27" tool="runtool">
+  <type>app-exit-code</type>
+  <arg>0</arg>
+</msg>
+<msg id="28" tool="runtool">
+  <type>marker-file</type>
+  <arg>C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\roofline_demo_samples\My Advisor Results - roofline_demo_samples\e000\trc000\trc000.advixe</arg>
+</msg>
+<msg id="29" tool="runtool">
+  <type>collector-done</type>
+</msg>
+<msg id="30" tool="runtool">
+  <type>log-end</type>
+  <arg>2018/03/19 23:10:04</arg>
+</msg>
+
+</log>
+

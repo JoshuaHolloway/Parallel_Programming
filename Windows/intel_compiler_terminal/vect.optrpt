@@ -1,0 +1,129 @@
+Intel(R) Advisor can now assist with vectorization and show optimization
+  report messages with your source code.
+See "https://software.intel.com/en-us/intel-advisor-xe" for details.
+
+
+Begin optimization report for: main()
+
+    Report from: Vector optimizations [vec]
+
+
+LOOP BEGIN at C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\intel_compiler_terminal\vect.cpp(30,2)
+   remark #15300: LOOP WAS VECTORIZED
+LOOP END
+
+LOOP BEGIN at C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\intel_compiler_terminal\vect.cpp(37,2)
+<Peeled loop for vectorization>
+LOOP END
+
+LOOP BEGIN at C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\intel_compiler_terminal\vect.cpp(37,2)
+   remark #15300: LOOP WAS VECTORIZED
+LOOP END
+
+LOOP BEGIN at C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\intel_compiler_terminal\vect.cpp(37,2)
+<Alternate Alignment Vectorized Loop>
+LOOP END
+
+LOOP BEGIN at C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\intel_compiler_terminal\vect.cpp(37,2)
+<Remainder loop for vectorization>
+LOOP END
+===========================================================================
+
+Begin optimization report for: std::num_put<char, std::basic_ostream<char, std::char_traits<char>>::_Iter>::do_put(const std::num_put<char, std::basic_ostream<char, std::char_traits<char>>::_Iter> *, std::basic_ostream<char, std::char_traits<char>>::_Iter *, std::basic_ostream<char, std::char_traits<char>>::_Iter, std::ios_base &, char, bool) const
+
+    Report from: Vector optimizations [vec]
+
+
+LOOP BEGIN at C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocale(673,2) inlined into C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocnum(1342,33)
+LOOP END
+
+LOOP BEGIN at C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocale(673,2) inlined into C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocnum(1342,33)
+   remark #25460: No loop optimizations reported
+
+   LOOP BEGIN at C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocale(673,2) inlined into C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocnum(1342,33)
+   <Multiversioned v2>
+   LOOP END
+
+   LOOP BEGIN at C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocale(673,2) inlined into C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocnum(1342,33)
+   <Remainder, Multiversioned v2>
+   LOOP END
+LOOP END
+
+LOOP BEGIN at C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocale(673,2) inlined into C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocnum(1342,33)
+   remark #25460: No loop optimizations reported
+
+   LOOP BEGIN at C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocale(673,2) inlined into C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocnum(1342,33)
+   <Multiversioned v2>
+   LOOP END
+
+   LOOP BEGIN at C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocale(673,2) inlined into C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocnum(1342,33)
+   <Remainder, Multiversioned v2>
+   LOOP END
+LOOP END
+===========================================================================
+
+Begin optimization report for: std::num_put<char, std::basic_ostream<char, std::char_traits<char>>::_Iter>::_Iput(const std::num_put<char, std::basic_ostream<char, std::char_traits<char>>::_Iter> *, std::basic_ostream<char, std::char_traits<char>>::_Iter *, std::basic_ostream<char, std::char_traits<char>>::_Iter, std::ios_base &, char, char *, size_t) const
+
+    Report from: Vector optimizations [vec]
+
+
+LOOP BEGIN at C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocale(673,2) inlined into C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocnum(1608,32)
+LOOP END
+
+LOOP BEGIN at C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocale(673,2) inlined into C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocnum(1608,32)
+   remark #25460: No loop optimizations reported
+
+   LOOP BEGIN at C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocale(673,2) inlined into C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocnum(1608,32)
+   <Multiversioned v2>
+   LOOP END
+
+   LOOP BEGIN at C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocale(673,2) inlined into C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocnum(1608,32)
+   <Remainder, Multiversioned v2>
+   LOOP END
+LOOP END
+
+LOOP BEGIN at C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocale(673,2) inlined into C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocnum(1608,32)
+   remark #25460: No loop optimizations reported
+
+   LOOP BEGIN at C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocale(673,2) inlined into C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocnum(1608,32)
+   <Multiversioned v2>
+   LOOP END
+
+   LOOP BEGIN at C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocale(673,2) inlined into C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocnum(1608,32)
+   <Remainder, Multiversioned v2>
+   LOOP END
+LOOP END
+===========================================================================
+
+Begin optimization report for: std::num_put<char, std::basic_ostream<char, std::char_traits<char>>::_Iter>::_Fput(const std::num_put<char, std::basic_ostream<char, std::char_traits<char>>::_Iter> *, std::basic_ostream<char, std::char_traits<char>>::_Iter *, std::basic_ostream<char, std::char_traits<char>>::_Iter, std::ios_base &, char, const char *, size_t) const
+
+    Report from: Vector optimizations [vec]
+
+
+LOOP BEGIN at C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocale(673,2) inlined into C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocnum(1520,32)
+LOOP END
+
+LOOP BEGIN at C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocale(673,2) inlined into C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocnum(1520,32)
+   remark #25460: No loop optimizations reported
+
+   LOOP BEGIN at C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocale(673,2) inlined into C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocnum(1520,32)
+   <Multiversioned v2>
+   LOOP END
+
+   LOOP BEGIN at C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocale(673,2) inlined into C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocnum(1520,32)
+   <Remainder, Multiversioned v2>
+   LOOP END
+LOOP END
+
+LOOP BEGIN at C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocale(673,2) inlined into C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocnum(1520,32)
+   remark #25460: No loop optimizations reported
+
+   LOOP BEGIN at C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocale(673,2) inlined into C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocnum(1520,32)
+   <Multiversioned v2>
+   LOOP END
+
+   LOOP BEGIN at C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocale(673,2) inlined into C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\xlocnum(1520,32)
+   <Remainder, Multiversioned v2>
+   LOOP END
+LOOP END
+===========================================================================

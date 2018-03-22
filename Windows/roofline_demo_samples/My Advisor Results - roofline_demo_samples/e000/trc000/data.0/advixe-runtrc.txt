@@ -1,0 +1,8 @@
+
+=== Start: [2018/03/19 23:10:00] === 
+Analysis started...
+Result file: C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\roofline_demo_samples\My Advisor Results - roofline_demo_samples\e000\trc000\trc000.advixe 
+Application exit code: 0 
+Result file: C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\roofline_demo_samples\My Advisor Results - roofline_demo_samples\e000\trc000\trc000.advixe 
+Analysis completed
+=== End: [2018/03/19 23:10:04] === 

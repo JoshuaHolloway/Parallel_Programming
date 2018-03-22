@@ -34,5 +34,10 @@
 # Exclude PDF's of papers
 *.pdf
 
-# Exclude original ORB-SLAM2 code
-ORB-SLAM2
+
+
+
+
+# Visual C++ cache files
+*.opendb
+

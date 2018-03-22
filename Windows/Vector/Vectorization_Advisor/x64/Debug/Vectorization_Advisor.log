@@ -1,0 +1,5 @@
+﻿  example.cpp
+C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\Vector_Tutorial_Introduction\Vectorization_Advisor\example.cpp(58): warning #3180: unrecognized OpenMP #pragma
+    #pragma omp declare simd
+            ^
+  

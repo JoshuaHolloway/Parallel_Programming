@@ -1,3 +1,0 @@
-/home/josh/Desktop/test_intel_compiler/03_compile_with_Cmake_gcc/CMakeFiles/edit_cache.dir
-/home/josh/Desktop/test_intel_compiler/03_compile_with_Cmake_gcc/CMakeFiles/rebuild_cache.dir
-/home/josh/Desktop/test_intel_compiler/03_compile_with_Cmake_gcc/CMakeFiles/sample.dir

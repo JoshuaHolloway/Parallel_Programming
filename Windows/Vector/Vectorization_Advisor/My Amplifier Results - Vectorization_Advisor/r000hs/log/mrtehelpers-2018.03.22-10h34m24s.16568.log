@@ -1,0 +1,5 @@
+1232 [13664] TRACE mrtehelpers.mrteenv <> - ENTER: mrtehelpers_3_0::BasicIterator<mrtehelpers_3_0::MrteEnvironmentVariable> mrtehelpers_3_0::MrteProfilingInitializer::getMrteProfilingEnvironment()
+1232 [13664] TRACE mrtehelpers.mrteenv <> - INTEL_MRTE_DATA_DIR=C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\My Amplifier Results - Vectorization_Advisor\r000hs\data.0\
+1232 [13664] TRACE mrtehelpers.mrteenv <> - INTEL_MRTE_HOST_NAME=DESKTOP-B3LU553
+1298 [13664] TRACE mrtehelpers.mrteenv <> - JAVA_TOOL_OPTIONS=-agentlib:amplxe_tpssmrte_javaprof_1.0
+1299 [13664] TRACE mrtehelpers.mrteenv <> - EXIT:  mrtehelpers_3_0::BasicIterator<mrtehelpers_3_0::MrteEnvironmentVariable> mrtehelpers_3_0::MrteProfilingInitializer::getMrteProfilingEnvironment()

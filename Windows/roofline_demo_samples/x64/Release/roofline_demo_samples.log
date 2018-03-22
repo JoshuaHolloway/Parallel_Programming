@@ -1,0 +1,3 @@
+﻿icl: : warning #10121: overriding '/archSSE2' with '/QxHost'
+  roofline.cpp
+  roofline_demo_samples.vcxproj -> C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\roofline_demo_samples\x64\Release\roofline_demo_samples.exe

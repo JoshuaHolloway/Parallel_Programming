@@ -1,3 +1,0 @@
-/home/josh/Desktop/Intel_Compiler_OpenVX_OpenCV_VTune/04_compile_openCV_with_cmake_intel_vtune/build/CMakeFiles/edit_cache.dir
-/home/josh/Desktop/Intel_Compiler_OpenVX_OpenCV_VTune/04_compile_openCV_with_cmake_intel_vtune/build/CMakeFiles/rebuild_cache.dir
-/home/josh/Desktop/Intel_Compiler_OpenVX_OpenCV_VTune/04_compile_openCV_with_cmake_intel_vtune/build/CMakeFiles/DisplayImage.dir

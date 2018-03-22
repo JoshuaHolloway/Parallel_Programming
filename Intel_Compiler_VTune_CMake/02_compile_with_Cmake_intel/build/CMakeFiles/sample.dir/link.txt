@@ -1,1 +1,0 @@
-/opt/intel/compilers_and_libraries_2018.1.163/linux/bin/intel64/icpc    -std=c++14 -g   CMakeFiles/sample.dir/main.cpp.o CMakeFiles/sample.dir/Class.cpp.o  -o sample -rdynamic 

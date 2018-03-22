@@ -1,0 +1,5 @@
+﻿  roofline.cpp
+C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\roofline_demo_samples\src\roofline.cpp(50): warning #3180: unrecognized OpenMP #pragma
+    #pragma omp parallel for
+            ^
+  
