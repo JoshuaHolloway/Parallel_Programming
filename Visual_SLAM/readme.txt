@@ -11,7 +11,7 @@ $ sudo apt-get install libeigen3-dev
 
 To build for Ubuntu 16.04 run the following scripts:
 
-# The following script assumes that this it libs_josh is not created yet in ~/
+# Pangolin:
 $ sudo ./pangolin_build_josh.sh
 
 # The following script installs openCV 3.2 with the contrib library
