@@ -3,17 +3,44 @@
 #include <cilk/cilk.h>
 #include <cilk/cilk_api.h>
 #include <xmmintrin.h>  // Need this for SSE compiler intrinsics
+#include <windows.h>
 using namespace std;
 
 long function (int slowDown[], long i);
 
-const long SIZE = 4;
-const long SLOWDOWNSIZE = 256;
 
-int slowdown[SIZE][SLOWDOWNSIZE];
+//===============================
+class CTimer
+{
+public:
+	CTimer() {
+		QueryPerformanceFrequency(&mqFreq);
+	}
+	~CTimer() {}
 
-float arrayA[SIZE];
-float arrayB[SIZE];
+	void Start() {
+		QueryPerformanceCounter(&mqStart);
+	}
+	void End() {
+		QueryPerformanceCounter(&mqEnd);
+	}
+	double GetTimeInSeconds() {
+		return (mqEnd.QuadPart - mqStart.QuadPart) / (double)mqFreq.QuadPart;
+	}
+	double GetTimeInMilliseconds() {
+		return (1.0e3*(mqEnd.QuadPart - mqStart.QuadPart)) / mqFreq.QuadPart;
+	}
+	double GetTimeInMicroseconds() {
+		return (1.0e6*(mqEnd.QuadPart - mqStart.QuadPart)) / mqFreq.QuadPart;
+	}
+	double GetTimeInNanoseconds() {
+		return (1.0e9*(mqEnd.QuadPart - mqStart.QuadPart)) / mqFreq.QuadPart;
+	}
+private:
+	LARGE_INTEGER mqStart;
+	LARGE_INTEGER mqEnd;
+	LARGE_INTEGER mqFreq;
+};
 //===============================
 double L1_error(size_t n, const float x[], const float y[]) {
 	double sum = 0.0;
@@ -94,44 +121,14 @@ void sse_add(
 //===============================
 int main ()
 {
-#include <Windows.h>
-#include <time.h>
-#include <ctime>
-#include <windows.h>
-	typedef unsigned long long LARGE_INTEGER;
-	typedef unsigned long DWORD;
-	typedef long HRESULT;
-	LARGE_INTEGER StartingTime, EndingTime, ElapsedMicroseconds;
-	LARGE_INTEGER Frequency;
+	
 
-	QueryPerformanceFrequency(&Frequency);
-	QueryPerformanceCounter(&StartingTime);
-
-	// Activity to be timed
-
-	QueryPerformanceCounter(&EndingTime);
-	ElapsedMicroseconds.QuadPart = EndingTime.QuadPart - StartingTime.QuadPart;
-
-
-	//
-	// We now have the elapsed number of ticks, along with the
-	// number of ticks-per-second. We use these values
-	// to convert to the number of elapsed microseconds.
-	// To guard against loss-of-precision, we convert
-	// to microseconds *before* dividing by ticks-per-second.
-	//
-
-	ElapsedMicroseconds.QuadPart *= 1000000;
-	ElapsedMicroseconds.QuadPart /= Frequency.QuadPart;
-
-
-
-	float alpha = 2.0f;
-	float arr1[2 * SIZE] = { 1, 2, 3, 4, 5, 6, 7, 8 };
-	float arr2[2 * SIZE] = { 1, 2, 3, 4, 5, 6, 7, 8 };
-	float arr3[2 * SIZE] = { 1, 2, 3, 4, 5, 6, 7, 8 };
-	float arr4[2 * SIZE] = { 1, 2, 3, 4, 5, 6, 7, 8 };
-	float arr5[2 * SIZE] = { 1, 2, 3, 4, 5, 6, 7, 8 };
+	/*
+	float arr1[2 * LENGTH] = { 1, 2, 3, 4, 5, 6, 7, 8 };
+	float arr2[2 * LENGTH] = { 1, 2, 3, 4, 5, 6, 7, 8 };
+	float arr3[2 * LENGTH] = { 1, 2, 3, 4, 5, 6, 7, 8 };
+	float arr4[2 * LENGTH] = { 1, 2, 3, 4, 5, 6, 7, 8 };
+	float arr5[2 * LENGTH] = { 1, 2, 3, 4, 5, 6, 7, 8 };
 
 	/// Add same 4 values 
 	// Replicate 1.0f to all SIMD lanes 
@@ -139,53 +136,114 @@ int main ()
 	__m128 valueB = _mm_set1_ps(2.0f); //0x40000000
 
 	// Add the registers and store back into regular array:
-	float z[SIZE];
+	float z[LENGTH];
 	__m128 sum = _mm_add_ps(valueA, valueB);
 	_mm_store_ps(z, sum);
 	std::cout << "Length-4 SIMD vector add: z = ";
-	print(SIZE, z);
+	print(LENGTH, z);
 		
 	// SSE Length-8 Vector addition
-	sse_add(2 * SIZE, arr1, arr2);
+	sse_add(2 * LENGTH, arr1, arr2);
 	std::cout << "Length-8 SIMD vector add: ";
-	print(2 * SIZE, arr2);
-
-
+	print(2 * LENGTH, arr2);
+	
 	// SSE Length-8 SAXPY:
-	saxpy_sse(2 * SIZE, alpha, arr1, arr3);
+	saxpy_sse(2 * LENGTH, alpha, arr1, arr3);
 
 	// SAXPY with OpenMP:
-	saxpy_openmp(2 * SIZE, alpha, arr1, arr4);
+	saxpy_openmp(2 * LENGTH, alpha, arr1, arr4);
 
 	// Serial SAXPY:
-	saxpy_serial(2 * SIZE, alpha, arr1, arr5);
-		
+	saxpy_serial(2 * LENGTH, alpha, arr1, arr5);
+	
 	std::cout << "SIMD SAXPY: ";
-	print(2 * SIZE, arr3);
+	print(2 * LENGTH, arr3);
 
 	std::cout << "OpenMP saxpy: ";
-	print(2 * SIZE, arr4);
+	print(2 * LENGTH, arr4);
 
 	std::cout << "Serieal SAXPY: ";
-	print(2 * SIZE, arr5);
+	print(2 * LENGTH, arr5);
 
 	// Run SAXPY on much larger array:
-	const int largeArraySize = 1000 * SIZE;
-	float arr6[largeArraySize];
-	float arr7[largeArraySize];
-	for (int i = 0; i < largeArraySize; i++)
+	const int LENGTH = 4 * LENGTH;
+	float arr6[LENGTH];
+	float arr7[LENGTH];
+	for (int i = 0; i < LENGTH; i++)
 		arr6[i] = arr7[i] = i;
 
-	// Run many times for profiler
-	for (size_t i = 0; i < 100000; i++)
+	*/
+
+
+	float alpha = 2.0f;
+	const long LENGTH = 65536;
+	float arrayA[LENGTH];
+	float arrayB[LENGTH];
+	double ms_serial = 0.0, ms_sse = 0.0;
+	size_t TEST_NUM = 1;
+	for (size_t test_num = 0; test_num < TEST_NUM; test_num++)
 	{
-		saxpy_sse(largeArraySize, alpha, arr5, arr6);
+		// Timer
+		CTimer qTimer;
 
-		saxpy_openmp(largeArraySize, alpha, arr5, arr6);
+		// Run many times for profiler
+		size_t num_itters = 100000;
+		double average_time = 0.0;
 
-		saxpy_serial(largeArraySize, alpha, arr5, arr6);
+		float arr5[LENGTH];
+		float arr6[LENGTH];
+
+		// SAXPY - serial 
+		qTimer.Start();  // Begin timer
+		for (size_t i = 0; i < num_itters; i++)
+		{
+			saxpy_serial(LENGTH, alpha, arr5, arr6);
+		}
+		qTimer.End(); // End timer
+		ms_serial += qTimer.GetTimeInMilliseconds();
+		//cout << qTimer.GetTimeInMilliseconds() << " milliseconds" << endl;
+		//cout << qTimer.GetTimeInMicroseconds() << " microseconds" << endl;
+		//cout << qTimer.GetTimeInNanoseconds() << " nanoseconds" << endl;
+		//average_time = qTimer.GetTimeInMicroseconds() / num_itters;
+		//cout << "average time for serial = " << average_time;
+		//std::cout << "\n\n\n";
+
+		// SAXPY - SSE
+		qTimer.Start();  // Begin timer
+		for (size_t i = 0; i < num_itters; i++)
+		{
+			saxpy_sse(LENGTH, alpha, arr5, arr6);
+		}
+		qTimer.End(); // End timer
+		ms_sse += qTimer.GetTimeInMilliseconds();
+		//cout << qTimer.GetTimeInMilliseconds() << " milliseconds" << endl;
+		//cout << qTimer.GetTimeInMicroseconds() << " microseconds" << endl;
+		//cout << qTimer.GetTimeInNanoseconds() << " nanoseconds" << endl;
+		//average_time = qTimer.GetTimeInMicroseconds() / num_itters;
+		//cout << "average time for SSE = " << average_time;
+		//std::cout << "\n\n\n";
+
+		// SAXPY - serial 
+		qTimer.Start();  // Begin timer
+		for (size_t i = 0; i < num_itters; i++)
+		{
+			saxpy_openmp(LENGTH, alpha, arr5, arr6);
+		}
+		qTimer.End(); // End timer
+		//cout << qTimer.GetTimeInMilliseconds() << " milliseconds" << endl;
+		//cout << qTimer.GetTimeInMicroseconds() << " microseconds" << endl;
+		//cout << qTimer.GetTimeInNanoseconds() << " nanoseconds" << endl;
+		//average_time = qTimer.GetTimeInMicroseconds() / num_itters;
+		//cout << "average time for openMP = " << average_time;
+		//std::cout << "\n\n\n";
 	}
+	double ms_serial_ave = ms_serial / TEST_NUM;
+	double ms_sse_ave = ms_sse / TEST_NUM;
+	std::cout << "ms_serial_ave at num_elems = " << LENGTH << " = "  << ms_serial_ave << "\n";
+	std::cout << "ms_sse_ave at num_elems = " << LENGTH << " = " << ms_sse_ave << "\n";
 
-	//getchar();
+	
+
+	getchar();
 	return EXIT_SUCCESS;
 }

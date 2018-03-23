@@ -102,7 +102,7 @@ float sprod(
 	return res;
 }
 //===============================
-float sse_prod( // FINISH THIS FROM THE BOOK
+float sse_prod(
 	size_t n,
 	const float a[],
 	const float b[])
