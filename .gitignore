@@ -37,3 +37,6 @@
 # This is due to the problem with pushing visual studio code - this seems to solve the problem.
 # Visual C++ cache files
 *.opendb
+
+# Exclude ORB-SLAM temporarily
+Visual_SLAM
