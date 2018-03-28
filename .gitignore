@@ -39,4 +39,4 @@
 *.opendb
 
 # Exclude ORB-SLAM temporarily
-Visual_SLAM
+#Visual_SLAM
