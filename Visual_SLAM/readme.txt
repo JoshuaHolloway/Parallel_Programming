@@ -1,5 +1,11 @@
 This directory has ORB-SLAM2 with modifications.
 
+$ ./Examples/Monocular/mono_kitti Vocabulary/ORBvoc.txt Examples/Monocular/KITTI00-02.yaml /home/josh/Desktop/00
+
+VTune:
+Application: /home/josh/Desktop/Parallel_Vision_Research/Visual_SLAM/orb_slam/Examples/Monocular/mono_kitti
+Parameters: Vocabulary/ORBvoc.txt Examples/Monocular/KITTI00-02.yaml /home/josh/Desktop/00
+
 The link to the 21GB Grayscale Kitti database dowload is here:
 http://kitti.is.tue.mpg.de/kitti/data_odometry_gray.zip
 
@@ -15,13 +21,16 @@ To build for Ubuntu 16.04 run the following scripts:
 $ sudo ./pangolin_build_josh.sh
 
 # The following script installs openCV 3.2 with the contrib library
+# NOTE - Need to enter each command manually for python bindings to work.
 $ sudo ./opencv_build_josh.sh 
 
+# ======================================================================================
 # Grab the ORB-SLAM2 code:
 $ git clone https://github.com/raulmur/ORB_SLAM2.git ORB_SLAM2
 $ cd ORB_SLAM2
 $ sudo chmod +x build.sh
 $ sudo ./build.sh
+
 
 # ======================================================================================
 
