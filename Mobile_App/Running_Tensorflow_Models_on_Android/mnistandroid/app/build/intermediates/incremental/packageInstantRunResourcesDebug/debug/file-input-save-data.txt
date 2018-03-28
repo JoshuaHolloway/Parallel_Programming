@@ -1,0 +1,15 @@
+#Internal package file, do not edit.
+#Tue Mar 27 22:22:25 MST 2018
+1.base=/home/josh/Desktop/A_Guide_to_Running_Tensorflow_Models_on_Android-master/mnistandroid/app/build/intermediates/assets/debug
+2.path=labels.txt
+0.baseType=DIRECTORY
+2.base=/home/josh/Desktop/A_Guide_to_Running_Tensorflow_Models_on_Android-master/mnistandroid/app/build/intermediates/assets/debug
+2.set=ASSET
+1.baseType=DIRECTORY
+count=3
+1.set=ASSET
+0.path=opt_mnist_convnet-keras.pb
+0.set=ASSET
+0.base=/home/josh/Desktop/A_Guide_to_Running_Tensorflow_Models_on_Android-master/mnistandroid/app/build/intermediates/assets/debug
+2.baseType=DIRECTORY
+1.path=opt_mnist_convnet-tf.pb

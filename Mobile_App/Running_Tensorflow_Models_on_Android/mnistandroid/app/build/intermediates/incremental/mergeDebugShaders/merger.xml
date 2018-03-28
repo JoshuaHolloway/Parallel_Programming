@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/home/josh/Desktop/A_Guide_to_Running_Tensorflow_Models_on_Android-master/mnistandroid/app/src/main/shaders"/></dataSet><dataSet config="debug"><source path="/home/josh/Desktop/A_Guide_to_Running_Tensorflow_Models_on_Android-master/mnistandroid/app/src/debug/shaders"/></dataSet></merger>
