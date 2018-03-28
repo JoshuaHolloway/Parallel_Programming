@@ -1,0 +1,3 @@
+/home/josh/Desktop/Parallel_Vision_Research/OpenCV/simple/CMakeFiles/edit_cache.dir
+/home/josh/Desktop/Parallel_Vision_Research/OpenCV/simple/CMakeFiles/DisplayImage.dir
+/home/josh/Desktop/Parallel_Vision_Research/OpenCV/simple/CMakeFiles/rebuild_cache.dir

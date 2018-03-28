@@ -1,0 +1,8 @@
+#description: OpenCV trace file
+#version: 1.0
+l,1,"/home/josh/opencv-3.4.1/modules/imgcodecs/src/loadsave.cpp",635,"cv::Mat cv::imread(const cv::String&, int)",0x1
+#thread file: OpenCVTrace-000.txt
+l,2,"/home/josh/opencv-3.4.1/modules/highgui/src/window.cpp",196,"void cv::namedWindow(const cv::String&, int)",0x1
+l,3,"/home/josh/opencv-3.4.1/modules/highgui/src/window.cpp",353,"void cv::imshow(const cv::String&, cv::InputArray)",0x1
+l,4,"/home/josh/opencv-3.4.1/modules/highgui/src/window.cpp",250,"int cv::waitKey(int)",0x1
+l,5,"/home/josh/opencv-3.4.1/modules/highgui/src/window.cpp",244,"int cv::waitKeyEx(int)",0x1

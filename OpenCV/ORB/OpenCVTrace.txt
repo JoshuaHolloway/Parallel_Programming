@@ -1,0 +1,33 @@
+#description: OpenCV trace file
+#version: 1.0
+l,1,"/home/josh/opencv-3.4.1/modules/imgcodecs/src/loadsave.cpp",635,"cv::Mat cv::imread(const cv::String&, int)",0x1
+#thread file: OpenCVTrace-000.txt
+l,2,"/home/josh/opencv-3.4.1/modules/imgproc/src/color.cpp",11095,"void cv::cvtColor(cv::InputArray, cv::OutputArray, int, int)",0x1
+l,3,"/home/josh/opencv-3.4.1/modules/core/src/copy.cpp",256,"void cv::Mat::copyTo(cv::OutputArray) const",0x1
+l,4,"/home/josh/opencv-3.4.1/modules/imgproc/src/color.cpp",10136,"void cv::hal::cvtBGRtoGray(const uchar*, std::size_t, uchar*, std::size_t, int, int, int, int, bool)",0x1
+l,5,"/home/josh/opencv-3.4.1/modules/core/src/algorithm.cpp",50,"cv::Algorithm::Algorithm()",0x1
+l,6,"/home/josh/opencv-3.4.1/modules/features2d/src/orb.cpp",960,"virtual void cv::ORB_Impl::detectAndCompute(cv::InputArray, cv::InputArray, std::vector<cv::KeyPoint>&, cv::OutputArray, bool)",0x1
+l,7,"/home/josh/opencv-3.4.1/modules/core/src/copy.cpp",1180,"void cv::copyMakeBorder(cv::InputArray, cv::OutputArray, int, int, int, int, int, const Scalar&)",0x1
+l,8,"/home/josh/opencv-3.4.1/modules/imgproc/src/resize.cpp",4040,"void cv::resize(cv::InputArray, cv::OutputArray, cv::Size, double, double, int)",0x1
+l,9,"/home/josh/opencv-3.4.1/modules/features2d/src/fast.cpp",527,"virtual void cv::FastFeatureDetector_Impl::detect(cv::InputArray, std::vector<cv::KeyPoint>&, cv::InputArray)",0x1
+l,10,"/home/josh/opencv-3.4.1/modules/core/src/algorithm.cpp",55,"virtual cv::Algorithm::~Algorithm()",0x1
+l,11,"/home/josh/opencv-3.4.1/modules/core/src/ocl.cpp",842,"bool cv::ocl::haveOpenCL()",0x1
+l,12,"/home/josh/opencv-3.4.1/modules/imgproc/src/smooth.cpp",3485,"void cv::GaussianBlur(cv::InputArray, cv::OutputArray, cv::Size, double, double, int)",0x1
+l,13,"/home/josh/opencv-3.4.1/modules/features2d/src/matchers.cpp",570,"void cv::DescriptorMatcher::match(cv::InputArray, cv::InputArray, std::vector<cv::DMatch>&, cv::InputArray) const",0x1
+l,14,"/home/josh/opencv-3.4.1/modules/features2d/src/matchers.cpp",601,"void cv::DescriptorMatcher::match(cv::InputArray, std::vector<cv::DMatch>&, cv::InputArrayOfArrays)",0x1
+l,15,"/home/josh/opencv-3.4.1/modules/calib3d/src/fundam.cpp",354,"cv::Mat cv::findHomography(cv::InputArray, cv::InputArray, int, double, cv::OutputArray, int, double)",0x1
+l,16,"/home/josh/opencv-3.4.1/modules/core/src/convert.cpp",1305,"void cv::Mat::convertTo(cv::OutputArray, int, double, double) const",0x1
+l,17,"/home/josh/opencv-3.4.1/modules/core/src/copy.cpp",517,"cv::Mat& cv::Mat::setTo(cv::InputArray, cv::InputArray)",0x1
+l,18,"/home/josh/opencv-3.4.1/modules/core/src/matrix_operations.cpp",543,"void cv::completeSymm(cv::InputOutputArray, bool)",0x1
+l,19,"/home/josh/opencv-3.4.1/modules/core/src/lapack.cpp",1389,"bool cv::eigen(cv::InputArray, cv::OutputArray, cv::OutputArray)",0x1
+l,20,"/home/josh/opencv-3.4.1/modules/core/src/matmul.cpp",899,"void cv::gemmImpl(cv::Mat, cv::Mat, double, cv::Mat, double, cv::Mat, int)",0x1
+l,21,"/home/josh/opencv-3.4.1/modules/core/src/copy.cpp",428,"cv::Mat& cv::Mat::operator=(const Scalar&)",0x1
+l,22,"/home/josh/opencv-3.4.1/modules/imgproc/src/color.cpp",10185,"void cv::hal::cvtGraytoBGR(const uchar*, std::size_t, uchar*, std::size_t, int, int, int, int)",0x1
+l,23,"/home/josh/opencv-3.4.1/modules/imgproc/src/drawing.cpp",1892,"void cv::circle(cv::InputOutputArray, cv::Point, int, const Scalar&, int, int, int)",0x1
+l,24,"/home/josh/opencv-3.4.1/modules/core/src/array.cpp",3229,"void cv::scalarToRawData(const Scalar&, void*, int, int)",0x1
+l,25,"/home/josh/opencv-3.4.1/modules/imgproc/src/drawing.cpp",966,"void cv::ellipse2Poly(cv::Point2d, cv::Size2d, int, int, int, int, std::vector<cv::Point_<double> >&)",0x1
+l,26,"/home/josh/opencv-3.4.1/modules/imgproc/src/drawing.cpp",94,"bool cv::clipLine(cv::Size2l, cv::Point2l&, cv::Point2l&)",0x1
+l,27,"/home/josh/opencv-3.4.1/modules/imgproc/src/drawing.cpp",1808,"void cv::line(cv::InputOutputArray, cv::Point, cv::Point, const Scalar&, int, int, int)",0x1
+l,28,"/home/josh/opencv-3.4.1/modules/highgui/src/window.cpp",353,"void cv::imshow(const cv::String&, cv::InputArray)",0x1
+l,29,"/home/josh/opencv-3.4.1/modules/highgui/src/window.cpp",250,"int cv::waitKey(int)",0x1
+l,30,"/home/josh/opencv-3.4.1/modules/highgui/src/window.cpp",244,"int cv::waitKeyEx(int)",0x1
