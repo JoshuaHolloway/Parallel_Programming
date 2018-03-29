@@ -59,25 +59,28 @@ void print(
 }
 //===============================
 // Serial SAXPY
+//===============================
 void saxpy_serial(
 	size_t n,
 	float a,
 	const float x[],
-	float y[])
+	const float y[],
+	float z[])
 {
 	for (size_t i = 0; i < n; ++i)
-		y[i] = a * x[i] + y[i];
+		z[i] = a * x[i] + y[i];
 }
 //===============================
 void saxpy_openmp(
-	int n,
+	size_t n,
 	float a,
 	const float x[],
-	float y[]
-) {
+	const float y[],
+	float z[])
+{
 #pragma omp parallel for
 	for (size_t i = 0; i < n; i++) {
-		y[i] = a * x[i] + y[i];
+		z[i] = a * x[i] + y[i];
 	}
 }
 //===============================
@@ -85,7 +88,8 @@ void saxpy_sse(
 	const size_t n,
 	float alpha,
 	const float x[],
-	float* y)
+	const float y[],
+	float z[])
 {
 	assert(0 == n % 4); // n must be a multiple of 4
 	__m128 vec1, vec2, alpha_vec, sum, product;
@@ -97,150 +101,169 @@ void saxpy_sse(
 
 		product = _mm_mul_ps(alpha_vec, vec1);	// multiply 4 values elementwise  (alpha * x)
 		sum = _mm_add_ps(product, vec2);
-		_mm_store_ps(&y[i], sum);
+		_mm_store_ps(&z[i], sum);
 	}
 }
 //===============================
-void sse_add(
+void saxpy_cilk(
+	int n,
+	float a,
+	const float x[],
+	const float y[],
+	float z[])
+{
+	z[0:n] = a * x[0:n] + y[0:n];
+}
+//===============================
+/*
+void saxpy_tbb( // tiled - see page 126
+int n,
+float a,
+const float x[],
+const float y[],
+float z[])
+{
+using tbb::parallel_for;
+using tbb::blocked_range;
+parallel_for(
+blocked_range<int>(0, n),
+[&](blocked_range)<int> r)
+{
+for(size_t i = r.begin(); i != r.end(); i++)
+z[i] = a * x[i] + y[i];
+}
+);
+}
+*/
+//===============================
+//===============================
+float dot_serial(
+	size_t n,
+	const float x[],
+	const float y[])
+{
+	float sum = 0.0f;
+	for (size_t i = 0; i < n; ++i)
+		sum += x[i] * y[i];
+	return sum;
+}
+//===============================
+float dot_sse(
 	const size_t n,
 	const float x[],
-	float* y)
+	const float y[])
 {
 	assert(0 == n % 4); // n must be a multiple of 4
-	__m128 vec1, vec2, sum;
+	__m128 accumulate, product, vec1, vec2;
+	accumulate = _mm_setzero_ps();
 
-	// Currently only works on 4 elements 
+
+	// In each iteration:
+	// a1  a2  a3  a4             }
+	// *   *   *   *   _mm_add_ps } Loop
+	// b1  b2  b3  b4             } over
+	// =   =   =   =              } this
+	// c1  c2  c3  c4             } part
+	// +   +   +   +   _mm_add_ps }
+	// s1  s2  s3  s4
+	//  \ /     \ /
+	//   t1      t2
+	//    \     /
+	//     result
 	for (size_t i = 0; i < n; i += 4) {
-		vec1 = _mm_loadu_ps(&x[i]); // load 4 elements from a
-		vec2 = _mm_loadu_ps(&y[i]); // load 4 elements from b
+		vec1 = _mm_loadu_ps(&x[i]); // load 4 elements from x
+		vec2 = _mm_loadu_ps(&y[i]); // load 4 elements from y
 
-		sum = _mm_add_ps(vec1, vec2);
-		_mm_store_ps(&y[i], sum);
+		product = _mm_mul_ps(vec1, vec2);	// x * y
+		accumulate = _mm_add_ps(accumulate, product); // s += x*y
+	}
+	product = _mm_setzero_ps();  // [0 0 0 0]
+	accumulate = _mm_hadd_ps(accumulate, product); // [(s1+s2), (s3+s4), (0+0), (0+0)]
+	accumulate = _mm_hadd_ps(accumulate, product); // [(s1+s2)+(s3+s4), 0, 0, 0]
+
+	float result;
+	_mm_store_ss(&result, accumulate);  // Extract left most element of accumulate
+
+	return result;
+}
+//===============================
+float dot_openmp(
+	size_t n,
+	const float x[],
+	const float y[])
+{
+	float sum = 0.0f;
+#pragma omp parallel for reduction(+:sum)
+	for (size_t i = 0; i < n; ++i)
+		sum += x[i] * y[i];
+	return sum;
+}
+//===============================
+float stencil_serial(
+	size_t n,
+	const float x[],
+	float y[])
+{
+	// Filter kernel:
+	float k00 = -1, k01 = -1, k02 = -1;
+	float k10 = -1, k11 = 8, k12 = -1;
+	float k20 = -1, k21 = -1, k22 = -1;
+
+	for (size_t i = 1; i < n - 1; i++)
+	{
+		for (size_t j = 1; j < n - 1; j++)
+		{
+			y[i * n + j] =
+				k00 * x[(i - 1)*n + j - 1] + k01 * x[(i - 1)*n + j] + k02 * x[(i - 1)*n + j + 1] +
+				k10 * x[(i)*n + j - 1] + k11 * x[(i)*n + j] + k12 * x[(i)*n + j + 1] +
+				k20 * x[(i + 1)*n + j - 1] + k21 * x[(i + 1)*n + j] + k22 * x[(i + 1)*n + j + 1];
+		}
 	}
 }
 //===============================
 int main()
 {
-
-
-	/*
-	float arr1[2 * LENGTH] = { 1, 2, 3, 4, 5, 6, 7, 8 };
-	float arr2[2 * LENGTH] = { 1, 2, 3, 4, 5, 6, 7, 8 };
-	float arr3[2 * LENGTH] = { 1, 2, 3, 4, 5, 6, 7, 8 };
-	float arr4[2 * LENGTH] = { 1, 2, 3, 4, 5, 6, 7, 8 };
-	float arr5[2 * LENGTH] = { 1, 2, 3, 4, 5, 6, 7, 8 };
-
-	/// Add same 4 values
-	// Replicate 1.0f to all SIMD lanes
-	__m128 valueA = _mm_set1_ps(1.0f); //0x3f800000
-	__m128 valueB = _mm_set1_ps(2.0f); //0x40000000
-
-	// Add the registers and store back into regular array:
-	float z[LENGTH];
-	__m128 sum = _mm_add_ps(valueA, valueB);
-	_mm_store_ps(z, sum);
-	std::cout << "Length-4 SIMD vector add: z = ";
-	print(LENGTH, z);
-
-	// SSE Length-8 Vector addition
-	sse_add(2 * LENGTH, arr1, arr2);
-	std::cout << "Length-8 SIMD vector add: ";
-	print(2 * LENGTH, arr2);
-
-	// SSE Length-8 SAXPY:
-	saxpy_sse(2 * LENGTH, alpha, arr1, arr3);
-
-	// SAXPY with OpenMP:
-	saxpy_openmp(2 * LENGTH, alpha, arr1, arr4);
-
-	// Serial SAXPY:
-	saxpy_serial(2 * LENGTH, alpha, arr1, arr5);
-
-	std::cout << "SIMD SAXPY: ";
-	print(2 * LENGTH, arr3);
-
-	std::cout << "OpenMP saxpy: ";
-	print(2 * LENGTH, arr4);
-
-	std::cout << "Serieal SAXPY: ";
-	print(2 * LENGTH, arr5);
-
-	// Run SAXPY on much larger array:
-	const int LENGTH = 4 * LENGTH;
-	float arr6[LENGTH];
-	float arr7[LENGTH];
-	for (int i = 0; i < LENGTH; i++)
-	arr6[i] = arr7[i] = i;
-
-	*/
-
+	// Timer
+	CTimer qTimer;
+	qTimer.Start();  // Begin timer
+	qTimer.End(); // End timer
+	double ms_serial = 0.0;
+	ms_serial += qTimer.GetTimeInMilliseconds();
 
 	float alpha = 2.0f;
-	const long LENGTH = 65536;
-	float arrayA[LENGTH];
-	float arrayB[LENGTH];
-	double ms_serial = 0.0, ms_sse = 0.0;
-	size_t TEST_NUM = 1;
-	for (size_t test_num = 0; test_num < TEST_NUM; test_num++)
-	{
-		// Timer
-		CTimer qTimer;
+	const int LENGTH = 8;
 
-		// Run many times for profiler
-		size_t num_itters = 100000;
-		double average_time = 0.0;
+	float arr1[LENGTH] = { 1, 2, 3, 4, 5, 6, 7, 8 };
+	float arr2[LENGTH] = { 1, 2, 3, 4, 5, 6, 7, 8 };
+	float arr3[LENGTH];
 
-		float arr5[LENGTH];
-		float arr6[LENGTH];
+	saxpy_serial(LENGTH, alpha, arr1, arr2, arr3);
+	cout << "Length-8 serial SAXPY: ";
+	print(LENGTH, arr3);
 
-		// SAXPY - serial 
-		qTimer.Start();  // Begin timer
-		for (size_t i = 0; i < num_itters; i++)
-		{
-			saxpy_serial(LENGTH, alpha, arr5, arr6);
-		}
-		qTimer.End(); // End timer
-		ms_serial += qTimer.GetTimeInMilliseconds();
-		//cout << qTimer.GetTimeInMilliseconds() << " milliseconds" << endl;
-		//cout << qTimer.GetTimeInMicroseconds() << " microseconds" << endl;
-		//cout << qTimer.GetTimeInNanoseconds() << " nanoseconds" << endl;
-		//average_time = qTimer.GetTimeInMicroseconds() / num_itters;
-		//cout << "average time for serial = " << average_time;
-		//std::cout << "\n\n\n";
+	saxpy_openmp(LENGTH, alpha, arr1, arr2, arr3);
+	cout << "Length-8 OpenMP SAXPY: ";
+	print(LENGTH, arr3);
 
-		// SAXPY - SSE
-		qTimer.Start();  // Begin timer
-		for (size_t i = 0; i < num_itters; i++)
-		{
-			saxpy_sse(LENGTH, alpha, arr5, arr6);
-		}
-		qTimer.End(); // End timer
-		ms_sse += qTimer.GetTimeInMilliseconds();
-		//cout << qTimer.GetTimeInMilliseconds() << " milliseconds" << endl;
-		//cout << qTimer.GetTimeInMicroseconds() << " microseconds" << endl;
-		//cout << qTimer.GetTimeInNanoseconds() << " nanoseconds" << endl;
-		//average_time = qTimer.GetTimeInMicroseconds() / num_itters;
-		//cout << "average time for SSE = " << average_time;
-		//std::cout << "\n\n\n";
+	saxpy_sse(LENGTH, alpha, arr1, arr2, arr3);
+	cout << "Length-8 SSE SAXPY: ";
+	print(LENGTH, arr3);
 
-		// SAXPY - serial 
-		qTimer.Start();  // Begin timer
-		for (size_t i = 0; i < num_itters; i++)
-		{
-			saxpy_openmp(LENGTH, alpha, arr5, arr6);
-		}
-		qTimer.End(); // End timer
-									//cout << qTimer.GetTimeInMilliseconds() << " milliseconds" << endl;
-									//cout << qTimer.GetTimeInMicroseconds() << " microseconds" << endl;
-									//cout << qTimer.GetTimeInNanoseconds() << " nanoseconds" << endl;
-									//average_time = qTimer.GetTimeInMicroseconds() / num_itters;
-									//cout << "average time for openMP = " << average_time;
-									//std::cout << "\n\n\n";
-	}
-	double ms_serial_ave = ms_serial / TEST_NUM;
-	double ms_sse_ave = ms_sse / TEST_NUM;
-	std::cout << "ms_serial_ave at num_elems = " << LENGTH << " = " << ms_serial_ave << "\n";
-	std::cout << "ms_sse_ave at num_elems = " << LENGTH << " = " << ms_sse_ave << "\n";
+	saxpy_cilk(LENGTH, alpha, arr1, arr2, arr3);
+	cout << "Length-8 Cilk SAXPY: ";
+	print(LENGTH, arr3);
+
+
+	// - - - - - - - - - - - - - - - - - - -
+	float dot;
+	dot = dot_serial(LENGTH, arr1, arr2);
+	cout << "Serial dot-product: dot = " << dot << "\n";
+
+	dot = dot_sse(LENGTH, arr1, arr2);
+	cout << "SSE dot-product: dot = " << dot << "\n";
+
+	dot = dot_openmp(LENGTH, arr1, arr2);
+	cout << "OpenMP dot-product: dot = " << dot << "\n";
 
 
 
