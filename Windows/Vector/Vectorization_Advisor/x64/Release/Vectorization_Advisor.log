@@ -5,7 +5,7 @@ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advi
     	z[0:n] = a * x[0:n] + y[0:n];
     	   ^
   
-C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(222): warning #1011: missing return statement at end of non-void function "stencil_serial"
+C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(223): warning #1011: missing return statement at end of non-void function "stencil_serial"
     }
     ^
   

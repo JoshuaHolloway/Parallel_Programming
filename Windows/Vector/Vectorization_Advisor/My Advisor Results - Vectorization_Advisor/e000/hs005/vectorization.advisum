@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- <!DOCTYPE IntelParallelAdvisorSummaryCollection SYSTEM  "IntelParallelAdvisorSummaryCollection.dtd"> -->
+
+<IntelParallelAdvisorSummary version="" 
+                             kind="DATAKIND_SURVEY_EX" >
+  <hotspot filename="C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp"
+           line_no="242"
+           routine="main"
+           is_vectorized="0"
+           self_time="0.000000E+000"
+           total_time="1.900014E+001"
+           trip_counts="100000"
+           func_instance="8"
+           priority="0"/>
+</IntelParallelAdvisorSummary >

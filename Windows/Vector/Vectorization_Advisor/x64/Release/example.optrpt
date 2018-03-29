@@ -33,107 +33,50 @@ Begin optimization report for: main()
 
     Report from: Interprocedural optimizations [ipo]
 
-INLINE REPORT: (main()) [1/298=0.3%] C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(225,1)
-  -> INLINE (MANUAL): (227,9) CTimer::CTimer(CTimer *) (isz = 3) (sz = 10)
+INLINE REPORT: (main()) [1/298=0.3%] C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(226,1)
+  -> INLINE (MANUAL): (228,9) CTimer::CTimer(CTimer *) (isz = 3) (sz = 10)
     -> EXTERN: (17,3) QueryPerformanceFrequency(LARGE_INTEGER *)
-  -> INLINE (MANUAL): (228,2) CTimer::Start(CTimer *) (isz = 3) (sz = 8)
+  -> INLINE (MANUAL): (229,2) CTimer::Start(CTimer *) (isz = 3) (sz = 8)
     -> EXTERN: (22,3) QueryPerformanceCounter(LARGE_INTEGER *)
-  -> INLINE (MANUAL): (229,2) CTimer::End(CTimer *) (isz = 3) (sz = 8)
+  -> INLINE (MANUAL): (230,2) CTimer::End(CTimer *) (isz = 3) (sz = 8)
     -> EXTERN: (25,3) QueryPerformanceCounter(LARGE_INTEGER *)
-  -> INLINE (MANUAL): (231,2) CTimer::GetTimeInMilliseconds(CTimer *) (isz = 8) (sz = 14)
-  -> EXTERN: (236,21) ?1memcpy
+  -> INLINE (MANUAL): (232,2) CTimer::GetTimeInMilliseconds(CTimer *) (isz = 8) (sz = 14)
   -> EXTERN: (237,21) ?1memcpy
-  -> INLINE: (240,2) saxpy_serial(size_t, float, const float *, const float *, float *) (isz = 19) (sz = 32)
-  -> (241,2) std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *) (isz = 2175) (sz = 2184)
-     [[ Called routine is noinline  <1>]]
-  -> INLINE: (242,2) print(size_t, const float *) (isz = 29) (sz = 36)
-    -> (57,3) std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *) (isz = 2175) (sz = 2184)
-       [[ Called routine is noinline  <1>]]
-    -> (57,3) std::basic_ostream<char, std::char_traits<char>>::operator<<(std::basic_ostream<char, std::char_traits<char>> *, float) (isz = 126) (sz = 135)
-       [[ Called routine is noinline  <1>]]
-    -> (58,2) std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *) (isz = 2175) (sz = 2184)
-       [[ Called routine is noinline  <1>]]
-  -> INLINE: (244,2) saxpy_openmp(size_t, float, const float *, const float *, float *) (isz = 22) (sz = 35)
-  -> (245,2) std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *) (isz = 2175) (sz = 2184)
-     [[ Called routine is noinline  <1>]]
-  -> INLINE: (246,2) print(size_t, const float *) (isz = 29) (sz = 36)
-    -> (57,3) std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *) (isz = 2175) (sz = 2184)
-       [[ Called routine is noinline  <1>]]
-    -> (57,3) std::basic_ostream<char, std::char_traits<char>>::operator<<(std::basic_ostream<char, std::char_traits<char>> *, float) (isz = 126) (sz = 135)
-       [[ Called routine is noinline  <1>]]
-    -> (58,2) std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *) (isz = 2175) (sz = 2184)
-       [[ Called routine is noinline  <1>]]
-  -> INLINE: (248,2) saxpy_sse(size_t, float, const float *, const float *, float *) (isz = 35) (sz = 48)
+  -> EXTERN: (238,21) ?1memcpy
+  -> INLINE: (244,3) saxpy_serial(size_t, float, const float *, const float *, float *) (isz = 19) (sz = 32)
+  -> INLINE: (248,3) saxpy_openmp(size_t, float, const float *, const float *, float *) (isz = 22) (sz = 35)
+  -> INLINE: (252,3) saxpy_sse(size_t, float, const float *, const float *, float *) (isz = 35) (sz = 48)
     -> EXTERN: (100,3) _mm_set_ps1(float)
     -> EXTERN: (102,3) _mm_mul_ps(__m128, __m128)
     -> EXTERN: (103,3) _mm_add_ps(__m128, __m128)
-  -> (249,2) std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *) (isz = 2175) (sz = 2184)
-     [[ Called routine is noinline  <1>]]
-  -> INLINE: (250,2) print(size_t, const float *) (isz = 29) (sz = 36)
-    -> (57,3) std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *) (isz = 2175) (sz = 2184)
-       [[ Called routine is noinline  <1>]]
-    -> (57,3) std::basic_ostream<char, std::char_traits<char>>::operator<<(std::basic_ostream<char, std::char_traits<char>> *, float) (isz = 126) (sz = 135)
-       [[ Called routine is noinline  <1>]]
-    -> (58,2) std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *) (isz = 2175) (sz = 2184)
-       [[ Called routine is noinline  <1>]]
-  -> INLINE: (252,2) saxpy_cilk(int, float, const float *, const float *, float *) (isz = 5) (sz = 15)
-  -> (253,2) std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *) (isz = 2175) (sz = 2184)
-     [[ Called routine is noinline  <1>]]
-  -> INLINE: (254,2) print(size_t, const float *) (isz = 29) (sz = 36)
-    -> (57,3) std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *) (isz = 2175) (sz = 2184)
-       [[ Called routine is noinline  <1>]]
-    -> (57,3) std::basic_ostream<char, std::char_traits<char>>::operator<<(std::basic_ostream<char, std::char_traits<char>> *, float) (isz = 126) (sz = 135)
-       [[ Called routine is noinline  <1>]]
-    -> (58,2) std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *) (isz = 2175) (sz = 2184)
-       [[ Called routine is noinline  <1>]]
-  -> INLINE: (259,2) dot_serial(size_t, const float *, const float *) (isz = 19) (sz = 30)
-  -> (260,2) std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *) (isz = 2175) (sz = 2184)
-     [[ Called routine is noinline  <1>]]
-  -> (260,2) std::basic_ostream<char, std::char_traits<char>>::operator<<(std::basic_ostream<char, std::char_traits<char>> *, float) (isz = 126) (sz = 135)
-     [[ Called routine is noinline  <1>]]
-  -> (260,2) std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *) (isz = 2175) (sz = 2184)
-     [[ Called routine is noinline  <1>]]
-  -> INLINE: (262,2) dot_sse(size_t, const float *, const float *) (isz = 49) (sz = 60)
-    -> EXTERN: (158,2) _mm_setzero_ps()
-    -> EXTERN: (177,3) _mm_mul_ps(__m128, __m128)
-    -> EXTERN: (178,3) _mm_add_ps(__m128, __m128)
-    -> EXTERN: (180,2) _mm_setzero_ps()
-    -> EXTERN: (181,2) _mm_hadd_ps(__m128, __m128)
+  -> INLINE: (256,3) saxpy_cilk(int, float, const float *, const float *, float *) (isz = 5) (sz = 15)
+  -> INLINE: (262,3) dot_serial(size_t, const float *, const float *) (isz = 19) (sz = 30)
+  -> INLINE: (265,3) dot_sse(size_t, const float *, const float *) (isz = 49) (sz = 60)
+    -> EXTERN: (159,2) _mm_setzero_ps()
+    -> EXTERN: (178,3) _mm_mul_ps(__m128, __m128)
+    -> EXTERN: (179,3) _mm_add_ps(__m128, __m128)
+    -> EXTERN: (181,2) _mm_setzero_ps()
     -> EXTERN: (182,2) _mm_hadd_ps(__m128, __m128)
-    -> EXTERN: (185,2) _mm_store_ss(float *, __m128)
-  -> (263,2) std::basic_ostream<char, std::char_traits<char>>::operator<<(std::basic_ostream<char, std::char_traits<char>> *, float) (isz = 126) (sz = 135)
-     [[ Called routine is noinline  <1>]]
-  -> (263,2) std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *) (isz = 2175) (sz = 2184)
-     [[ Called routine is noinline  <1>]]
-  -> (263,2) std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *) (isz = 2175) (sz = 2184)
-     [[ Called routine is noinline  <1>]]
-  -> INLINE: (265,2) dot_openmp(size_t, const float *, const float *) (isz = 23) (sz = 34)
-  -> (266,2) std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *) (isz = 2175) (sz = 2184)
-     [[ Called routine is noinline  <1>]]
-  -> (266,2) std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *) (isz = 2175) (sz = 2184)
-     [[ Called routine is noinline  <1>]]
-  -> (266,2) std::basic_ostream<char, std::char_traits<char>>::operator<<(std::basic_ostream<char, std::char_traits<char>> *, float) (isz = 126) (sz = 135)
-     [[ Called routine is noinline  <1>]]
-  -> EXTERN: (270,2) getchar()
-  -> DELETED: (271,2) CTimer::~CTimer(CTimer *) (isz = 0) (sz = 3)
-  -> EXTERN: (272,1) __cxa_end_catch
-  -> DELETED: (272,1) CTimer::~CTimer(CTimer *) (isz = 0) (sz = 3)
+    -> EXTERN: (183,2) _mm_hadd_ps(__m128, __m128)
+    -> EXTERN: (186,2) _mm_store_ss(float *, __m128)
+  -> INLINE: (268,3) dot_openmp(size_t, const float *, const float *) (isz = 23) (sz = 34)
+  -> DELETED: (273,2) CTimer::~CTimer(CTimer *) (isz = 0) (sz = 3)
 
 
     Report from: OpenMP optimizations [openmp]
 
-OpenMP Construct at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(81,1) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(244,2)
+OpenMP Construct at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(81,1) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(248,3)
 remark #16200: OpenMP DEFINED LOOP WAS PARALLELIZED
-OpenMP Construct at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(196,1) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(265,2)
+OpenMP Construct at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(197,1) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(268,3)
 remark #16200: OpenMP DEFINED LOOP WAS PARALLELIZED
 
     Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
 
 
-LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(70,2) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(240,2)
-   remark #15388: vectorization support: reference arr3[i] has aligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(240,2) ]
-   remark #15388: vectorization support: reference arr1[i] has aligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(240,2) ]
-   remark #15388: vectorization support: reference arr2[i] has aligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(240,2) ]
+LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(70,2) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(244,3)
+   remark #15388: vectorization support: reference arr3[i] has aligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(244,3) ]
+   remark #15388: vectorization support: reference arr1[i] has aligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(244,3) ]
+   remark #15388: vectorization support: reference arr2[i] has aligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(244,3) ]
    remark #15305: vectorization support: vector length 8
    remark #15427: loop was completely unrolled
    remark #15300: LOOP WAS VECTORIZED
@@ -146,24 +89,12 @@ LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vect
    remark #15488: --- end vector cost summary ---
 LOOP END
 
-LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(56,2) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(242,2)
-   remark #15333: loop was not vectorized: exception handling for a call prevents vectorization   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(57,3) ]
-LOOP END
-
-LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(56,2) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(246,2)
-   remark #15333: loop was not vectorized: exception handling for a call prevents vectorization   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(57,3) ]
-LOOP END
-
-LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(96,2) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(248,2)
+LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(96,2) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(252,3)
    remark #15310: loop was not vectorized: operation cannot be vectorized   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(100,3) ]
    remark #25436: completely unrolled by 2  
 LOOP END
 
-LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(56,2) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(250,2)
-   remark #15333: loop was not vectorized: exception handling for a call prevents vectorization   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(57,3) ]
-LOOP END
-
-LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(115,2) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(252,2)
+LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(115,2) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(256,3)
    remark #15388: vectorization support: reference arr3[$i1] has aligned access
    remark #15388: vectorization support: reference arr1[$i1] has aligned access
    remark #15388: vectorization support: reference arr2[$i1] has aligned access
@@ -179,40 +110,19 @@ LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vect
    remark #15488: --- end vector cost summary ---
 LOOP END
 
-LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(56,2) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(254,2)
-   remark #15333: loop was not vectorized: exception handling for a call prevents vectorization   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(57,3) ]
-LOOP END
-
-LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(146,2) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(259,2)
-   remark #15388: vectorization support: reference arr1[i] has aligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(259,2) ]
-   remark #15388: vectorization support: reference arr2[i] has aligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(259,2) ]
-   remark #15335: loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or /Qvec-threshold0 to override
-   remark #15305: vectorization support: vector length 4
-   remark #15427: loop was completely unrolled
-   remark #15399: vectorization support: unroll factor set to 2
-   remark #15309: vectorization support: normalized vectorization overhead 1.357
-   remark #15448: unmasked aligned unit stride loads: 2 
-   remark #15475: --- begin vector cost summary ---
-   remark #15476: scalar cost: 7 
-   remark #15477: vector cost: 1.750 
-   remark #15478: estimated potential speedup: 1.690 
-   remark #15488: --- end vector cost summary ---
-   remark #25436: completely unrolled by 8  
-LOOP END
-
-LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(173,2) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(262,2)
+LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(174,2) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(265,3)
    remark #15344: loop was not vectorized: vector dependence prevents vectorization
-   remark #15346: vector dependence: assumed ANTI dependence between accumulate.scalar (178:3) and accumulate.scalar (178:3)
-   remark #15346: vector dependence: assumed FLOW dependence between accumulate.scalar (178:3) and accumulate.scalar (178:3)
+   remark #15346: vector dependence: assumed ANTI dependence between accumulate.scalar (179:3) and accumulate.scalar (179:3)
+   remark #15346: vector dependence: assumed FLOW dependence between accumulate.scalar (179:3) and accumulate.scalar (179:3)
    remark #25436: completely unrolled by 2  
 LOOP END
 
-LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(81,1) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(244,2)
+LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(81,1) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(248,3)
 <Peeled loop for vectorization>
    remark #25015: Estimate of max trip count of loop=7
 LOOP END
 
-LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(81,1) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(244,2)
+LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(81,1) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(248,3)
    remark #15389: vectorization support: reference z has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(83,3) ]
    remark #15389: vectorization support: reference x has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(83,3) ]
    remark #15389: vectorization support: reference y has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(83,3) ]
@@ -230,19 +140,19 @@ LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vect
    remark #15488: --- end vector cost summary ---
 LOOP END
 
-LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(81,1) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(244,2)
+LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(81,1) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(248,3)
 <Remainder loop for vectorization>
 LOOP END
 
-LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(196,1) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(265,2)
+LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(197,1) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(268,3)
 <Peeled loop for vectorization>
    remark #25015: Estimate of max trip count of loop=7
 LOOP END
 
-LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(196,1) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(265,2)
-   remark #25084: Preprocess Loopnests: Moving Out Store    [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(198,3) ]
-   remark #15389: vectorization support: reference *x[i] has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(198,3) ]
-   remark #15389: vectorization support: reference *y[i] has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(198,3) ]
+LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(197,1) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(268,3)
+   remark #25084: Preprocess Loopnests: Moving Out Store    [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(199,3) ]
+   remark #15389: vectorization support: reference *x[i] has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(199,3) ]
+   remark #15389: vectorization support: reference *y[i] has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(199,3) ]
    remark #15381: vectorization support: unaligned access used inside loop body
    remark #15305: vectorization support: vector length 8
    remark #15399: vectorization support: unroll factor set to 2
@@ -257,42 +167,161 @@ LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vect
    remark #15488: --- end vector cost summary ---
 LOOP END
 
-LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(196,1) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(265,2)
+LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(197,1) inlined into C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(268,3)
 <Remainder loop for vectorization>
-   remark #15389: vectorization support: reference *x[i] has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(198,3) ]
-   remark #15389: vectorization support: reference *y[i] has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(198,3) ]
+   remark #15389: vectorization support: reference *x[i] has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(199,3) ]
+   remark #15389: vectorization support: reference *y[i] has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(199,3) ]
    remark #15381: vectorization support: unaligned access used inside loop body
    remark #15335: remainder loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or /Qvec-threshold0 to override
    remark #15305: vectorization support: vector length 8
    remark #15309: vectorization support: normalized vectorization overhead 4.556
 LOOP END
 
+
+Non-optimizable loops:
+
+
+LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(242,2)
+   remark #15543: loop was not vectorized: loop with function call not considered an optimization candidate.
+LOOP END
+
     Report from: Code generation optimizations [cg]
 
-C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(236,21):remark #34000: call to memcpy implemented inline with loads and stores with proven source (alignment, offset): (32, 0), and destination (alignment, offset): (32, 0)
 C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(237,21):remark #34000: call to memcpy implemented inline with loads and stores with proven source (alignment, offset): (32, 0), and destination (alignment, offset): (32, 0)
-C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(225,1):remark #34051: REGISTER ALLOCATION : [main] C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp:225
+C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(238,21):remark #34000: call to memcpy implemented inline with loads and stores with proven source (alignment, offset): (32, 0), and destination (alignment, offset): (32, 0)
+C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(226,1):remark #34051: REGISTER ALLOCATION : [main] C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp:226
 
     Hardware registers
         Reserved     :    3[ rsp r13 rip]
         Available    :   38[ rax rdx rcx rbx rbp rsi rdi r8-r12 r14-r15 mm0-mm7 zmm0-zmm15]
         Callee-save  :   17[ rbx rbp rsi rdi r12 r14-r15 xmm6-xmm15]
-        Assigned     :   27[ rax rdx rcx rbx rsi rdi r8-r12 r14-r15 zmm0-zmm13]
+        Assigned     :   21[ rax rdx rcx rbx rsi rdi r8-r12 r14-r15 zmm0-zmm7]
         
     Routine temporaries
-        Total         :     563
-            Global    :      97
-            Local     :     466
-        Regenerable   :     142
-        Spilled       :       1
+        Total         :     326
+            Global    :     145
+            Local     :     181
+        Regenerable   :     104
+        Spilled       :      16
         
     Routine stack
-        Variables     :     443 bytes*
-            Reads     :      50 [4.99e+001 ~ 5.2%]
-            Writes    :      41 [6.19e+001 ~ 6.4%]
-        Spills        :     240 bytes*
-            Reads     :      81 [1.70e+001 ~ 1.8%]
-            Writes    :      81 [3.30e+001 ~ 3.4%]
+        Variables     :     403 bytes*
+            Reads     :      22 [4.90e+005 ~ 0.8%]
+            Writes    :      35 [5.69e+006 ~ 9.5%]
+        Spills        :      96 bytes*
+            Reads     :      10 [5.00e+000 ~ 0.0%]
+            Writes    :      10 [5.00e+005 ~ 0.8%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================
+
+Begin optimization report for: CTimer::~CTimer(CTimer *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (CTimer::~CTimer(CTimer *)) C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(19,12)
+
+===========================================================================
+
+Begin optimization report for: fabsl(long double)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (fabsl(long double)) C:\PROGRA~2\INTELS~1\COMPIL~1\windows\compiler\include\math.h(951,3)
+
+===========================================================================
+
+Begin optimization report for: frexpl(long double, int *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (frexpl(long double, int *)) C:\PROGRA~2\INTELS~1\COMPIL~1\windows\compiler\include\math.h(957,3)
+
+===========================================================================
+
+Begin optimization report for: abs(float)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (abs(float)) C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\cstdlib(24,2)
+
+===========================================================================
+
+Begin optimization report for: _vsprintf_s_l(char *, size_t, const char *, _locale_t, va_list)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (_vsprintf_s_l(char *, size_t, const char *, _locale_t, va_list)) C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1495,5)
+
+===========================================================================
+
+Begin optimization report for: operator new(size_t, void *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (operator new(size_t, void *)) C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\vcruntime_new.h(178,5)
+
+===========================================================================
+
+Begin optimization report for: operator delete(void *, void *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (operator delete(void *, void *)) C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\vcruntime_new.h(184,5)
+
+===========================================================================
+
+Begin optimization report for: print(size_t, const float *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (print(size_t, const float *)) [9/298=3.0%] C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(55,1)
+  -> (57,3) std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *) (isz = 2175) (sz = 2184)
+     [[ Called routine is noinline  <1>]]
+  -> (57,3) std::basic_ostream<char, std::char_traits<char>>::operator<<(std::basic_ostream<char, std::char_traits<char>> *, float) (isz = 126) (sz = 135)
+     [[ Called routine is noinline  <1>]]
+  -> (58,2) std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *) (isz = 2175) (sz = 2184)
+     [[ Called routine is noinline  <1>]]
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(56,2)
+   remark #15382: vectorization support: call to function std::basic_ostream<char, std::char_traits<char>>::operator<<(std::basic_ostream<char, std::char_traits<char>> *, float) cannot be vectorized   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(57,3) ]
+   remark #15382: vectorization support: call to function std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *) cannot be vectorized   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(57,3) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(55,1):remark #34051: REGISTER ALLOCATION : [?print@@YAX_KQEBM@Z] C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp:55
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   39[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm15]
+        Callee-save  :   18[ rbx rbp rsi rdi r12-r15 xmm6-xmm15]
+        Assigned     :    7[ rax rdx rcx rbx rsi rdi zmm1]
+        
+    Routine temporaries
+        Total         :      36
+            Global    :      24
+            Local     :      12
+        Regenerable   :       4
+        Spilled       :       3
+        
+    Routine stack
+        Variables     :       0 bytes*
+            Reads     :       0 [0.00e+000 ~ 0.0%]
+            Writes    :       0 [0.00e+000 ~ 0.0%]
+        Spills        :      24 bytes*
+            Reads     :       3 [2.70e+000 ~ 3.0%]
+            Writes    :       3 [2.70e+000 ~ 3.0%]
     
     Notes
     
@@ -306,7 +335,7 @@ Begin optimization report for: std::operator<<<std::char_traits<char>>(std::basi
 
     Report from: Interprocedural optimizations [ipo]
 
-INLINE REPORT: (std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *)) [2/298=0.7%] C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\ostream(769,2)
+INLINE REPORT: (std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *)) [10/298=3.4%] C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\ostream(769,2)
   -> INLINE (MANUAL): (773,20) std::char_traits<char>::length(const char *) (isz = 2) (sz = 9)
     -> EXTERN: C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\iosfwd:(446,3) strlen(const char *)
   -> INLINE (MANUAL): (774,18) std::ios_base::width(const std::ios_base *) const (isz = 0) (sz = 6)
@@ -315,7 +344,7 @@ INLINE REPORT: (std::operator<<<std::char_traits<char>>(std::basic_ostream<char,
   -> INLINE (MANUAL): (776,31) std::basic_ostream<char, std::char_traits<char>>::sentry::sentry(std::basic_ostream<char, std::char_traits<char>>::sentry *, std::basic_ostream<char, std::char_traits<char>> &) (isz = 126) (sz = 135)
     -> INLINE (MANUAL): (118,31) std::basic_ostream<char, std::char_traits<char>>::_Sentry_base::_Sentry_base(std::basic_ostream<char, std::char_traits<char>>::_Sentry_base *, std::basic_ostream<char, std::char_traits<char>> &) (isz = 40) (sz = 49)
       -> INLINE (MANUAL): (99,4) std::basic_ios<char, std::char_traits<char>>::rdbuf(const std::basic_ios<char, std::char_traits<char>> *) const (isz = 0) (sz = 6)
-      -> INDIRECT- (VIRTUAL): (100,5)  (__$U7a_V$4d7.0.242.6072->__vptr_V$3ab + EXPR_CONV.SI32.I64(1(SI32)) * 8(I64))->f_V$2a
+      -> INDIRECT- (VIRTUAL): (100,5)  (__$U7a_V$4d7.0.242.6068->__vptr_V$3ab + EXPR_CONV.SI32.I64(1(SI32)) * 8(I64))->f_V$2a
          [[ Unable to inline indirect callsite  <2>]]
       -> INLINE (MANUAL): (100,5) std::basic_ios<char, std::char_traits<char>>::rdbuf(const std::basic_ios<char, std::char_traits<char>> *) const (isz = 0) (sz = 6)
     -> INLINE (MANUAL): (121,4) std::basic_ios<char, std::char_traits<char>>::tie(const std::basic_ios<char, std::char_traits<char>> *) const (isz = 0) (sz = 6)
@@ -846,7 +875,7 @@ Begin optimization report for: std::basic_ostream<char, std::char_traits<char>>:
 
     Report from: Interprocedural optimizations [ipo]
 
-INLINE REPORT: (std::basic_ostream<char, std::char_traits<char>>::sentry::~sentry(std::basic_ostream<char, std::char_traits<char>>::sentry *)) [3/298=1.0%] C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\ostream(127,4)
+INLINE REPORT: (std::basic_ostream<char, std::char_traits<char>>::sentry::~sentry(std::basic_ostream<char, std::char_traits<char>>::sentry *)) [11/298=3.7%] C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\ostream(127,4)
   -> EXTERN: (129,4) std::uncaught_exceptions()
   -> INLINE (MANUAL): (131,5) std::basic_ostream<char, std::char_traits<char>>::_Osfx(std::basic_ostream<char, std::char_traits<char>> *) (isz = 2006) (sz = 2011)
     -> INLINE (MANUAL): (165,3) std::ios_base::flags(const std::ios_base *) const (isz = 0) (sz = 6)
@@ -1276,7 +1305,7 @@ INLINE REPORT: (std::basic_ostream<char, std::char_traits<char>>::sentry::~sentr
   -> INLINE (MANUAL): (136,4) std::basic_ostream<char, std::char_traits<char>>::_Sentry_base::~_Sentry_base(std::basic_ostream<char, std::char_traits<char>>::_Sentry_base *) (isz = 39) (sz = 44)
     -> INLINE (MANUAL): (105,4) std::basic_ios<char, std::char_traits<char>>::rdbuf(const std::basic_ios<char, std::char_traits<char>> *) const (isz = 0) (sz = 6)
     -> INLINE (MANUAL): (106,5) std::basic_ios<char, std::char_traits<char>>::rdbuf(const std::basic_ios<char, std::char_traits<char>> *) const (isz = 0) (sz = 6)
-    -> INDIRECT- (VIRTUAL): (106,5)  (__$U7b_V$4d9.0.243.2854->__vptr_V$3ab + EXPR_CONV.SI32.I64(2(SI32)) * 8(I64))->f_V$2a
+    -> INDIRECT- (VIRTUAL): (106,5)  (__$U7b_V$4d9.0.243.2850->__vptr_V$3ab + EXPR_CONV.SI32.I64(2(SI32)) * 8(I64))->f_V$2a
        [[ Unable to inline indirect callsite  <2>]]
   -> (136,4) std::basic_ostream<char, std::char_traits<char>>::_Sentry_base::~_Sentry_base(std::basic_ostream<char, std::char_traits<char>>::_Sentry_base *) (isz = 39) (sz = 44)
      [[ Callee not marked with inlining pragma  <3>]]
@@ -1344,7 +1373,7 @@ Begin optimization report for: std::basic_ostream<char, std::char_traits<char>>:
 
     Report from: Interprocedural optimizations [ipo]
 
-INLINE REPORT: (std::basic_ostream<char, std::char_traits<char>>::_Sentry_base::~_Sentry_base(std::basic_ostream<char, std::char_traits<char>>::_Sentry_base *)) [4/298=1.3%] C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\ostream(104,4)
+INLINE REPORT: (std::basic_ostream<char, std::char_traits<char>>::_Sentry_base::~_Sentry_base(std::basic_ostream<char, std::char_traits<char>>::_Sentry_base *)) [12/298=4.0%] C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\ostream(104,4)
   -> INLINE (MANUAL): (105,4) std::basic_ios<char, std::char_traits<char>>::rdbuf(const std::basic_ios<char, std::char_traits<char>> *) const (isz = 0) (sz = 6)
   -> INDIRECT- (VIRTUAL): (106,5)  (__$U7b_V$4d9.0.243->__vptr_V$3ab + EXPR_CONV.SI32.I64(2(SI32)) * 8(I64))->f_V$2a
      [[ Unable to inline indirect callsite  <2>]]
@@ -1388,7 +1417,7 @@ Begin optimization report for: std::basic_ostream<char, std::char_traits<char>>:
 
     Report from: Interprocedural optimizations [ipo]
 
-INLINE REPORT: (std::basic_ostream<char, std::char_traits<char>>::sentry::operator bool(const std::basic_ostream<char, std::char_traits<char>>::sentry *) const) [7/298=2.3%] C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\ostream(139,4)
+INLINE REPORT: (std::basic_ostream<char, std::char_traits<char>>::sentry::operator bool(const std::basic_ostream<char, std::char_traits<char>>::sentry *) const) [15/298=5.0%] C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\ostream(139,4)
 
 
     Report from: Code generation optimizations [cg]
@@ -1424,117 +1453,6 @@ C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.
 
 ===========================================================================
 
-Begin optimization report for: CTimer::~CTimer(CTimer *)
-
-    Report from: Interprocedural optimizations [ipo]
-
-DEAD STATIC FUNCTION: (CTimer::~CTimer(CTimer *)) C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(19,12)
-
-===========================================================================
-
-Begin optimization report for: fabsl(long double)
-
-    Report from: Interprocedural optimizations [ipo]
-
-DEAD STATIC FUNCTION: (fabsl(long double)) C:\PROGRA~2\INTELS~1\COMPIL~1\windows\compiler\include\math.h(951,3)
-
-===========================================================================
-
-Begin optimization report for: frexpl(long double, int *)
-
-    Report from: Interprocedural optimizations [ipo]
-
-DEAD STATIC FUNCTION: (frexpl(long double, int *)) C:\PROGRA~2\INTELS~1\COMPIL~1\windows\compiler\include\math.h(957,3)
-
-===========================================================================
-
-Begin optimization report for: abs(float)
-
-    Report from: Interprocedural optimizations [ipo]
-
-DEAD STATIC FUNCTION: (abs(float)) C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\cstdlib(24,2)
-
-===========================================================================
-
-Begin optimization report for: _vsprintf_s_l(char *, size_t, const char *, _locale_t, va_list)
-
-    Report from: Interprocedural optimizations [ipo]
-
-DEAD STATIC FUNCTION: (_vsprintf_s_l(char *, size_t, const char *, _locale_t, va_list)) C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1495,5)
-
-===========================================================================
-
-Begin optimization report for: operator new(size_t, void *)
-
-    Report from: Interprocedural optimizations [ipo]
-
-DEAD STATIC FUNCTION: (operator new(size_t, void *)) C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\vcruntime_new.h(178,5)
-
-===========================================================================
-
-Begin optimization report for: operator delete(void *, void *)
-
-    Report from: Interprocedural optimizations [ipo]
-
-DEAD STATIC FUNCTION: (operator delete(void *, void *)) C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\include\vcruntime_new.h(184,5)
-
-===========================================================================
-
-Begin optimization report for: print(size_t, const float *)
-
-    Report from: Interprocedural optimizations [ipo]
-
-INLINE REPORT: (print(size_t, const float *)) [16/298=5.4%] C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(55,1)
-  -> (57,3) std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *) (isz = 2175) (sz = 2184)
-     [[ Called routine is noinline  <1>]]
-  -> (57,3) std::basic_ostream<char, std::char_traits<char>>::operator<<(std::basic_ostream<char, std::char_traits<char>> *, float) (isz = 126) (sz = 135)
-     [[ Called routine is noinline  <1>]]
-  -> (58,2) std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *) (isz = 2175) (sz = 2184)
-     [[ Called routine is noinline  <1>]]
-
-
-    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
-
-
-LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(56,2)
-   remark #15382: vectorization support: call to function std::basic_ostream<char, std::char_traits<char>>::operator<<(std::basic_ostream<char, std::char_traits<char>> *, float) cannot be vectorized   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(57,3) ]
-   remark #15382: vectorization support: call to function std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *) cannot be vectorized   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(57,3) ]
-   remark #15344: loop was not vectorized: vector dependence prevents vectorization
-LOOP END
-
-    Report from: Code generation optimizations [cg]
-
-C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(55,1):remark #34051: REGISTER ALLOCATION : [?print@@YAX_KQEBM@Z] C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp:55
-
-    Hardware registers
-        Reserved     :    2[ rsp rip]
-        Available    :   39[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm15]
-        Callee-save  :   18[ rbx rbp rsi rdi r12-r15 xmm6-xmm15]
-        Assigned     :    7[ rax rdx rcx rbx rsi rdi zmm1]
-        
-    Routine temporaries
-        Total         :      36
-            Global    :      24
-            Local     :      12
-        Regenerable   :       4
-        Spilled       :       3
-        
-    Routine stack
-        Variables     :       0 bytes*
-            Reads     :       0 [0.00e+000 ~ 0.0%]
-            Writes    :       0 [0.00e+000 ~ 0.0%]
-        Spills        :      24 bytes*
-            Reads     :       3 [2.70e+000 ~ 3.0%]
-            Writes    :       3 [2.70e+000 ~ 3.0%]
-    
-    Notes
-    
-        *Non-overlapping variables and spills may share stack space,
-         so the total stack size might be less than this.
-    
-
-===========================================================================
-
 Begin optimization report for: std::basic_ostream<char, std::char_traits<char>>::sentry::sentry(std::basic_ostream<char, std::char_traits<char>>::sentry *, std::basic_ostream<char, std::char_traits<char>> &)
 
     Report from: Interprocedural optimizations [ipo]
@@ -1543,7 +1461,7 @@ INLINE REPORT: (std::basic_ostream<char, std::char_traits<char>>::sentry::sentry
   -> INLINE (MANUAL): (118,31) std::basic_ostream<char, std::char_traits<char>>::_Sentry_base::_Sentry_base(std::basic_ostream<char, std::char_traits<char>>::_Sentry_base *, std::basic_ostream<char, std::char_traits<char>> &) (isz = 40) (sz = 49)
     -> INLINE (MANUAL): (99,4) std::basic_ios<char, std::char_traits<char>>::rdbuf(const std::basic_ios<char, std::char_traits<char>> *) const (isz = 0) (sz = 6)
     -> INLINE (MANUAL): (100,5) std::basic_ios<char, std::char_traits<char>>::rdbuf(const std::basic_ios<char, std::char_traits<char>> *) const (isz = 0) (sz = 6)
-    -> INDIRECT- (VIRTUAL): (100,5)  (__$U7a_V$4d7.0.242.2982->__vptr_V$3ab + EXPR_CONV.SI32.I64(1(SI32)) * 8(I64))->f_V$2a
+    -> INDIRECT- (VIRTUAL): (100,5)  (__$U7a_V$4d7.0.242.2978->__vptr_V$3ab + EXPR_CONV.SI32.I64(1(SI32)) * 8(I64))->f_V$2a
        [[ Unable to inline indirect callsite  <2>]]
   -> INLINE (MANUAL): (121,4) std::basic_ios<char, std::char_traits<char>>::tie(const std::basic_ios<char, std::char_traits<char>> *) const (isz = 0) (sz = 6)
   -> INLINE (MANUAL): (121,4) std::basic_ios<char, std::char_traits<char>>::tie(const std::basic_ios<char, std::char_traits<char>> *) const (isz = 0) (sz = 6)
@@ -2168,20 +2086,20 @@ Begin optimization report for: dot_serial(size_t, const float *, const float *)
 
     Report from: Interprocedural optimizations [ipo]
 
-INLINE REPORT: (dot_serial(size_t, const float *, const float *)) [30/298=10.1%] C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(144,1)
+INLINE REPORT: (dot_serial(size_t, const float *, const float *)) [30/298=10.1%] C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(145,1)
 
 
     Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
 
 
-LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(146,2)
+LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(147,2)
 <Peeled loop for vectorization>
    remark #25015: Estimate of max trip count of loop=7
 LOOP END
 
-LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(146,2)
-   remark #15389: vectorization support: reference x[i] has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(147,3) ]
-   remark #15389: vectorization support: reference y[i] has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(147,3) ]
+LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(147,2)
+   remark #15389: vectorization support: reference x[i] has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(148,3) ]
+   remark #15389: vectorization support: reference y[i] has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(148,3) ]
    remark #15381: vectorization support: unaligned access used inside loop body
    remark #15305: vectorization support: vector length 8
    remark #15399: vectorization support: unroll factor set to 2
@@ -2196,10 +2114,10 @@ LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vect
    remark #15488: --- end vector cost summary ---
 LOOP END
 
-LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(146,2)
+LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(147,2)
 <Remainder loop for vectorization>
-   remark #15389: vectorization support: reference x[i] has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(147,3) ]
-   remark #15389: vectorization support: reference y[i] has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(147,3) ]
+   remark #15389: vectorization support: reference x[i] has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(148,3) ]
+   remark #15389: vectorization support: reference y[i] has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(148,3) ]
    remark #15381: vectorization support: unaligned access used inside loop body
    remark #15335: remainder loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or /Qvec-threshold0 to override
    remark #15305: vectorization support: vector length 8
@@ -2208,7 +2126,7 @@ LOOP END
 
     Report from: Code generation optimizations [cg]
 
-C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(144,1):remark #34051: REGISTER ALLOCATION : [?dot_serial@@YAM_KQEBM1@Z] C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp:144
+C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(145,1):remark #34051: REGISTER ALLOCATION : [?dot_serial@@YAM_KQEBM1@Z] C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp:145
 
     Hardware registers
         Reserved     :    3[ rsp r13 rip]
@@ -2243,28 +2161,28 @@ Begin optimization report for: dot_sse(size_t, const float *, const float *)
 
     Report from: Interprocedural optimizations [ipo]
 
-INLINE REPORT: (dot_sse(size_t, const float *, const float *)) [31/298=10.4%] C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(155,1)
-  -> EXTERN: (158,2) _mm_setzero_ps()
-  -> EXTERN: (177,3) _mm_mul_ps(__m128, __m128)
-  -> EXTERN: (178,3) _mm_add_ps(__m128, __m128)
-  -> EXTERN: (180,2) _mm_setzero_ps()
-  -> EXTERN: (181,2) _mm_hadd_ps(__m128, __m128)
+INLINE REPORT: (dot_sse(size_t, const float *, const float *)) [31/298=10.4%] C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(156,1)
+  -> EXTERN: (159,2) _mm_setzero_ps()
+  -> EXTERN: (178,3) _mm_mul_ps(__m128, __m128)
+  -> EXTERN: (179,3) _mm_add_ps(__m128, __m128)
+  -> EXTERN: (181,2) _mm_setzero_ps()
   -> EXTERN: (182,2) _mm_hadd_ps(__m128, __m128)
-  -> EXTERN: (185,2) _mm_store_ss(float *, __m128)
+  -> EXTERN: (183,2) _mm_hadd_ps(__m128, __m128)
+  -> EXTERN: (186,2) _mm_store_ss(float *, __m128)
 
 
     Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
 
 
-LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(173,2)
+LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(174,2)
    remark #15344: loop was not vectorized: vector dependence prevents vectorization
-   remark #15346: vector dependence: assumed ANTI dependence between accumulate.scalar (178:3) and accumulate.scalar (178:3)
-   remark #15346: vector dependence: assumed FLOW dependence between accumulate.scalar (178:3) and accumulate.scalar (178:3)
+   remark #15346: vector dependence: assumed ANTI dependence between accumulate.scalar (179:3) and accumulate.scalar (179:3)
+   remark #15346: vector dependence: assumed FLOW dependence between accumulate.scalar (179:3) and accumulate.scalar (179:3)
 LOOP END
 
     Report from: Code generation optimizations [cg]
 
-C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(155,1):remark #34051: REGISTER ALLOCATION : [?dot_sse@@YAM_KQEBM1@Z] C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp:155
+C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(156,1):remark #34051: REGISTER ALLOCATION : [?dot_sse@@YAM_KQEBM1@Z] C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp:156
 
     Hardware registers
         Reserved     :    2[ rsp rip]
@@ -2299,26 +2217,26 @@ Begin optimization report for: dot_openmp(size_t, const float *, const float *)
 
     Report from: Interprocedural optimizations [ipo]
 
-INLINE REPORT: (dot_openmp(size_t, const float *, const float *)) [32/298=10.7%] C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(194,1)
+INLINE REPORT: (dot_openmp(size_t, const float *, const float *)) [32/298=10.7%] C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(195,1)
 
 
     Report from: OpenMP optimizations [openmp]
 
-OpenMP Construct at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(196,1)
+OpenMP Construct at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(197,1)
 remark #16200: OpenMP DEFINED LOOP WAS PARALLELIZED
 
     Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
 
 
-LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(196,1)
+LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(197,1)
 <Peeled loop for vectorization>
    remark #25015: Estimate of max trip count of loop=7
 LOOP END
 
-LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(196,1)
-   remark #25084: Preprocess Loopnests: Moving Out Store    [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(198,3) ]
-   remark #15389: vectorization support: reference x[i] has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(198,3) ]
-   remark #15389: vectorization support: reference y[i] has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(198,3) ]
+LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(197,1)
+   remark #25084: Preprocess Loopnests: Moving Out Store    [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(199,3) ]
+   remark #15389: vectorization support: reference x[i] has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(199,3) ]
+   remark #15389: vectorization support: reference y[i] has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(199,3) ]
    remark #15381: vectorization support: unaligned access used inside loop body
    remark #15305: vectorization support: vector length 8
    remark #15399: vectorization support: unroll factor set to 2
@@ -2333,10 +2251,10 @@ LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vect
    remark #15488: --- end vector cost summary ---
 LOOP END
 
-LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(196,1)
+LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(197,1)
 <Remainder loop for vectorization>
-   remark #15389: vectorization support: reference x[i] has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(198,3) ]
-   remark #15389: vectorization support: reference y[i] has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(198,3) ]
+   remark #15389: vectorization support: reference x[i] has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(199,3) ]
+   remark #15389: vectorization support: reference y[i] has unaligned access   [ C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(199,3) ]
    remark #15381: vectorization support: unaligned access used inside loop body
    remark #15335: remainder loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or /Qvec-threshold0 to override
    remark #15305: vectorization support: vector length 8
@@ -2345,7 +2263,7 @@ LOOP END
 
     Report from: Code generation optimizations [cg]
 
-C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(194,1):remark #34051: REGISTER ALLOCATION : [?dot_openmp@@YAM_KQEBM1@Z] C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp:194
+C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(195,1):remark #34051: REGISTER ALLOCATION : [?dot_openmp@@YAM_KQEBM1@Z] C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp:195
 
     Hardware registers
         Reserved     :    3[ rsp r13 rip]
@@ -2380,25 +2298,25 @@ Begin optimization report for: stencil_serial(size_t, const float *, float *)
 
     Report from: Interprocedural optimizations [ipo]
 
-INLINE REPORT: (stencil_serial(size_t, const float *, float *)) [33/298=11.1%] C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(206,1)
+INLINE REPORT: (stencil_serial(size_t, const float *, float *)) [33/298=11.1%] C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(207,1)
 
 
     Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
 
 
-LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(212,2)
+LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(213,2)
    remark #15541: outer loop was not auto-vectorized: consider using SIMD directive
 
-   LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(214,3)
+   LOOP BEGIN at C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(215,3)
       remark #15344: loop was not vectorized: vector dependence prevents vectorization
-      remark #15346: vector dependence: assumed FLOW dependence between y[i*n+j] (216:4) and x[(i-1)*n+j-1] (216:4)
-      remark #15346: vector dependence: assumed ANTI dependence between x[(i-1)*n+j-1] (216:4) and y[i*n+j] (216:4)
+      remark #15346: vector dependence: assumed FLOW dependence between y[i*n+j] (217:4) and x[(i-1)*n+j-1] (217:4)
+      remark #15346: vector dependence: assumed ANTI dependence between x[(i-1)*n+j-1] (217:4) and y[i*n+j] (217:4)
    LOOP END
 LOOP END
 
     Report from: Code generation optimizations [cg]
 
-C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(206,1):remark #34051: REGISTER ALLOCATION : [?stencil_serial@@YAM_KQEBMQEAM@Z] C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp:206
+C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp(207,1):remark #34051: REGISTER ALLOCATION : [?stencil_serial@@YAM_KQEBMQEAM@Z] C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\example.cpp:207
 
     Hardware registers
         Reserved     :    2[ rsp rip]

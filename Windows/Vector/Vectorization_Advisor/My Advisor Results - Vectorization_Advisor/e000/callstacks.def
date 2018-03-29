@@ -1,51 +1,551 @@
 # callstacks file version: 4
 #    rowid	    parent	       rva	 loop	 system	                                function	binary	instance start rva	instance size	instance end rva	finst rowid	roi
-         1	        -1	     31540	    0	      0	                          mainCRTStartup	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	31540	18	0	1	0
-         2	        -1	    454544	    0	      1	                      RtlUserThreadStart	C:\WINDOWS\SYSTEM32\ntdll.dll	454512	72	0	21	0
-         3	         2	     73699	    0	      1	                     BaseThreadInitThunk	C:\WINDOWS\System32\KERNEL32.DLL	73680	55	0	18	0
-         4	         3	     31427	    0	      0	                   _scrt_common_main_seh	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	31156	384	0	2	0
-         5	        26	      4359	    1	      0	               [Loop at line 50 in main]	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	4328	51	4379	3	0
-         6	        28	      5373	    1	      0	           [Loop at line 96 in function]	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	5360	80	5440	5	0
-         7	        28	      5366	    1	      0	           [Loop at line 96 in function]	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	5360	80	5440	5	0
-         8	        31	      4488	    1	      0	               [Loop at line 59 in main]	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	4461	47	4508	7	0
-         9	        33	      5380	    1	      0	           [Loop at line 96 in function]	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	5360	80	5440	5	0
-        10	        35	      4606	    1	      0	               [Loop at line 69 in main]	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	4575	52	4627	8	0
-        11	        37	      5397	    1	      0	           [Loop at line 96 in function]	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	5360	80	5440	5	0
-        12	         4	      4664	    0	      0	                                    main	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	4096	704	0	4	0
-        13	        39	      8322	    1	      0	   [Loop at line 796 in std::operator<<]	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	5988	656		9	0
-        14	        47	     63211	    1	      1	[Loop@0x18000f688 in std::basic_streambuf<char,struct std::char_traits<char> >::xsputn]	C:\WINDOWS\SYSTEM32\MSVCP140.dll	63112	124		15	0
-        15	        14	     62138	    0	      1	                        func@0x18000f1e0	C:\WINDOWS\SYSTEM32\MSVCP140.dll	61920	616	0	17	0
-        16	        15	    452004	    0	      1	                                   fputc	C:\WINDOWS\System32\ucrtbase.dll	451760	274	0	19	0
-        17	        16	     83443	    0	      1	                        func@0x180014573	C:\WINDOWS\System32\ucrtbase.dll	83315	163	0	20	0
-        18	        17	    324342	    0	      1	                        func@0x18004f2e4	C:\WINDOWS\System32\ucrtbase.dll	324324	27	0	22	0
-        19	        18	     83804	    0	      1	                                   write	C:\WINDOWS\System32\ucrtbase.dll	83664	204	0	23	0
-        20	        19	     84169	    0	      1	                        func@0x18001479c	C:\WINDOWS\System32\ucrtbase.dll	83868	308	0	24	0
-        21	        45	     84864	    1	      1	  [Loop@0x180014b39 in func@0x180014ad0]	C:\WINDOWS\System32\ucrtbase.dll	84793	110		25	0
-        22	        21	    272073	    0	      1	                               WriteFile	C:\WINDOWS\System32\KERNELBASE.dll	271952	370	0	28	0
-        23	        22	    655172	    0	      1	                             NtWriteFile	C:\WINDOWS\SYSTEM32\ntdll.dll	655152	21	0	27	0
-        24	        41	      4722	    1	      0	               [Loop at line 78 in main]	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	4683	64	4747	11	0
-        25	        43	      5380	    1	      0	           [Loop at line 96 in function]	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	5360	80	5440	5	0
-        26	         4	      4328	    0	      0	                                    main	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	4096	704	0	4	0
-        27	         4	      4359	    0	      0	                                    main	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	4096	704	0	4	0
-        28	         5	      5360	    0	      0	                                function	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	5312	144	0	6	0
-        29	         5	      5373	    0	      0	                                function	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	5312	144	0	6	0
-        30	         5	      5366	    0	      0	                                function	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	5312	144	0	6	0
-        31	         4	      4461	    0	      0	                                    main	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	4096	704	0	4	0
-        32	         4	      4488	    0	      0	                                    main	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	4096	704	0	4	0
-        33	         8	      5360	    0	      0	                                function	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	5312	144	0	6	0
-        34	         8	      5380	    0	      0	                                function	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	5312	144	0	6	0
-        35	         4	      4575	    0	      0	                                    main	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	4096	704	0	4	0
-        36	         4	      4606	    0	      0	                                    main	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	4096	704	0	4	0
-        37	        10	      5360	    0	      0	                                function	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	5312	144	0	6	0
-        38	        10	      5397	    0	      0	                                function	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	5312	144	0	6	0
-        39	        12	      5988	    0	      0	                         std::operator<<	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	5456	3568	0	10	0
-        40	        12	      8322	    0	      0	                         std::operator<<	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	5456	3568	0	10	0
-        41	         4	      4683	    0	      0	                                    main	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	4096	704	0	4	0
-        42	         4	      4722	    0	      0	                                    main	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	4096	704	0	4	0
-        43	        24	      5360	    0	      0	                                function	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	5312	144	0	6	0
-        44	        24	      5380	    0	      0	                                function	C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe	5312	144	0	6	0
-        45	        20	     84793	    0	      1	                        func@0x180014ad0	C:\WINDOWS\System32\ucrtbase.dll	84688	258	0	26	0
-        46	        20	     84864	    0	      1	                        func@0x180014ad0	C:\WINDOWS\System32\ucrtbase.dll	84688	258	0	26	0
-        47	        13	     63112	    0	      1	std::basic_streambuf<char,struct std::char_traits<char> >::xsputn	C:\WINDOWS\SYSTEM32\MSVCP140.dll	63072	192	0	16	0
-        48	        13	     63211	    0	      1	std::basic_streambuf<char,struct std::char_traits<char> >::xsputn	C:\WINDOWS\SYSTEM32\MSVCP140.dll	63072	192	0	16	0
-        49	        -1	         0	    0	      0	                [Unknown stack frame(s)]	n/a	0	1	0	30	0
+         1	        -1	     36808	    0	      0	                          mainCRTStartup	C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\x64\Release\Vectorization_Advisor.exe	36808	18	0	6	0
+         2	        -1	    454592	    0	      1	                      RtlUserThreadStart	C:\WINDOWS\SYSTEM32\ntdll.dll	454560	72	0	33	0
+         3	         2	     73699	    0	      1	                     BaseThreadInitThunk	C:\WINDOWS\System32\KERNEL32.DLL	73680	55	0	21	0
+         4	         3	     36695	    0	      0	                   _scrt_common_main_seh	C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\x64\Release\Vectorization_Advisor.exe	36424	384	0	7	0
+         5	       372	      4516	    1	      0	              [Loop at line 242 in main]	C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\x64\Release\Vectorization_Advisor.exe	4362	520	4882	8	0
+         6	         5	    258748	    0	      1	                           [OpenMP fork]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	258528	368	0	46	0
+         7	         6	    529695	    0	      1	                          _kmp_fork_call	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	522048	10176	0	47	0
+         8	       415	    534051	    1	      1	[Loop at line 5302 in _kmp_allocate_team]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	534038	90		48	0
+         9	         8	    511544	    0	      1	                    _kmp_allocate_thread	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	509696	2544	0	50	0
+        10	         9	    788619	    0	      1	                      _kmp_create_worker	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	788480	448	0	51	0
+        11	       372	      4769	    1	      0	              [Loop at line 242 in main]	C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\x64\Release\Vectorization_Advisor.exe	4362	520	4882	8	0
+        12	        11	    258767	    0	      1	                           [OpenMP fork]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	258528	368	0	46	0
+        13	        12	    541484	    0	      1	                          _kmp_join_call	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	541136	3104	0	52	0
+        14	        13	    252766	    0	      1	                      __kmp_join_barrier	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	251344	3568	0	53	0
+        15	       419	    229238	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	229109	536		54	0
+        16	       375	    364057	    1	      1	           [Loop@0x180058e0c in SleepEx]	C:\WINDOWS\System32\KERNELBASE.dll	364044	36		25	0
+        17	        16	    656644	    0	      1	                        NtDelayExecution	C:\WINDOWS\SYSTEM32\ntdll.dll	656624	21	0	34	0
+        18	        11	    258748	    0	      1	                           [OpenMP fork]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	258528	368	0	46	0
+        19	        18	    527655	    0	      1	                          _kmp_fork_call	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	522048	10176	0	47	0
+        20	        19	         3	    0	      0	                    [Stitch point frame]	n/a	0	1	0	1	0
+        21	        20	    521810	    0	      1	                     [OpenMP dispatcher]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	521552	352	0	58	0
+        22	        21	   1091234	    0	      1	                   _kmp_invoke_microtask	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	1091088	160	0	59	0
+        23	        22	      5547	    0	      0	               main$omp$parallel_for@197	C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\x64\Release\Vectorization_Advisor.exe	5039	700	0	10	0
+        24	        23	    268670	    0	      1	                     _kmpc_reduce_nowait	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	268112	1248	0	60	0
+        25	        24	    217069	    0	      1	                            _kmp_barrier	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	214352	7040	0	61	0
+        26	       421	    242881	    1	      1	[Loop at line 911 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242869	355		62	0
+        27	         5	    258767	    0	      1	                           [OpenMP fork]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	258528	368	0	46	0
+        28	        27	    541484	    0	      1	                          _kmp_join_call	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	541136	3104	0	52	0
+        29	        28	    252766	    0	      1	                      __kmp_join_barrier	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	251344	3568	0	53	0
+        30	       425	    229238	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	229109	536		54	0
+        31	       377	    364057	    1	      1	           [Loop@0x180058e0c in SleepEx]	C:\WINDOWS\System32\KERNELBASE.dll	364044	36		25	0
+        32	        31	    656644	    0	      1	                        NtDelayExecution	C:\WINDOWS\SYSTEM32\ntdll.dll	656624	21	0	34	0
+        33	        27	    541599	    0	      1	                          _kmp_join_call	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	541136	3104	0	52	0
+        34	        33	    846040	    0	      1	                         func@0xc50ce820	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	845856	1656	0	32	0
+        35	        34	   1915360	    0	      1	                         func@0xc51d3770	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1914736	971	0	38	0
+        36	        35	   1923308	    0	      1	                         func@0xc51d5860	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1923168	1759	0	39	0
+        37	       393	   1926999	    1	      1	    [Loop@0xc51d666b in func@0xc51d6650]	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926763	242		40	0
+        38	        37	    391740	    0	      1	                          SwitchToThread	C:\WINDOWS\System32\KERNELBASE.dll	391712	59	0	28	0
+        39	        38	    657200	    0	      1	                        NtYieldExecution	C:\WINDOWS\SYSTEM32\ntdll.dll	657200	21	0	35	0
+        40	        24	    216494	    0	      1	                            _kmp_barrier	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	214352	7040	0	61	0
+        41	       429	    229389	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	229109	536		54	0
+        42	       429	    229238	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	229109	536		54	0
+        43	       379	    364057	    1	      1	           [Loop@0x180058e0c in SleepEx]	C:\WINDOWS\System32\KERNELBASE.dll	364044	36		25	0
+        44	        43	    656644	    0	      1	                        NtDelayExecution	C:\WINDOWS\SYSTEM32\ntdll.dll	656624	21	0	34	0
+        45	       419	    229224	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	229109	536		54	0
+        46	         6	    527869	    0	      1	                          _kmp_fork_call	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	522048	10176	0	47	0
+        47	        46	    255461	    0	      1	                      __kmp_fork_barrier	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	254912	1248	0	64	0
+        48	       434	    243074	    1	      1	[Loop at line 923 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242948	222		65	0
+        49	        48	   1090728	    0	      1	                    _kmp_test_then_add64	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	1090720	16	0	66	0
+        50	       419	    229239	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	229109	536		54	0
+        51	        18	    527890	    0	      1	                          _kmp_fork_call	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	522048	10176	0	47	0
+        52	        51	    521667	    0	      1	                     [OpenMP dispatcher]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	521552	352	0	58	0
+        53	        52	   1223189	    0	      1	                         func@0xc512a9d0	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1223120	327	0	42	0
+        54	        53	   1915360	    0	      1	                         func@0xc51d3770	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1914736	971	0	38	0
+        55	        54	   1923308	    0	      1	                         func@0xc51d5860	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1923168	1759	0	39	0
+        56	       395	   1926999	    1	      1	    [Loop@0xc51d666b in func@0xc51d6650]	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926763	242		40	0
+        57	        56	    391740	    0	      1	                          SwitchToThread	C:\WINDOWS\System32\KERNELBASE.dll	391712	59	0	28	0
+        58	        57	    657220	    0	      1	                        NtYieldExecution	C:\WINDOWS\SYSTEM32\ntdll.dll	657200	21	0	35	0
+        59	         6	    527655	    0	      1	                          _kmp_fork_call	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	522048	10176	0	47	0
+        60	        59	     15947	    0	      1	                _itt_stack_caller_create	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\runtime\libittnotify.dll	15947	48	0	4	0
+        61	        59	   1603491	    0	      1	                         func@0xc51876f0	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1603312	1676	0	43	0
+        62	        61	   1915360	    0	      1	                         func@0xc51d3770	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1914736	971	0	38	0
+        63	        62	   1923308	    0	      1	                         func@0xc51d5860	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1923168	1759	0	39	0
+        64	       397	   1926999	    1	      1	    [Loop@0xc51d666b in func@0xc51d6650]	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926763	242		40	0
+        65	        64	    391740	    0	      1	                          SwitchToThread	C:\WINDOWS\System32\KERNELBASE.dll	391712	59	0	28	0
+        66	        65	    657220	    0	      1	                        NtYieldExecution	C:\WINDOWS\SYSTEM32\ntdll.dll	657200	21	0	35	0
+        67	        38	    657220	    0	      1	                        NtYieldExecution	C:\WINDOWS\SYSTEM32\ntdll.dll	657200	21	0	35	0
+        68	        19	   1603491	    0	      1	                         func@0xc51876f0	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1603312	1676	0	43	0
+        69	        68	   1915360	    0	      1	                         func@0xc51d3770	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1914736	971	0	38	0
+        70	        69	   1923308	    0	      1	                         func@0xc51d5860	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1923168	1759	0	39	0
+        71	       399	   1926999	    1	      1	    [Loop@0xc51d666b in func@0xc51d6650]	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926763	242		40	0
+        72	        71	    391740	    0	      1	                          SwitchToThread	C:\WINDOWS\System32\KERNELBASE.dll	391712	59	0	28	0
+        73	        72	    657220	    0	      1	                        NtYieldExecution	C:\WINDOWS\SYSTEM32\ntdll.dll	657200	21	0	35	0
+        74	       425	    229389	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	229109	536		54	0
+        75	         6	    527890	    0	      1	                          _kmp_fork_call	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	522048	10176	0	47	0
+        76	        75	    521667	    0	      1	                     [OpenMP dispatcher]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	521552	352	0	58	0
+        77	        76	   1223189	    0	      1	                         func@0xc512a9d0	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1223120	327	0	42	0
+        78	        77	   1915360	    0	      1	                         func@0xc51d3770	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1914736	971	0	38	0
+        79	        78	   1923308	    0	      1	                         func@0xc51d5860	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1923168	1759	0	39	0
+        80	       401	   1926999	    1	      1	    [Loop@0xc51d666b in func@0xc51d6650]	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926763	242		40	0
+        81	        80	    391740	    0	      1	                          SwitchToThread	C:\WINDOWS\System32\KERNELBASE.dll	391712	59	0	28	0
+        82	        81	    657220	    0	      1	                        NtYieldExecution	C:\WINDOWS\SYSTEM32\ntdll.dll	657200	21	0	35	0
+        83	        12	    541599	    0	      1	                          _kmp_join_call	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	541136	3104	0	52	0
+        84	        83	    846040	    0	      1	                         func@0xc50ce820	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	845856	1656	0	32	0
+        85	        84	   1915360	    0	      1	                         func@0xc51d3770	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1914736	971	0	38	0
+        86	        85	   1923308	    0	      1	                         func@0xc51d5860	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1923168	1759	0	39	0
+        87	       403	   1926999	    1	      1	    [Loop@0xc51d666b in func@0xc51d6650]	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926763	242		40	0
+        88	        87	    391740	    0	      1	                          SwitchToThread	C:\WINDOWS\System32\KERNELBASE.dll	391712	59	0	28	0
+        89	        88	    657220	    0	      1	                        NtYieldExecution	C:\WINDOWS\SYSTEM32\ntdll.dll	657200	21	0	35	0
+        90	       429	    229245	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	229109	536		54	0
+        91	       418	    228501	    1	      1	[Loop at line 775 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228473	1450		56	0
+        92	        25	    243229	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+        93	        37	     43792	    0	      1	                          SwitchToThread	C:\WINDOWS\System32\KERNEL32.DLL	43792	7	0	22	0
+        94	        20	    521851	    0	      1	                     [OpenMP dispatcher]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	521552	352	0	58	0
+        95	        94	   1602928	    0	      1	                         func@0xc5187530	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1602864	128	0	44	0
+        96	        95	   1915360	    0	      1	                         func@0xc51d3770	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1914736	971	0	38	0
+        97	        96	   1923308	    0	      1	                         func@0xc51d5860	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1923168	1759	0	39	0
+        98	       405	   1926999	    1	      1	    [Loop@0xc51d666b in func@0xc51d6650]	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926763	242		40	0
+        99	        98	    391740	    0	      1	                          SwitchToThread	C:\WINDOWS\System32\KERNELBASE.dll	391712	59	0	28	0
+       100	        99	    657220	    0	      1	                        NtYieldExecution	C:\WINDOWS\SYSTEM32\ntdll.dll	657200	21	0	35	0
+       101	         7	    537975	    0	      1	                      _kmp_allocate_team	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	532224	6944	0	49	0
+       102	       101	    738539	    0	      1	                 _kmp_init_implicit_task	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	738528	384	0	67	0
+       103	       419	    229194	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	229109	536		54	0
+       104	        59	         3	    0	      0	                    [Stitch point frame]	n/a	0	1	0	1	0
+       105	       104	    521851	    0	      1	                     [OpenMP dispatcher]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	521552	352	0	58	0
+       106	       105	   1602928	    0	      1	                         func@0xc5187530	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1602864	128	0	44	0
+       107	       106	   1915360	    0	      1	                         func@0xc51d3770	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1914736	971	0	38	0
+       108	       107	   1923308	    0	      1	                         func@0xc51d5860	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1923168	1759	0	39	0
+       109	       407	   1926999	    1	      1	    [Loop@0xc51d666b in func@0xc51d6650]	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926763	242		40	0
+       110	       109	    391740	    0	      1	                          SwitchToThread	C:\WINDOWS\System32\KERNELBASE.dll	391712	59	0	28	0
+       111	       110	    657220	    0	      1	                        NtYieldExecution	C:\WINDOWS\SYSTEM32\ntdll.dll	657200	21	0	35	0
+       112	        19	   1604304	    0	      1	                         func@0xc51876f0	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1603312	1676	0	43	0
+       113	       112	   1915360	    0	      1	                         func@0xc51d3770	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1914736	971	0	38	0
+       114	       113	   1923308	    0	      1	                         func@0xc51d5860	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1923168	1759	0	39	0
+       115	       409	   1926999	    1	      1	    [Loop@0xc51d666b in func@0xc51d6650]	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926763	242		40	0
+       116	       115	    391740	    0	      1	                          SwitchToThread	C:\WINDOWS\System32\KERNELBASE.dll	391712	59	0	28	0
+       117	       116	    657220	    0	      1	                        NtYieldExecution	C:\WINDOWS\SYSTEM32\ntdll.dll	657200	21	0	35	0
+       118	        87	    391712	    0	      1	                          SwitchToThread	C:\WINDOWS\System32\KERNELBASE.dll	391712	59	0	28	0
+       119	       429	    229269	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	229109	536		54	0
+       120	       429	    229409	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	229109	536		54	0
+       121	       379	    364058	    1	      1	           [Loop@0x180058e0c in SleepEx]	C:\WINDOWS\System32\KERNELBASE.dll	364044	36		25	0
+       122	       429	    229392	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	229109	536		54	0
+       123	        98	    391712	    0	      1	                          SwitchToThread	C:\WINDOWS\System32\KERNELBASE.dll	391712	59	0	28	0
+       124	        59	   1604304	    0	      1	                         func@0xc51876f0	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1603312	1676	0	43	0
+       125	       124	   1915360	    0	      1	                         func@0xc51d3770	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1914736	971	0	38	0
+       126	       125	   1923308	    0	      1	                         func@0xc51d5860	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1923168	1759	0	39	0
+       127	       411	   1926999	    1	      1	    [Loop@0xc51d666b in func@0xc51d6650]	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926763	242		40	0
+       128	       127	    391740	    0	      1	                          SwitchToThread	C:\WINDOWS\System32\KERNELBASE.dll	391712	59	0	28	0
+       129	       128	    657220	    0	      1	                        NtYieldExecution	C:\WINDOWS\SYSTEM32\ntdll.dll	657200	21	0	35	0
+       130	       418	    228987	    1	      1	[Loop at line 775 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228473	1450		56	0
+       131	        33	    846012	    0	      1	                         func@0xc50ce820	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	845856	1656	0	32	0
+       132	       131	     81792	    0	      1	                            GetLastError	C:\WINDOWS\System32\KERNELBASE.dll	81792	13	0	29	0
+       133	       429	    229335	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	229109	536		54	0
+       134	        42	    363980	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       135	       134	    444361	    0	      1	                  RtlGetCurrentUmsThread	C:\WINDOWS\SYSTEM32\ntdll.dll	444320	108	0	36	0
+       136	       429	    229406	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	229109	536		54	0
+       137	       447	    243074	    1	      1	[Loop at line 923 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242948	222		65	0
+       138	       137	   1090728	    0	      1	                    _kmp_test_then_add64	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	1090720	16	0	66	0
+       139	        98	    391726	    0	      1	                          SwitchToThread	C:\WINDOWS\System32\KERNELBASE.dll	391712	59	0	28	0
+       140	       139	    444325	    0	      1	                  RtlGetCurrentUmsThread	C:\WINDOWS\SYSTEM32\ntdll.dll	444320	108	0	36	0
+       141	       429	    229276	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	229109	536		54	0
+       142	        31	    656624	    0	      1	                        NtDelayExecution	C:\WINDOWS\SYSTEM32\ntdll.dll	656624	21	0	34	0
+       143	       425	    229224	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	229109	536		54	0
+       144	        99	    657200	    0	      1	                        NtYieldExecution	C:\WINDOWS\SYSTEM32\ntdll.dll	657200	21	0	35	0
+       145	        83	    846012	    0	      1	                         func@0xc50ce820	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	845856	1656	0	32	0
+       146	       145	     81792	    0	      1	                            GetLastError	C:\WINDOWS\System32\KERNELBASE.dll	81792	13	0	29	0
+       147	        98	     43792	    0	      1	                          SwitchToThread	C:\WINDOWS\System32\KERNEL32.DLL	43792	7	0	22	0
+       148	       424	    229531	    1	      1	[Loop at line 775 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228473	1450		56	0
+       149	       429	    229345	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	229109	536		54	0
+       150	       429	    229109	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	229109	536		54	0
+       151	       429	    229509	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	229109	536		54	0
+       152	       429	    229249	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	229109	536		54	0
+       153	        30	    787357	    0	      1	                              _kmp_yield	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	787344	16	0	68	0
+       154	       429	    229380	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	229109	536		54	0
+       155	         3	     36798	    0	      0	                   _scrt_common_main_seh	C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\x64\Release\Vectorization_Advisor.exe	36424	384	0	7	0
+       156	       155	     78522	    0	      1	                                    exit	C:\WINDOWS\System32\ucrtbase.dll	78400	133	0	18	0
+       157	       156	     78598	    0	      1	                        func@0x1800132c8	C:\WINDOWS\System32\ucrtbase.dll	78536	149	0	19	0
+       158	       157	     75371	    0	      1	                        func@0x180012560	C:\WINDOWS\System32\ucrtbase.dll	75104	321	0	20	0
+       159	       158	    273024	    0	      1	                          LoadLibraryExW	C:\WINDOWS\System32\KERNELBASE.dll	273024	446	0	30	0
+       160	        -1	    788000	    0	      1	                         [OpenMP worker]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	788000	480	0	69	0
+       161	         3	    777462	    0	      1	          tpss_ThreadStartRoutineWrapper	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	776032	2043	0	45	0
+       162	       161	    788330	    0	      1	                         [OpenMP worker]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	788000	480	0	69	0
+       163	       457	    518192	    1	      1	[Loop at line 5846 in _kmp_launch_thread]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	518180	324		70	0
+       164	       163	    255461	    0	      1	                      __kmp_fork_barrier	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	254912	1248	0	64	0
+       165	       459	    244046	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       166	       382	    364057	    1	      1	           [Loop@0x180058e0c in SleepEx]	C:\WINDOWS\System32\KERNELBASE.dll	364044	36		25	0
+       167	       166	    656644	    0	      1	                        NtDelayExecution	C:\WINDOWS\SYSTEM32\ntdll.dll	656624	21	0	34	0
+       168	       459	    244138	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       169	       457	    518397	    1	      1	[Loop at line 5846 in _kmp_launch_thread]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	518180	324		70	0
+       170	       169	    521667	    0	      1	                     [OpenMP dispatcher]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	521552	352	0	58	0
+       171	       170	   1223189	    0	      1	                         func@0xc512a9d0	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1223120	327	0	42	0
+       172	       171	   1915360	    0	      1	                         func@0xc51d3770	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1914736	971	0	38	0
+       173	       172	   1923308	    0	      1	                         func@0xc51d5860	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1923168	1759	0	39	0
+       174	       413	   1926999	    1	      1	    [Loop@0xc51d666b in func@0xc51d6650]	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926763	242		40	0
+       175	       174	    391740	    0	      1	                          SwitchToThread	C:\WINDOWS\System32\KERNELBASE.dll	391712	59	0	28	0
+       176	       175	    657220	    0	      1	                        NtYieldExecution	C:\WINDOWS\SYSTEM32\ntdll.dll	657200	21	0	35	0
+       177	       459	    244205	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       178	       464	    244046	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       179	       384	    364057	    1	      1	           [Loop@0x180058e0c in SleepEx]	C:\WINDOWS\System32\KERNELBASE.dll	364044	36		25	0
+       180	       179	    656644	    0	      1	                        NtDelayExecution	C:\WINDOWS\SYSTEM32\ntdll.dll	656624	21	0	34	0
+       181	       457	    518489	    1	      1	[Loop at line 5846 in _kmp_launch_thread]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	518180	324		70	0
+       182	       181	    252766	    0	      1	                      __kmp_join_barrier	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	251344	3568	0	53	0
+       183	       469	    229238	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	229109	536		54	0
+       184	       386	    364057	    1	      1	           [Loop@0x180058e0c in SleepEx]	C:\WINDOWS\System32\KERNELBASE.dll	364044	36		25	0
+       185	       184	    656644	    0	      1	                        NtDelayExecution	C:\WINDOWS\SYSTEM32\ntdll.dll	656624	21	0	34	0
+       186	       165	    363980	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       187	       186	    444320	    0	      1	                  RtlGetCurrentUmsThread	C:\WINDOWS\SYSTEM32\ntdll.dll	444320	108	0	36	0
+       188	       175	    657216	    0	      1	                        NtYieldExecution	C:\WINDOWS\SYSTEM32\ntdll.dll	657200	21	0	35	0
+       189	       459	    244058	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       190	       459	    244031	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       191	       459	    244054	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       192	       165	    363967	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       193	       459	    244208	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       194	       459	    244029	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       195	       459	    244002	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       196	       459	    244078	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       197	       382	    364058	    1	      1	           [Loop@0x180058e0c in SleepEx]	C:\WINDOWS\System32\KERNELBASE.dll	364044	36		25	0
+       198	       459	    243922	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       199	       459	    244037	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       200	       459	    244182	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       201	       165	    364006	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       202	       459	    244800	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       203	       175	    657200	    0	      1	                        NtYieldExecution	C:\WINDOWS\SYSTEM32\ntdll.dll	657200	21	0	35	0
+       204	       459	    244179	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       205	       459	    244290	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       206	       459	    244074	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       207	       459	    243938	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       208	       459	    244301	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       209	       459	    244185	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       210	       459	    244194	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       211	       186	    444361	    0	      1	                  RtlGetCurrentUmsThread	C:\WINDOWS\SYSTEM32\ntdll.dll	444320	108	0	36	0
+       212	       459	    243969	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       213	       491	    243074	    1	      1	[Loop at line 923 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242948	222		65	0
+       214	       213	   1090728	    0	      1	                    _kmp_test_then_add64	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	1090720	16	0	66	0
+       215	       459	    243931	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       216	       429	    229377	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	229109	536		54	0
+       217	       459	    244802	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       218	       459	    244191	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       219	       459	    244188	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       220	       164	    243299	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       221	       220	    738607	    0	      1	                 _kmp_init_implicit_task	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	738528	384	0	67	0
+       222	       464	    243931	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       223	       182	    230224	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       224	        24	    214404	    0	      1	                            _kmp_barrier	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	214352	7040	0	61	0
+       225	       186	    444347	    0	      1	                  RtlGetCurrentUmsThread	C:\WINDOWS\SYSTEM32\ntdll.dll	444320	108	0	36	0
+       226	       459	    244154	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       227	       163	    255743	    0	      1	                      __kmp_fork_barrier	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	254912	1248	0	64	0
+       228	       457	    518225	    1	      1	[Loop at line 5846 in _kmp_launch_thread]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	518180	324		70	0
+       229	       464	    244054	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       230	       183	    363980	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       231	       230	    444338	    0	      1	                  RtlGetCurrentUmsThread	C:\WINDOWS\SYSTEM32\ntdll.dll	444320	108	0	36	0
+       232	       165	    787357	    0	      1	                              _kmp_yield	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	787344	16	0	68	0
+       233	       459	    244085	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       234	       165	    363914	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       235	       386	    364058	    1	      1	           [Loop@0x180058e0c in SleepEx]	C:\WINDOWS\System32\KERNELBASE.dll	364044	36		25	0
+       236	       459	    244159	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       237	        23	    268671	    0	      1	                     _kmpc_reduce_nowait	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	268112	1248	0	60	0
+       238	       459	    244047	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       239	        25	    242756	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       240	       464	    244031	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       241	       459	    244791	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       242	       165	    363998	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       243	       174	     43792	    0	      1	                          SwitchToThread	C:\WINDOWS\System32\KERNEL32.DLL	43792	7	0	22	0
+       244	       459	    244176	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       245	       459	    244066	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       246	       182	    230199	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       247	       246	   1090728	    0	      1	                    _kmp_test_then_add64	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	1090720	16	0	66	0
+       248	       459	    244166	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       249	       469	    229234	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	229109	536		54	0
+       250	       469	    229125	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	229109	536		54	0
+       251	       459	    244081	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       252	       163	    255443	    0	      1	                      __kmp_fork_barrier	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	254912	1248	0	64	0
+       253	       467	    228319	    1	      1	[Loop at line 748 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228310	1729		57	0
+       254	        22	      5202	    0	      0	               main$omp$parallel_for@197	C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\x64\Release\Vectorization_Advisor.exe	5039	700	0	10	0
+       255	       254	    574934	    0	      1	                _kmpc_for_static_init_8u	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	574832	3136	0	73	0
+       256	       457	    518193	    1	      1	[Loop at line 5846 in _kmp_launch_thread]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	518180	324		70	0
+       257	       447	    243095	    1	      1	[Loop at line 923 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242948	222		65	0
+       258	       459	    244042	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       259	        22	      5556	    0	      0	               main$omp$parallel_for@197	C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\x64\Release\Vectorization_Advisor.exe	5039	700	0	10	0
+       260	       459	    244010	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       261	       165	    363888	    0	      1	                                   Sleep	C:\WINDOWS\System32\KERNELBASE.dll	363888	7	0	31	0
+       262	       181	    252993	    0	      1	                      __kmp_join_barrier	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	251344	3568	0	53	0
+       263	       459	    244812	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       264	       457	    518382	    1	      1	[Loop at line 5846 in _kmp_launch_thread]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	518180	324		70	0
+       265	       382	    364067	    1	      1	           [Loop@0x180058e0c in SleepEx]	C:\WINDOWS\System32\KERNELBASE.dll	364044	36		25	0
+       266	       520	    242815	    1	      1	[Loop at line 905 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242799	26		74	0
+       267	        22	      5628	    0	      0	               main$omp$parallel_for@197	C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\x64\Release\Vectorization_Advisor.exe	5039	700	0	10	0
+       268	       459	    243996	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       269	       139	    444320	    0	      1	                  RtlGetCurrentUmsThread	C:\WINDOWS\SYSTEM32\ntdll.dll	444320	108	0	36	0
+       270	       165	    787344	    0	      1	                              _kmp_yield	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	787344	16	0	68	0
+       271	       165	    364113	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       272	       165	    363955	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       273	       464	    244078	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       274	       459	    244198	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       275	        21	   1091235	    0	      1	                   _kmp_invoke_microtask	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	1091088	160	0	59	0
+       276	       104	    521810	    0	      1	                     [OpenMP dispatcher]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	521552	352	0	58	0
+       277	       276	   1091234	    0	      1	                   _kmp_invoke_microtask	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	1091088	160	0	59	0
+       278	       277	      5935	    0	      0	                main$omp$parallel_for@81	C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\x64\Release\Vectorization_Advisor.exe	5739	581	0	11	0
+       279	       278	    574832	    0	      1	                _kmpc_for_static_init_8u	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	574832	3136	0	73	0
+       280	       165	    363904	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       281	       464	    243969	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       282	       459	    244795	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       283	       162	         0	    0	      0	                [Unknown stack frame(s)]	n/a	0	1	0	2	0
+       284	       283	1869888904	    0	      0	              [Outside any known module]	n/a	0	1	0	3	0
+       285	       174	    391712	    0	      1	                          SwitchToThread	C:\WINDOWS\System32\KERNELBASE.dll	391712	59	0	28	0
+       286	       186	    444420	    0	      1	                  RtlGetCurrentUmsThread	C:\WINDOWS\SYSTEM32\ntdll.dll	444320	108	0	36	0
+       287	       459	    244220	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       288	       287	    787902	    0	      1	                           _kmp_now_nsec	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	787888	112	0	75	0
+       289	       288	    273783	    0	      1	              RtlQueryPerformanceCounter	C:\WINDOWS\SYSTEM32\ntdll.dll	273744	92	0	37	0
+       290	       166	    656640	    0	      1	                        NtDelayExecution	C:\WINDOWS\SYSTEM32\ntdll.dll	656624	21	0	34	0
+       291	       169	    521613	    0	      1	                     [OpenMP dispatcher]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	521552	352	0	58	0
+       292	       220	    738847	    0	      1	                 _kmp_init_implicit_task	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	738528	384	0	67	0
+       293	       163	    255484	    0	      1	                      __kmp_fork_barrier	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	254912	1248	0	64	0
+       294	       165	    364026	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       295	       165	    364031	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       296	       384	    364058	    1	      1	           [Loop@0x180058e0c in SleepEx]	C:\WINDOWS\System32\KERNELBASE.dll	364044	36		25	0
+       297	       186	    444379	    0	      1	                  RtlGetCurrentUmsThread	C:\WINDOWS\SYSTEM32\ntdll.dll	444320	108	0	36	0
+       298	       165	    363908	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       299	       165	    364145	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       300	       459	    244148	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       301	       464	    244058	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       302	       464	    244154	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       303	       164	    244322	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       304	       165	    363913	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       305	       165	    363947	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       306	       459	    243962	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       307	       165	    363925	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       308	       171	   1914808	    0	      1	                         func@0xc51d3770	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1914736	971	0	38	0
+       309	       308	     24896	    0	      1	                             TlsGetValue	C:\WINDOWS\System32\KERNEL32.DLL	24896	5	0	23	0
+       310	       164	    243390	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       311	       459	    243929	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       312	       165	     24976	    0	      1	                                   Sleep	C:\WINDOWS\System32\KERNEL32.DLL	24976	7	0	24	0
+       313	       464	    244791	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       314	       164	    243314	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       315	       178	    787357	    0	      1	                              _kmp_yield	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	787344	16	0	68	0
+       316	       165	    363971	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       317	       178	    363980	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       318	       317	    444325	    0	      1	                  RtlGetCurrentUmsThread	C:\WINDOWS\SYSTEM32\ntdll.dll	444320	108	0	36	0
+       319	       464	    244029	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       320	       165	    363941	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       321	        21	   1091247	    0	      1	                   _kmp_invoke_microtask	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	1091088	160	0	59	0
+       322	       165	    363951	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       323	       169	    521560	    0	      1	                     [OpenMP dispatcher]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	521552	352	0	58	0
+       324	       459	    244784	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       325	       459	    244298	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       326	       165	    363963	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       327	       139	    444347	    0	      1	                  RtlGetCurrentUmsThread	C:\WINDOWS\SYSTEM32\ntdll.dll	444320	108	0	36	0
+       328	       464	    244138	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       329	       164	    242794	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       330	       170	     10084	    0	      1	                 _itt_stack_callee_enter	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\runtime\libittnotify.dll	10084	28	0	5	0
+       331	       164	    243378	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       332	       459	    244216	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       333	       186	    444400	    0	      1	                  RtlGetCurrentUmsThread	C:\WINDOWS\SYSTEM32\ntdll.dll	444320	108	0	36	0
+       334	       164	    244370	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       335	       464	    244205	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       336	       165	    363943	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       337	       166	    656624	    0	      1	                        NtDelayExecution	C:\WINDOWS\SYSTEM32\ntdll.dll	656624	21	0	34	0
+       338	       464	    244179	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       339	        24	    217631	    0	      1	                            _kmp_barrier	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	214352	7040	0	61	0
+       340	       317	    444347	    0	      1	                  RtlGetCurrentUmsThread	C:\WINDOWS\SYSTEM32\ntdll.dll	444320	108	0	36	0
+       341	       382	    364049	    1	      1	           [Loop@0x180058e0c in SleepEx]	C:\WINDOWS\System32\KERNELBASE.dll	364044	36		25	0
+       342	       165	    364147	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       343	        99	    657216	    0	      1	                        NtYieldExecution	C:\WINDOWS\SYSTEM32\ntdll.dll	657200	21	0	35	0
+       344	       464	    244074	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       345	       164	    243288	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       346	        25	    243241	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       347	       165	    363981	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       348	       174	    391726	    0	      1	                          SwitchToThread	C:\WINDOWS\System32\KERNELBASE.dll	391712	59	0	28	0
+       349	       348	    444325	    0	      1	                  RtlGetCurrentUmsThread	C:\WINDOWS\SYSTEM32\ntdll.dll	444320	108	0	36	0
+       350	       220	    738851	    0	      1	                 _kmp_init_implicit_task	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	738528	384	0	67	0
+       351	       464	    244812	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       352	       308	    145696	    0	      1	                        func@0x180023910	C:\WINDOWS\System32\KERNEL32.DLL	145680	86	0	26	0
+       353	       464	    244081	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       354	       457	    518260	    1	      1	[Loop at line 5846 in _kmp_launch_thread]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	518180	324		70	0
+       355	       164	    243284	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       356	       163	    255678	    0	      1	                      __kmp_fork_barrier	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	254912	1248	0	64	0
+       357	       356	    711978	    0	      1	                     _kmp_task_team_sync	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	711968	48	0	76	0
+       358	       164	    242741	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       359	        40	    230221	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       360	       464	    243922	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       361	       182	    228302	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       362	        25	    244370	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       363	       464	    243996	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       364	        22	      5167	    0	      0	               main$omp$parallel_for@197	C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\x64\Release\Vectorization_Advisor.exe	5039	700	0	10	0
+       365	       356	    711974	    0	      1	                     _kmp_task_team_sync	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	711968	48	0	76	0
+       366	       163	    255641	    0	      1	                      __kmp_fork_barrier	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	254912	1248	0	64	0
+       367	       308	    145683	    0	      1	                        func@0x180023910	C:\WINDOWS\System32\KERNEL32.DLL	145680	86	0	26	0
+       368	       459	    244164	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       369	       464	    244063	    1	      1	[Loop at line 354 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	243922	732		72	0
+       370	        40	    230195	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       371	       165	    364146	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       372	         4	      4362	    0	      0	                                    main	C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\x64\Release\Vectorization_Advisor.exe	4096	2224	0	9	0
+       373	         4	      4516	    0	      0	                                    main	C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\x64\Release\Vectorization_Advisor.exe	4096	2224	0	9	0
+       374	         4	      4769	    0	      0	                                    main	C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\x64\Release\Vectorization_Advisor.exe	4096	2224	0	9	0
+       375	        15	    364044	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       376	        15	    364057	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       377	        30	    364044	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       378	        30	    364057	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       379	        42	    364044	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       380	        42	    364057	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       381	        42	    364058	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       382	       165	    364044	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       383	       165	    364057	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       384	       178	    364044	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       385	       178	    364057	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       386	       183	    364044	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       387	       183	    364057	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       388	       165	    364058	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       389	       183	    364058	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       390	       165	    364067	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       391	       178	    364058	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       392	       165	    364049	    0	      1	                                 SleepEx	C:\WINDOWS\System32\KERNELBASE.dll	363904	283	0	27	0
+       393	        36	   1926763	    0	      1	                         func@0xc51d6650	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926736	302	0	41	0
+       394	        36	   1926999	    0	      1	                         func@0xc51d6650	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926736	302	0	41	0
+       395	        55	   1926763	    0	      1	                         func@0xc51d6650	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926736	302	0	41	0
+       396	        55	   1926999	    0	      1	                         func@0xc51d6650	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926736	302	0	41	0
+       397	        63	   1926763	    0	      1	                         func@0xc51d6650	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926736	302	0	41	0
+       398	        63	   1926999	    0	      1	                         func@0xc51d6650	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926736	302	0	41	0
+       399	        70	   1926763	    0	      1	                         func@0xc51d6650	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926736	302	0	41	0
+       400	        70	   1926999	    0	      1	                         func@0xc51d6650	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926736	302	0	41	0
+       401	        79	   1926763	    0	      1	                         func@0xc51d6650	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926736	302	0	41	0
+       402	        79	   1926999	    0	      1	                         func@0xc51d6650	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926736	302	0	41	0
+       403	        86	   1926763	    0	      1	                         func@0xc51d6650	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926736	302	0	41	0
+       404	        86	   1926999	    0	      1	                         func@0xc51d6650	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926736	302	0	41	0
+       405	        97	   1926763	    0	      1	                         func@0xc51d6650	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926736	302	0	41	0
+       406	        97	   1926999	    0	      1	                         func@0xc51d6650	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926736	302	0	41	0
+       407	       108	   1926763	    0	      1	                         func@0xc51d6650	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926736	302	0	41	0
+       408	       108	   1926999	    0	      1	                         func@0xc51d6650	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926736	302	0	41	0
+       409	       114	   1926763	    0	      1	                         func@0xc51d6650	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926736	302	0	41	0
+       410	       114	   1926999	    0	      1	                         func@0xc51d6650	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926736	302	0	41	0
+       411	       126	   1926763	    0	      1	                         func@0xc51d6650	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926736	302	0	41	0
+       412	       126	   1926999	    0	      1	                         func@0xc51d6650	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926736	302	0	41	0
+       413	       173	   1926763	    0	      1	                         func@0xc51d6650	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926736	302	0	41	0
+       414	       173	   1926999	    0	      1	                         func@0xc51d6650	C:\Program Files (x86)\IntelSWTools\Advisor 2018\bin64\tpsstool.dll	1926736	302	0	41	0
+       415	         7	    534038	    0	      1	                      _kmp_allocate_team	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	532224	6944	0	49	0
+       416	         7	    534051	    0	      1	                      _kmp_allocate_team	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	532224	6944	0	49	0
+       417	        14	    228310	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       418	       417	    228473	    1	      1	[Loop at line 748 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228310	1729		57	0
+       419	       418	    229109	    1	      1	[Loop at line 775 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228473	1450		56	0
+       420	        14	    229238	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       421	        25	    242869	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       422	        25	    242881	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       423	        29	    228310	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       424	       423	    228473	    1	      1	[Loop at line 748 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228310	1729		57	0
+       425	       424	    229109	    1	      1	[Loop at line 775 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228473	1450		56	0
+       426	        29	    229238	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       427	        40	    228310	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       428	       427	    228473	    1	      1	[Loop at line 748 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228310	1729		57	0
+       429	       428	    229109	    1	      1	[Loop at line 775 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228473	1450		56	0
+       430	        40	    229389	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       431	        40	    229238	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       432	        14	    229224	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       433	        47	    242869	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       434	       433	    242948	    1	      1	[Loop at line 911 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242869	355		62	0
+       435	        47	    243074	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       436	        14	    229239	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       437	        29	    229389	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       438	        40	    229245	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       439	        14	    228501	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       440	        14	    229194	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       441	        40	    229269	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       442	        40	    229409	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       443	        40	    229392	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       444	        14	    228987	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       445	        40	    229335	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       446	        40	    229406	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       447	       421	    242948	    1	      1	[Loop at line 911 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242869	355		62	0
+       448	        25	    243074	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       449	        40	    229276	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       450	        29	    229224	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       451	        29	    229531	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       452	        40	    229345	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       453	        40	    229109	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       454	        40	    229509	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       455	        40	    229249	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       456	        40	    229380	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       457	       162	    518180	    0	      1	                      _kmp_launch_thread	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	518016	592	0	71	0
+       458	       162	    518192	    0	      1	                      _kmp_launch_thread	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	518016	592	0	71	0
+       459	       164	    243922	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       460	       164	    244046	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       461	       164	    244138	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       462	       162	    518397	    0	      1	                      _kmp_launch_thread	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	518016	592	0	71	0
+       463	       164	    244205	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       464	        25	    243922	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       465	        25	    244046	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       466	       162	    518489	    0	      1	                      _kmp_launch_thread	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	518016	592	0	71	0
+       467	       182	    228310	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       468	       467	    228473	    1	      1	[Loop at line 748 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228310	1729		57	0
+       469	       468	    229109	    1	      1	[Loop at line 775 in _kmp_hyper_barrier_gather]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228473	1450		56	0
+       470	       182	    229238	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       471	       164	    244058	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       472	       164	    244031	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       473	       164	    244054	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       474	       164	    244208	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       475	       164	    244029	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       476	       164	    244002	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       477	       164	    244078	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       478	       164	    243922	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       479	       164	    244037	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       480	       164	    244182	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       481	       164	    244800	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       482	       164	    244179	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       483	       164	    244290	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       484	       164	    244074	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       485	       164	    243938	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       486	       164	    244301	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       487	       164	    244185	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       488	       164	    244194	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       489	       164	    243969	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       490	       164	    242869	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       491	       490	    242948	    1	      1	[Loop at line 911 in _kmp_hyper_barrier_release]	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242869	355		62	0
+       492	       164	    243074	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       493	       164	    243931	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       494	        40	    229377	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       495	       164	    244802	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       496	       164	    244191	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       497	       164	    244188	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       498	        25	    243931	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       499	       164	    244154	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       500	       162	    518225	    0	      1	                      _kmp_launch_thread	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	518016	592	0	71	0
+       501	        25	    244054	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       502	       164	    244085	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       503	       164	    244159	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       504	       164	    244047	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       505	        25	    244031	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       506	       164	    244791	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       507	       164	    244176	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       508	       164	    244066	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       509	       164	    244166	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       510	       182	    229234	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       511	       182	    229125	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       512	       164	    244081	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       513	       182	    228319	    0	      1	               _kmp_hyper_barrier_gather	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	228112	2240	0	55	0
+       514	       162	    518193	    0	      1	                      _kmp_launch_thread	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	518016	592	0	71	0
+       515	        25	    243095	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       516	       164	    244042	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       517	       164	    244010	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       518	       164	    244812	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       519	       162	    518382	    0	      1	                      _kmp_launch_thread	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	518016	592	0	71	0
+       520	        25	    242799	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       521	        25	    242815	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       522	       164	    243996	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       523	        25	    244078	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       524	       164	    244198	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       525	        25	    243969	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       526	       164	    244795	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       527	       164	    244220	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       528	       164	    244148	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       529	        25	    244058	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       530	        25	    244154	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       531	       164	    243962	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       532	       164	    243929	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       533	        25	    244791	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       534	        25	    244029	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       535	       164	    244784	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       536	       164	    244298	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       537	        25	    244138	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       538	       164	    244216	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       539	        25	    244205	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       540	        25	    244179	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       541	        25	    244074	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       542	        25	    244812	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       543	        25	    244081	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       544	       162	    518260	    0	      1	                      _kmp_launch_thread	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	518016	592	0	71	0
+       545	        25	    243922	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       546	        25	    243996	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       547	       164	    244164	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       548	        25	    244063	    0	      1	              _kmp_hyper_barrier_release	C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll	242400	3296	0	63	0
+       549	        -1	         0	    0	      0	                      [Outside any loop]	n/a	0	0	0	100	0
