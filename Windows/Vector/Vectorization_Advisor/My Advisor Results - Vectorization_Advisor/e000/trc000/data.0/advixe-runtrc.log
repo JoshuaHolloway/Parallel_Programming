@@ -3,246 +3,218 @@
 
 <msg id="1" tool="runtool">
   <type>log-start</type>
-  <arg>2018/03/22 08:25:03</arg>
+  <arg>2018/03/19 23:41:23</arg>
 </msg>
 <msg id="2" tool="runtool">
   <type>collector-starts</type>
 </msg>
 <msg id="3" tool="runtool">
   <type>marker-file</type>
-  <arg>C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\My Advisor Results - Vectorization_Advisor\e000\trc000\trc000.advixe</arg>
+  <arg>C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\Vectorization_Advisor\My Advisor Results - Vectorization_Advisor\e000\trc000\trc000.advixe</arg>
 </msg>
 <msg id="4" tool="trc">
   <type>PROCESS_START</type>
-  <arg>C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\Vector\Release\Vectorization_Advisor.exe</arg>
-  <arg>3128</arg>
+  <arg>C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe</arg>
+  <arg>6164</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:03 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:23 2018</timestamp>
 </msg>
 <msg id="5" tool="trc">
   <type>PROCESS_ANALYSIS_MODE</type>
   <arg>full</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:04 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:24 2018</timestamp>
 </msg>
 <msg id="6" tool="trc">
   <type>LOAD_MODULE</type>
-  <arg>C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\Vector\Release\Vectorization_Advisor.exe</arg>
-  <arg>0xfb0000</arg>
-  <arg>0xfc0fff</arg>
+  <arg>C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe</arg>
+  <arg>0x7ff6b2440000</arg>
+  <arg>0x7ff6b6e24fff</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:04 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:24 2018</timestamp>
 </msg>
 <msg id="7" tool="trc">
   <type>LOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\kernel32.dll</arg>
-  <arg>0x74bf0000</arg>
-  <arg>0x74cbffff</arg>
+  <arg>C:\WINDOWS\System32\KERNELBASE.dll</arg>
+  <arg>0x7ffb07610000</arg>
+  <arg>0x7ffb07875fff</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:04 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:24 2018</timestamp>
 </msg>
 <msg id="8" tool="trc">
   <type>LOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\KernelBase.dll</arg>
-  <arg>0x74cc0000</arg>
-  <arg>0x74e96fff</arg>
+  <arg>C:\WINDOWS\System32\KERNEL32.DLL</arg>
+  <arg>0x7ffb0a070000</arg>
+  <arg>0x7ffb0a11dfff</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:04 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:24 2018</timestamp>
 </msg>
 <msg id="9" tool="trc">
   <type>LOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\ntdll.dll</arg>
-  <arg>0x779d0000</arg>
-  <arg>0x77b5cfff</arg>
+  <arg>C:\WINDOWS\SYSTEM32\ntdll.dll</arg>
+  <arg>0x7ffb0abb0000</arg>
+  <arg>0x7ffb0ad8ffff</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:04 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:24 2018</timestamp>
 </msg>
 <msg id="10" tool="trc">
   <type>LOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\ucrtbase.dll</arg>
-  <arg>0x76ad0000</arg>
-  <arg>0x76be6fff</arg>
+  <arg>C:\WINDOWS\System32\ucrtbase.dll</arg>
+  <arg>0x7ffb071a0000</arg>
+  <arg>0x7ffb07295fff</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:04 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:24 2018</timestamp>
 </msg>
 <msg id="11" tool="trc">
   <type>LOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\vcruntime140.dll</arg>
-  <arg>0x73630000</arg>
-  <arg>0x73644fff</arg>
+  <arg>C:\WINDOWS\SYSTEM32\MSVCP140.dll</arg>
+  <arg>0x7ffaea4d0000</arg>
+  <arg>0x7ffaea576fff</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:04 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:24 2018</timestamp>
 </msg>
 <msg id="12" tool="trc">
   <type>LOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\msvcp140.dll</arg>
-  <arg>0xfd80000</arg>
-  <arg>0xfdf0fff</arg>
+  <arg>C:\WINDOWS\SYSTEM32\VCRUNTIME140.dll</arg>
+  <arg>0x7ffaee280000</arg>
+  <arg>0x7ffaee295fff</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:04 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:24 2018</timestamp>
 </msg>
 <msg id="13" tool="trc">
   <type>LOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\kernel.appcore.dll</arg>
-  <arg>0x76690000</arg>
-  <arg>0x7669dfff</arg>
+  <arg>C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\svml_dispmd.dll</arg>
+  <arg>0x7ffac8b20000</arg>
+  <arg>0x7ffaca01dfff</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:06 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:24 2018</timestamp>
 </msg>
 <msg id="14" tool="trc">
   <type>LOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\msvcrt.dll</arg>
-  <arg>0x74aa0000</arg>
-  <arg>0x74b5cfff</arg>
+  <arg>C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll</arg>
+  <arg>0x7ffac8960000</arg>
+  <arg>0x7ffac8b15fff</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:06 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:24 2018</timestamp>
 </msg>
 <msg id="15" tool="trc">
   <type>LOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\rpcrt4.dll</arg>
-  <arg>0x763c0000</arg>
-  <arg>0x7647dfff</arg>
+  <arg>C:\WINDOWS\System32\kernel.appcore.dll</arg>
+  <arg>0x7ffb06f70000</arg>
+  <arg>0x7ffb06f80fff</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:06 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:25 2018</timestamp>
 </msg>
 <msg id="16" tool="trc">
   <type>LOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\sspicli.dll</arg>
-  <arg>0x743f0000</arg>
-  <arg>0x7440ffff</arg>
+  <arg>C:\WINDOWS\System32\msvcrt.dll</arg>
+  <arg>0x7ffb0a9a0000</arg>
+  <arg>0x7ffb0aa3cfff</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:06 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:25 2018</timestamp>
 </msg>
 <msg id="17" tool="trc">
   <type>LOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\cryptbase.dll</arg>
-  <arg>0x743e0000</arg>
-  <arg>0x743e9fff</arg>
+  <arg>C:\WINDOWS\System32\RPCRT4.dll</arg>
+  <arg>0x7ffb09cd0000</arg>
+  <arg>0x7ffb09deefff</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:06 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:25 2018</timestamp>
 </msg>
 <msg id="18" tool="trc">
-  <type>LOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\bcryptprimitives.dll</arg>
-  <arg>0x770e0000</arg>
-  <arg>0x77136fff</arg>
+  <type>UNLOAD_MODULE</type>
+  <arg>C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:06 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:25 2018</timestamp>
 </msg>
 <msg id="19" tool="trc">
-  <type>LOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\sechost.dll</arg>
-  <arg>0x74410000</arg>
-  <arg>0x74452fff</arg>
+  <type>UNLOAD_MODULE</type>
+  <arg>C:\WINDOWS\System32\KERNELBASE.dll</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:06 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:25 2018</timestamp>
 </msg>
 <msg id="20" tool="trc">
   <type>UNLOAD_MODULE</type>
-  <arg>C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\Vector\Release\Vectorization_Advisor.exe</arg>
+  <arg>C:\WINDOWS\System32\KERNEL32.DLL</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:06 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:25 2018</timestamp>
 </msg>
 <msg id="21" tool="trc">
   <type>UNLOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\kernel32.dll</arg>
+  <arg>C:\WINDOWS\SYSTEM32\ntdll.dll</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:06 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:25 2018</timestamp>
 </msg>
 <msg id="22" tool="trc">
   <type>UNLOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\KernelBase.dll</arg>
+  <arg>C:\WINDOWS\System32\ucrtbase.dll</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:06 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:25 2018</timestamp>
 </msg>
 <msg id="23" tool="trc">
   <type>UNLOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\ntdll.dll</arg>
+  <arg>C:\WINDOWS\SYSTEM32\MSVCP140.dll</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:06 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:25 2018</timestamp>
 </msg>
 <msg id="24" tool="trc">
   <type>UNLOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\ucrtbase.dll</arg>
+  <arg>C:\WINDOWS\SYSTEM32\VCRUNTIME140.dll</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:06 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:25 2018</timestamp>
 </msg>
 <msg id="25" tool="trc">
   <type>UNLOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\vcruntime140.dll</arg>
+  <arg>C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\svml_dispmd.dll</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:06 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:25 2018</timestamp>
 </msg>
 <msg id="26" tool="trc">
   <type>UNLOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\msvcp140.dll</arg>
+  <arg>C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\redist\intel64\compiler\libiomp5md.dll</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:06 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:25 2018</timestamp>
 </msg>
 <msg id="27" tool="trc">
   <type>UNLOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\kernel.appcore.dll</arg>
+  <arg>C:\WINDOWS\System32\kernel.appcore.dll</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:06 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:25 2018</timestamp>
 </msg>
 <msg id="28" tool="trc">
   <type>UNLOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\msvcrt.dll</arg>
+  <arg>C:\WINDOWS\System32\msvcrt.dll</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:06 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:25 2018</timestamp>
 </msg>
 <msg id="29" tool="trc">
   <type>UNLOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\rpcrt4.dll</arg>
+  <arg>C:\WINDOWS\System32\RPCRT4.dll</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:06 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:25 2018</timestamp>
 </msg>
 <msg id="30" tool="trc">
-  <type>UNLOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\sspicli.dll</arg>
-  <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:06 2018</timestamp>
-</msg>
-<msg id="31" tool="trc">
-  <type>UNLOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\cryptbase.dll</arg>
-  <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:06 2018</timestamp>
-</msg>
-<msg id="32" tool="trc">
-  <type>UNLOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\bcryptprimitives.dll</arg>
-  <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:06 2018</timestamp>
-</msg>
-<msg id="33" tool="trc">
-  <type>UNLOAD_MODULE</type>
-  <arg>C:\Windows\SysWOW64\sechost.dll</arg>
-  <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:06 2018</timestamp>
-</msg>
-<msg id="34" tool="trc">
   <type>PROCESS_FINISH</type>
-  <arg>C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\Vector\Release\Vectorization_Advisor.exe</arg>
-  <arg>3128</arg>
+  <arg>C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe</arg>
+  <arg>6164</arg>
   <arg>0x0</arg>
   <severity>INFO</severity>
-  <timestamp>Thu Mar 22 08:25:06 2018</timestamp>
+  <timestamp>Mon Mar 19 23:41:25 2018</timestamp>
 </msg>
-<msg id="35" tool="runtool">
+<msg id="31" tool="runtool">
   <type>app-exit-code</type>
   <arg>0</arg>
 </msg>
-<msg id="36" tool="runtool">
+<msg id="32" tool="runtool">
   <type>marker-file</type>
-  <arg>C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\My Advisor Results - Vectorization_Advisor\e000\trc000\trc000.advixe</arg>
+  <arg>C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\Vectorization_Advisor\My Advisor Results - Vectorization_Advisor\e000\trc000\trc000.advixe</arg>
 </msg>
-<msg id="37" tool="runtool">
+<msg id="33" tool="runtool">
   <type>collector-done</type>
 </msg>
-<msg id="38" tool="runtool">
+<msg id="34" tool="runtool">
   <type>log-end</type>
-  <arg>2018/03/22 08:25:10</arg>
+  <arg>2018/03/19 23:41:28</arg>
 </msg>
 
 </log>

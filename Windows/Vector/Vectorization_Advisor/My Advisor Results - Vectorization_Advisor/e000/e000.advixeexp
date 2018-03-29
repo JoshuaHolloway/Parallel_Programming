@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
  <rdmgr>
-  <timestamp type="u64_t">1521730682</timestamp>
+  <timestamp type="u64_t">1521526990</timestamp>
   <hostname>DESKTOP-B3LU553</hostname>
   <os>windows</os>
   <product>Intel® Advisor 2018 Update 1</product>

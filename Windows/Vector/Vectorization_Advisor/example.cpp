@@ -6,7 +6,7 @@
 #include <windows.h>
 using namespace std;
 
-long function (int slowDown[], long i);
+long function(int slowDown[], long i);
 
 
 //===============================
@@ -108,20 +108,20 @@ void sse_add(
 {
 	assert(0 == n % 4); // n must be a multiple of 4
 	__m128 vec1, vec2, sum;
-	
+
 	// Currently only works on 4 elements 
 	for (size_t i = 0; i < n; i += 4) {
 		vec1 = _mm_loadu_ps(&x[i]); // load 4 elements from a
 		vec2 = _mm_loadu_ps(&y[i]); // load 4 elements from b
-		
+
 		sum = _mm_add_ps(vec1, vec2);
 		_mm_store_ps(&y[i], sum);
 	}
 }
 //===============================
-int main ()
+int main()
 {
-	
+
 
 	/*
 	float arr1[2 * LENGTH] = { 1, 2, 3, 4, 5, 6, 7, 8 };
@@ -130,8 +130,8 @@ int main ()
 	float arr4[2 * LENGTH] = { 1, 2, 3, 4, 5, 6, 7, 8 };
 	float arr5[2 * LENGTH] = { 1, 2, 3, 4, 5, 6, 7, 8 };
 
-	/// Add same 4 values 
-	// Replicate 1.0f to all SIMD lanes 
+	/// Add same 4 values
+	// Replicate 1.0f to all SIMD lanes
 	__m128 valueA = _mm_set1_ps(1.0f); //0x3f800000
 	__m128 valueB = _mm_set1_ps(2.0f); //0x40000000
 
@@ -141,12 +141,12 @@ int main ()
 	_mm_store_ps(z, sum);
 	std::cout << "Length-4 SIMD vector add: z = ";
 	print(LENGTH, z);
-		
+
 	// SSE Length-8 Vector addition
 	sse_add(2 * LENGTH, arr1, arr2);
 	std::cout << "Length-8 SIMD vector add: ";
 	print(2 * LENGTH, arr2);
-	
+
 	// SSE Length-8 SAXPY:
 	saxpy_sse(2 * LENGTH, alpha, arr1, arr3);
 
@@ -155,7 +155,7 @@ int main ()
 
 	// Serial SAXPY:
 	saxpy_serial(2 * LENGTH, alpha, arr1, arr5);
-	
+
 	std::cout << "SIMD SAXPY: ";
 	print(2 * LENGTH, arr3);
 
@@ -170,7 +170,7 @@ int main ()
 	float arr6[LENGTH];
 	float arr7[LENGTH];
 	for (int i = 0; i < LENGTH; i++)
-		arr6[i] = arr7[i] = i;
+	arr6[i] = arr7[i] = i;
 
 	*/
 
@@ -230,19 +230,19 @@ int main ()
 			saxpy_openmp(LENGTH, alpha, arr5, arr6);
 		}
 		qTimer.End(); // End timer
-		//cout << qTimer.GetTimeInMilliseconds() << " milliseconds" << endl;
-		//cout << qTimer.GetTimeInMicroseconds() << " microseconds" << endl;
-		//cout << qTimer.GetTimeInNanoseconds() << " nanoseconds" << endl;
-		//average_time = qTimer.GetTimeInMicroseconds() / num_itters;
-		//cout << "average time for openMP = " << average_time;
-		//std::cout << "\n\n\n";
+									//cout << qTimer.GetTimeInMilliseconds() << " milliseconds" << endl;
+									//cout << qTimer.GetTimeInMicroseconds() << " microseconds" << endl;
+									//cout << qTimer.GetTimeInNanoseconds() << " nanoseconds" << endl;
+									//average_time = qTimer.GetTimeInMicroseconds() / num_itters;
+									//cout << "average time for openMP = " << average_time;
+									//std::cout << "\n\n\n";
 	}
 	double ms_serial_ave = ms_serial / TEST_NUM;
 	double ms_sse_ave = ms_sse / TEST_NUM;
-	std::cout << "ms_serial_ave at num_elems = " << LENGTH << " = "  << ms_serial_ave << "\n";
+	std::cout << "ms_serial_ave at num_elems = " << LENGTH << " = " << ms_serial_ave << "\n";
 	std::cout << "ms_sse_ave at num_elems = " << LENGTH << " = " << ms_sse_ave << "\n";
 
-	
+
 
 	getchar();
 	return EXIT_SUCCESS;

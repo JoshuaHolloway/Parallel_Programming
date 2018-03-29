@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
  <rdmgr>
-  <timestamp type="u64_t">1521732301</timestamp>
+  <timestamp type="u64_t">1521528082</timestamp>
   <hostname>DESKTOP-B3LU553</hostname>
   <os>windows</os>
   <product>Intel® Advisor 2018 Update 1</product>
@@ -13,9 +13,9 @@
   <CPUStepping type="s32_t">3</CPUStepping>
   <CPUBrandName>Intel(R) Core(TM) i7-4720HQ CPU @ 2.60GHz</CPUBrandName>
   <isa>avx2</isa>
-  <collectionTimeBegin type="u64_t">1521732303</collectionTimeBegin>
-  <collectionTimeEnd type="u64_t">1521732311</collectionTimeEnd>
-  <finalizationTimeBegin type="u64_t">1521732312</finalizationTimeBegin>
-  <finalizationTimeEnd type="u64_t">1521732315</finalizationTimeEnd>
+  <collectionTimeBegin type="u64_t">1521528083</collectionTimeBegin>
+  <collectionTimeEnd type="u64_t">1521528088</collectionTimeEnd>
+  <finalizationTimeBegin type="u64_t">1521528088</finalizationTimeBegin>
+  <finalizationTimeEnd type="u64_t">1521528091</finalizationTimeEnd>
  </rdmgr>
 </root>

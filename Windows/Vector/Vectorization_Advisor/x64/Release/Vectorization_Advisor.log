@@ -1,4 +1,4 @@
 ﻿icl: : warning #10121: overriding '/fp:precise' with '/fp:fast'
-icl: : message #10397: optimization reports are generated in *.optrpt files in the output location
   example.cpp
-  Vectorization_Advisor.vcxproj -> C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe
+icl: : message #10397: optimization reports are generated in *.optrpt files in the output location
+  Vectorization_Advisor.vcxproj -> C:\Users\josh\Desktop\Parallel_Vision_Research\Windows\Vector\x64\Release\Vectorization_Advisor.exe

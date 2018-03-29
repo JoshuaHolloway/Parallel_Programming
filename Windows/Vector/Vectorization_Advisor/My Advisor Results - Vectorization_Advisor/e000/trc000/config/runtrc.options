@@ -1,23 +1,25 @@
 -r
-C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\My Advisor Results - Vectorization_Advisor\e000\trc000
+C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\Vectorization_Advisor\My Advisor Results - Vectorization_Advisor\e000\trc000
 --return-app-exitcode
 --cs-mode=no-count-loops,no-count-flops
 --count-flops
---cs-file=C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\Vector\Vectorization_Advisor\My Advisor Results - Vectorization_Advisor\e000/callstacks.def
+--cs-file=C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\Vectorization_Advisor\My Advisor Results - Vectorization_Advisor\e000/callstacks.def
 --search-dir
-sym=C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\Vector\Release
+sym=C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release
 --search-dir
-sym=C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\Vector
+sym=C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction
 --search-dir
-bin=C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\Vector\Release
+bin=C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release
 --search-dir
-bin=C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\Vector
+bin=C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction
 --search-dir
-bin=C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\bin\intel64
---search-dir
-bin=C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\bin\HostX64\x86
+bin=C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018\windows\bin\Intel64
 --search-dir
 bin=C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.13.26128\bin\HostX64\x64
+--search-dir
+bin=C:\Program Files (x86)\Windows Kits\10\bin\10.0.16299.0\x64
+--search-dir
+bin=C:\Program Files (x86)\Windows Kits\10\bin\10.0.16299.0\x86
 --search-dir
 bin=C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\tools
 --search-dir
@@ -25,11 +27,11 @@ bin=C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\ide
 --search-dir
 bin=C:\Program Files (x86)\HTML Help Workshop
 --search-dir
-bin=C:\Program Files (x86)\Windows Kits\10\bin\10.0.16299.0\x64
+bin=C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin
 --search-dir
-bin=C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\x64
+bin=C:\WINDOWS\Microsoft.NET\Framework64\v4.0.30319
 --search-dir
-bin=C:\WINDOWS\SysWow64
+bin=C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319
 --search-dir
 bin=C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018.1.156\windows\mpi\intel64\bin
 --search-dir
@@ -59,14 +61,8 @@ bin=C:\Program Files\Git\usr\bin
 --search-dir
 bin=C:\Program Files\Microsoft SQL Server\130\Tools\Binn
 --search-dir
-bin=C:\Program Files\PuTTY
---search-dir
-bin=C:\Program Files\Microsoft SQL Server\120\Tools\Binn
---search-dir
-bin=C:\Program Files\CMake\bin
---search-dir
 bin=C:\Users\josh\AppData\Local\Microsoft\WindowsApps
 --search-dir
 bin=C:\Program Files\Microsoft VS Code\bin
 --
-C:\Users\josh\Desktop\git_temp\Parallel_Vision_Research\Windows\Vector\Release\Vectorization_Advisor.exe
+C:\Users\josh\Desktop\Vector_Tutorial_Introduction\Vector_Tutorial_Introduction\x64\Release\Vectorization_Advisor.exe
