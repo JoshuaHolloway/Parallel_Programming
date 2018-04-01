@@ -33,3 +33,15 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
 make -j6
 sudo make install
 sudo ldconfig
+
+
+=======================
+To build with debugging symbols (http://unixnme.blogspot.com/2016/11/how-to-compile-opencv-with-debugging.html), 
+do this instead:
+cmake -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+    -D CMAKE_INSTALL_PREFIX=/usr/local \
+    -D INSTALL_PYTHON_EXAMPLES=ON \
+    -D INSTALL_C_EXAMPLES=OFF \
+    -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib-3.4.1/modules \
+    -D PYTHON_EXECUTABLE=/usr/bin/python3.5 \
+    -D BUILD_EXAMPLES=ON ..
