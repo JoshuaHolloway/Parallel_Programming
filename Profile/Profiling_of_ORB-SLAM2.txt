@@ -1,0 +1,29 @@
+Refer to ORB-SLAM2_block_hotspot.png in this directory.
+
+Only top two hottest threads are listed.
+Only functions within the thread that are over 1s in duration are listed.
+NOTE: Functions can accumulate larger than 1s., but only obviously hot functions are listed.
+
+Total Time = ~17.5s.
+
+- after initialization
+
+Thread 00: 16.637 -   Only functions consuming over 1s. reported below
+
+- Place recognition:  - Almost all DBoW
+  - 7.356 
+- ORB Extract:
+  - 1.552
+- Tracking:
+  - 1.531
+- Remainder functions (~110 funcs)
+
+Thread 10: 11.532
+
+- Local Mapping:
+  - 6.7
+- KeyFrame:
+  - 0.142
+- Remainder functions
+
+10 other threads < 0.36s.
