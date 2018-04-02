@@ -1,0 +1,541 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0014)about:internet -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Code Generation Report</title>
+<link rel="stylesheet" type="text/css" href="file:///C:\\MATLAB\\R2015b-Latest-Pass\\toolbox\\coder\\coder\\resources\\eml_report.css" />
+<link rel="stylesheet" type="text/css" href="file:///C:\\MATLAB\\R2015b-Latest-Pass\\toolbox\\coder\\coder\\resources\\jQuery\\ui.resizable.css" />
+<link rel="stylesheet" type="text/css" href="file:///C:\\Work\\Android\\cornerSlider\\mCameraSlider\\jni\\src\\corner\\html\\index.css" />
+
+<script type="text/javascript" src="file:///C:\\MATLAB\\R2015b-Latest-Pass\\toolbox\\coder\\coder\\resources\\jQuery\\jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="file:///C:\\MATLAB\\R2015b-Latest-Pass\\toolbox\\coder\\coder\\resources\\jQuery\\jquery-ui-1.7.custom.min.js"></script>
+<script type="text/javascript" src="file:///C:\\MATLAB\\R2015b-Latest-Pass\\toolbox\\coder\\coder\\resources\\jQuery\\jquery.tablesorter.mod.js"></script>
+<script type="text/javascript" src="file:///C:\\MATLAB\\R2015b-Latest-Pass\\toolbox\\coder\\coder\\resources\\jQuery\\jquery.hotkeys-0.7.8.js"></script>
+<script type="text/javascript" src="file:///C:\\MATLAB\\R2015b-Latest-Pass\\toolbox\\coder\\coder\\resources\\eml_report_interactions.js"></script>
+<script type="text/javascript" src="file:///C:\\MATLAB\\R2015b-Latest-Pass\\toolbox\\coder\\coder\\resources\\eml_report_layout.js"></script>
+<script type="text/javascript" src="file:///C:\\MATLAB\\R2015b-Latest-Pass\\toolbox\\rtw\\rtw\\+coder\\+report\\resources\\rtwshrink.js"></script>
+<script type="text/javascript">
+var localizedMessages = {
+    callSelectPrompt: "Select a function call:",
+    callSelectSource: "Calls from this function",
+    callSelectTarget: "Calls to this function",
+    infoForExpression: "Information for the selected expression:",
+    infoForVarType: "Information for the selected variable:",
+    infoForVarConst: "Information for the selected compile-time constant:",
+    infoForVarNone: "This variable does not have information associated with it.",
+    infoForFilter: "Matched {0}/{1} functions, {2}/{3} methods",
+    autoExtrinsicCall: "Only supported within the MATLAB environment."
+};
+var keyBindings = {
+        selectMCodeTab: "Ctrl+m",
+    selectCallStackTab: "Ctrl+k",
+        selectCCodeTab: "Ctrl+c",
+       selectReportTab: "Ctrl+r",
+     selectCenterPanel: "Ctrl+w",
+      selectSummaryTab: "Ctrl+s",
+     selectMessagesTab: "Ctrl+a",
+    selectWatchListTab: "Ctrl+v",
+     selectBuildLogTab: "Ctrl+t"
+};
+var functionInfoTable = {
+ MATLABcode1: "myCorners1_mcode.html",
+ fpath1: "C:/Work/Android/matlabCode/myCorners/myCorners.m",
+ lines1: [1, 1, 63],
+ watch1: "myCorners1_watch.html",
+ title1: "Function: <span class='functionname'><a title='C:&nbsp;\\Work\\Android\\matlabCode\\myCorners\\myCorners.m' class='functionlink' href=\"matlab: open('C:\\Work\\Android\\matlabCode\\myCorners\\myCorners.m')\">myCorners</a></span>",
+ tcall1: [  ],
+ scall1: [  ],
+ rootFcnID: "1",
+ firstPage: "myCorners_c.html",
+ htmlRoot: "C:/Work/Android/cornerSlider/mCameraSlider/jni/src/corner/html/"
+};
+var scriptInfoTable = {
+ fpath1: "C:/Work/Android/matlabCode/myCorners/myCorners.m",
+ fpath2: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/eml/+coder/+internal/floatModel.m",
+ fpath3: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/matlab/elmat/private/eml_eps.m",
+ fpath4: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/matlab/elmat/eps.m",
+ fpath5: "C:/MATLAB/R2015b-Latest-Pass/toolbox/shared/system/coder/+matlab/+system/+coder/SystemProp.p",
+ fpath6: "C:/MATLAB/R2015b-Latest-Pass/toolbox/coder/coder/+coder/+internal/matlabCodegenHandle.p",
+ fpath7: "C:/MATLAB/R2015b-Latest-Pass/toolbox/shared/system/coder/+matlab/+system/+coder/SystemCore.p",
+ fpath8: "C:/MATLAB/R2015b-Latest-Pass/toolbox/shared/system/coder/+matlab/+system/+coder/System.p",
+ fpath9: "C:/MATLAB/R2015b-Latest-Pass/toolbox/matlab/system/+matlab/+system/isSystemObject.p",
+ fpath10: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/eml/+coder/+internal/length.m",
+ fpath11: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/eml/+coder/+internal/isBuiltInNumeric.m",
+ fpath12: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/eml/+coder/+internal/scalarEg.m",
+ fpath13: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/fixedpoint/isnumerictype.m",
+ fpath14: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/fixedpoint/isfimath.m",
+ fpath15: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/fixedpoint/isfi.m",
+ fpath16: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/matlab/elmat/intmax.m",
+ fpath17: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/matlab/elmat/intmin.m",
+ fpath18: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/matlab/eml/eml_int_forloop_overflow_check.m",
+ fpath19: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/eml/+coder/+internal/scalexpAllocNoCheck.m",
+ fpath20: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/eml/+coder/+internal/scalexpAlloc.m",
+ fpath21: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/eml/+coder/+internal/+scalar/rem.m",
+ fpath22: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/eml/+coder/+internal/applyScalarFunction.m",
+ fpath23: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/matlab/elfun/rem.m",
+ fpath24: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/eml/+coder/+internal/+scalar/floor.m",
+ fpath25: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/eml/+coder/+internal/applyScalarFunctionInPlace.m",
+ fpath26: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/matlab/elfun/floor.m",
+ fpath27: "C:/MATLAB/R2015b-Latest-Pass/toolbox/shared/coder/coder/+coder/+internal/narginchk.m",
+ fpath28: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/matlab/elmat/isinf.m",
+ fpath29: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/eml/+coder/+internal/minOrMax.m",
+ fpath30: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/matlab/datafun/max.m",
+ fpath31: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/matlab/elmat/repmat.m",
+ fpath32: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/eml/+coder/+internal/strcmp.m",
+ fpath33: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/eml/+coder/+internal/charmax.m",
+ fpath34: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/eml/+coder/+internal/assertSupportedString.m",
+ fpath35: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/matlab/ops/colon.m",
+ fpath36: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/eml/+coder/+internal/isaUint.m",
+ fpath37: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/eml/+coder/+internal/unsignedClass.m",
+ fpath38: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/eml/+coder/+internal/indexPlus.m",
+ fpath39: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/matlab/strfun/char.m",
+ fpath40: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/matlab/strfun/eml_string_transform.m",
+ fpath41: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/matlab/strfun/lower.m",
+ fpath42: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/matlab/strfun/strcmpi.m",
+ fpath43: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/matlab/lang/validateattributes.m",
+ fpath44: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/matlab/elmat/isnan.m",
+ fpath45: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/matlab/elmat/isfinite.m",
+ fpath46: "C:/MATLAB/R2015b-Latest-Pass/toolbox/vision/vision/+vision/CornerDetector.p",
+ fpath47: "C:/MATLAB/R2015b-Latest-Pass/toolbox/matlab/system/+matlab/+system/pvParse.p",
+ fpath48: "C:/MATLAB/R2015b-Latest-Pass/toolbox/shared/system/coder/+matlab/+system/+mixin/+coder/Nondirect.p",
+ fpath49: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/scomp/createsystemobjectv2.m",
+ fpath50: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/scomp/checkSystemObjectInput.m",
+ fpath51: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/scomp/setSfunSystemObject.m",
+ fpath52: "C:/MATLAB/R2015b-Latest-Pass/toolbox/vision/vision/+visioncodegen/LocalMaximaFinder.p",
+ fpath53: "C:/MATLAB/R2015b-Latest-Pass/toolbox/vision/vision/+visioncodegen/MarkerInserter.p",
+ fpath54: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/matlab/ops/eml_mtimes_helper.m",
+ fpath55: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/matlab/elmat/private/eml_isequal_core.m",
+ fpath56: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/matlab/elmat/isequal.m",
+ fpath57: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/eml/+coder/+internal/constNonSingletonDim.m",
+ fpath58: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/eml/+coder/+internal/allOrAny.m",
+ fpath59: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/matlab/ops/any.m",
+ fpath60: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/matlab/elmat/reshape.m",
+ fpath61: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/scomp/reset.m",
+ fpath62: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/scomp/step.m",
+ fpath63: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/scomp/getNumInputs.m",
+ fpath64: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/scomp/setup.m",
+ fpath65: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/scomp/getNumOutputs.m",
+ fpath66: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/scomp/output.m",
+ fpath67: "C:/MATLAB/R2015b-Latest-Pass/toolbox/eml/lib/scomp/update.m"
+};
+</script>
+</head>
+<body>
+
+<div class="west">
+<ul class="ui-tabs-nav">
+<li class="ui-tabs-nav-item ui-tabs-selected"><span class="tab-link" id="MATLABcode"><span>MATLAB code</span></span></li>
+<li class="ui-tabs-nav-item"><span class="tab-link" id="callstack"><span>Call stack</span></span></li>
+<li class="ui-tabs-nav-item"><span class="tab-link" id="ccode"><span>C code</span></span></li>
+</ul>
+<div id="MATLABcodebody" class="ui-tabs-panel">
+<!-- Begin Filter -->
+<div class="grayline methodset" onclick="filterClick(event);">
+<a class="collapsed">Filter</a>
+</div>
+<div id="filterbody" class="hidden">
+<table class="myfunc-filter-tbl">
+<tr>
+<td title="Use this filter to display only functions and methods that contain variables or expressions with the specified attributes." colspan="2" class="checkbox">
+<div class="myfunc-filterby-chk"><input type="checkbox" class="filterenable" />
+<div class="filter-enable-lbl">Filter functions and methods</div></div></td></tr><tr>
+<td class="label"><div class="myfunc-filterby-lbl">Filter by:</div></td>
+<td class="select">
+<div class="filters">
+<select class="myfunc-filterby">
+<option id="size">Size</option>
+<option id="complex">Complexity</option>
+<option id="class">Class</option>
+</select>
+</div>
+</td>
+</tr>
+
+<tr>
+<td class="label"><div class="myfunc-filterstr-lbl">Filter:</div></td>
+<td class="input"><div>
+
+<div class="size">
+<select class="myfunc-filter size">
+<option value="1">1 x 1</option>
+<option value="1">1 x 10</option>
+<option value="1">1 x 15</option>
+<option value="1">1 x 19</option>
+<option value="1">1 x 2</option>
+<option value="1">1 x 3</option>
+<option value="1">1 x 33</option>
+<option value="1">1 x 4</option>
+<option value="1">1 x 43</option>
+<option value="1">1 x 46</option>
+<option value="1">1 x 5</option>
+<option value="1">1 x 6</option>
+<option value="1">1 x 8</option>
+<option value="1">352 x 288</option>
+<option value="1"><b>:</b>1000 x <b>:</b>2</option>
+</select>
+</div>
+
+<div class="complex">
+<select class="myfunc-filter complex">
+<option value="">Complex values</option>
+<option value="1">Real values</option>
+</select>
+</div>
+<!-- Begin Class Filter -->
+<div class="class">
+<select class="myfunc-filter class">
+<option value="1">char</option>
+<option value="1">double</option>
+<option value="1">embedded.numerictype</option>
+<option value="1">int32</option>
+<option value="1">logical</option>
+<option value="1">single</option>
+<option value="1">uint32</option>
+<option value="1">uint8</option>
+<option value="1">vision.CornerDetector</option>
+<option value="1">vision.LocalMaximaFinder</option>
+<option value="1">vision.MarkerInserter</option>
+<option value="1">vision.private.CornerMetric</option>
+<option value="1">visioncodegen.LocalMaximaFinder</option>
+<option value="1">visioncodegen.MarkerInserter</option>
+</select>
+</div>
+<!-- End Class Filter -->
+
+
+<div class="wl">
+<table cellspacing="0" cellpadding="0">
+<tr>
+<td class="mode">
+<select class="wl-operator" name=":1;16:1;32:1">
+<option value="eq">=</option>
+<option value="ne">~=</option>
+<option value="lt">&lt;</option>
+<option value="le">&lt;=</option>
+<option value="ge">&gt;=</option>
+<option value="gt">&gt;</option>
+</select>
+</td>
+<td class="value"><select class="wl">
+<option value="1">16</option>
+<option value="1">32</option>
+</select>
+<input class="wl" />
+</td>
+</tr>
+</table>
+</div>
+</div>
+</td>
+</tr>
+</table>
+<div class="myfunc-count"></div>
+</div>
+<!-- End Filter -->
+<div class="grayline methodset" onmouseover="callTreeMouseOver(event);" onmouseout="callTreeMouseOut(event);" onclick="functionSetClick(event);">
+<a class="expanded">Functions</a>
+</div>
+<!-- Begin Function Tree -->
+<div id="functiontreebody">
+<div class="functionwrapper" onmouseover="callTreeMouseOver(event);" onmouseout="callTreeMouseOut(event);" onclick="functionTreeClick(event);">
+<ol class="tree">
+<!-- Begin Function Tree Roots -->
+<li class="leaf  passed"><a href="#" class="fcn " id="F1N14:F1">myCorners</a></li>
+<!-- End Function Tree Roots -->
+</ol>
+<!-- Function Tree Nodes -->
+<div class="functiontreenodes hidden">
+</div>
+<!-- End Function Tree Nodes -->
+</div>
+</div>
+<!-- End Function Tree -->
+<!-- Begin Class Tree -->
+<div class="grayline methodset" onmouseover="callTreeMouseOver(event);" onmouseout="callTreeMouseOut(event);" onclick="methodSetClick(event);">
+<a class="expanded">Classes</a>
+</div>
+<div id="classlistbody">
+<div class="classwrapper" onmouseover="callTreeMouseOver(event);" onmouseout="callTreeMouseOut(event);" onclick="classTreeClick(event);">
+<ol class="tree">
+<!-- Begin Class Tree Roots -->
+<!-- End Class Tree Roots -->
+</ol>
+<!-- Class Tree Nodes -->
+<div class="classlistnodes hidden">
+</div>
+</div>
+</div>
+<!-- End Class Tree -->
+</div>
+<!-- Begin Call Tree -->
+<div id="callstackbody" class="ui-tabs-panel hidden">
+<div class="treewrapper" onmouseover="callTreeMouseOver(event);" onmouseout="callTreeMouseOut(event);" onclick="callTreeClick(event);">
+<ol class="tree">
+<!-- Call Tree Root -->
+<li class="leaf passed"><a href="#" class="fcn " id="F1N14:L1">myCorners</a>
+</li>
+</ol>
+<!-- Call Tree Nodes -->
+<div class="callstacknodes hidden">
+<ol class="callstacknode" id="callstacknode1">
+
+<li class="leaf passed"><a href="#" class="fcn " id="F1N14:l1">myCorners</a>
+</li>
+</ol>
+
+</div>
+</div>
+</div>
+<!-- End Call Tree -->
+<!-- Begin C Code -->
+<div id="ccodebody" class="ui-tabs-panel hidden">
+
+<table class="myfunc-list" cellspacing="0" cellpadding="0" onclick="reportFileClick(event);">
+<tbody>
+<tr class="report" id="metrics.html"><td class="report"><a href="#">Static Code Metrics Report</a></td></tr>
+</tbody>
+</table><div class="grayline methodset" onclick="ccodeClick(event,1);">
+<a class="expanded">Target Source Files</a>
+</div>
+<!-- Begin C Code List -->
+<div id="ccodelistbody1" class="visible">
+<table class="myfunc-list" cellspacing="0" cellpadding="0" onclick="cFileClick(event);">
+<tbody>
+<tr class="ccode" id="myCorners_c.html"><td class="ccode"><a href="#">myCorners.c</a></td></tr>
+<tr class="ccode" id="myCorners_h.html"><td class="ccode"><a href="#">myCorners.h</a></td></tr>
+<tr class="ccode" id="myCorners_types_h.html"><td class="ccode"><a href="#">myCorners_types.h</a></td></tr>
+<tr class="ccode" id="rtwtypes_h.html"><td class="ccode"><a href="#">rtwtypes.h</a></td></tr>
+</tbody>
+</table>
+</div>
+<!-- End C Code List -->
+</div>
+<!-- End C Code -->
+</div>
+<!-- Tooltips -->
+<div class="aux hidden">
+<div class="tooltips">
+<div class="tooltip" id="TT1"><table class="tooltip"><tr><th>Size</th><td>352 x 288</td></tr><tr><th>Class</th><td>uint8</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT2"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>single</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT3"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>vision.CornerDetector</td></tr></table></div>
+<div class="tooltip" id="TT4"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>int32</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT5"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>logical</td></tr></table></div>
+<div class="tooltip" id="TT6"><table class="tooltip"><tr><th>Size</th><td>1 x 6</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT7"><table class="tooltip"><tr><th>Size</th><td>1 x 2</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT8"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT9"><table class="tooltip"><tr><th>Size</th><td>1 x 5</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT10"><table class="tooltip"><tr><th>Size</th><td>1 x 43</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT11"><table class="tooltip"><tr><th>Size</th><td>1 x 5</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT12"><table class="tooltip"><tr><th>Size</th><td>1 x 4</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT13"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>embedded.numerictype</td></tr><tr><th>Signedness</th><td>Auto</td></tr><tr><th>WL</th><td>16</td></tr><tr><th>FL</th><td>0</td></tr></table></div>
+<div class="tooltip" id="TT14"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>embedded.numerictype</td></tr><tr><th>Signedness</th><td>Auto</td></tr><tr><th>WL</th><td>32</td></tr><tr><th>FL</th><td>0</td></tr></table></div>
+<div class="tooltip" id="TT15"><table class="tooltip"><tr><th>Size</th><td>1 x 19</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT16"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>vision.private.CornerMetric</td></tr></table></div>
+<div class="tooltip" id="TT17"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>vision.CornerDetector</td></tr></table></div>
+<div class="tooltip" id="TT18"><table class="tooltip"><tr><th>Size</th><td>1 x 46</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT19"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>vision.private.CornerMetric</td></tr></table></div>
+<div class="tooltip" id="TT20"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>vision.CornerDetector</td></tr></table></div>
+<div class="tooltip" id="TT21"><table class="tooltip"><tr><th>Size</th><td>1 x 33</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT22"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>vision.private.CornerMetric</td></tr></table></div>
+<div class="tooltip" id="TT23"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>visioncodegen.LocalMaximaFinder</td></tr></table></div>
+<div class="tooltip" id="TT24"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>vision.LocalMaximaFinder</td></tr></table></div>
+<div class="tooltip" id="TT25"><table class="tooltip"><tr><th>Size</th><td>1 x 10</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT26"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>visioncodegen.MarkerInserter</td></tr></table></div>
+<div class="tooltip" id="TT27"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>vision.MarkerInserter</td></tr></table></div>
+<div class="tooltip" id="TT28"><table class="tooltip"><tr><th>Size</th><td>1 x 8</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT29"><table class="tooltip"><tr><th>Size</th><td>1 x 3</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT30"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>embedded.numerictype</td></tr><tr><th>Signedness</th><td>Auto</td></tr><tr><th>WL</th><td>32</td></tr><tr><th>FL</th><td>14</td></tr></table></div>
+<div class="tooltip" id="TT31"><table class="tooltip"><tr><th>Size</th><td>1 x 15</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT32"><table class="tooltip"><tr><th>Size</th><td>1 x 3</td></tr><tr><th>Class</th><td>single</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT33"><table class="tooltip"><tr><th>Size</th><td>352 x 288</td></tr><tr><th>Class</th><td>single</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT34"><table class="tooltip"><tr><th>Size</th><td><b>:</b>1000 x <b>:</b>2</td></tr><tr><th>Class</th><td>uint32</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT35"><table class="tooltip"><tr><th>Size</th><td>1 x 2</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT36"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT37"><table class="tooltip"><tr><th>Size</th><td>1 x 23</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT38"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT39"><table class="tooltip"><tr><th>Size</th><td>1 x 3</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT40"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT41"><table class="tooltip"><tr><th>Size</th><td>1 x 0</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT42"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT43"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT44"><table class="tooltip"><tr><th>Size</th><td>1 x 3</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT45"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT46"><table class="tooltip"><tr><th>Size</th><td>1 x 3</td></tr><tr><th>Class</th><td>logical</td></tr></table></div>
+<div class="tooltip" id="TT47"><table class="tooltip"><tr><th>Size</th><td>1 x 2</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT48"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>int8</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT49"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>uint8</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT50"><table class="tooltip"><tr><th>Size</th><td>1 x 128</td></tr><tr><th>Class</th><td>int8</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT51"><table class="tooltip"><tr><th>Size</th><td>1 x 128</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT52"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT53"><table class="tooltip"><tr><th>Size</th><td>1 x 7</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT54"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT55"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT56"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT57"><table class="tooltip"><tr><th>Size</th><td>1 x 3</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT58"><table class="tooltip"><tr><th>Size</th><td>1 x 3</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT59"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT60"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT61"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT62"><table class="tooltip"><tr><th>Size</th><td>1 x 3</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT63"><table class="tooltip"><tr><th>Size</th><td>1 x 0</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT64"><table class="tooltip"><tr><th>Size</th><td>1 x 3</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT65"><table class="tooltip"><tr><th>Size</th><td>1 x 3</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT66"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT67"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT68"><table class="tooltip"><tr><th>Size</th><td>1 x 3</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT69"><table class="tooltip"><tr><th>Size</th><td>1 x 0</td></tr><tr><th>Class</th><td>logical</td></tr></table></div>
+<div class="tooltip" id="TT70"><table class="tooltip"><tr><th>Size</th><td>1 x 3</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT71"><table class="tooltip"><tr><th>Size</th><td>1 x 3</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT72"><table class="tooltip"><tr><th>Size</th><td>1 x 13</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT73"><table class="tooltip"><tr><th>Size</th><td>1 x 13</td></tr><tr><th>Class</th><td>logical</td></tr></table></div>
+<div class="tooltip" id="TT74"><table class="tooltip"><tr><th>Size</th><td>1 x 3</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT75"><table class="tooltip"><tr><th>Size</th><td>1 x 3</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT76"><table class="tooltip"><tr><th>Size</th><td>1 x 24</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT77"><table class="tooltip"><tr><th>Size</th><td>1 x 6</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT78"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>mxArray</td></tr></table></div>
+<div class="tooltip" id="TT79"><table class="tooltip"><tr><th>Size</th><td>0 x 0</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT80"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>vision.LocalMaximaFinder</td></tr></table></div>
+<div class="tooltip" id="TT81"><table class="tooltip"><tr><th>Size</th><td>1 x 9</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT82"><table class="tooltip"><tr><th>Size</th><td>1 x 21</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT83"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>vision.MarkerInserter</td></tr></table></div>
+<div class="tooltip" id="TT84"><table class="tooltip"><tr><th>Size</th><td>1 x 2</td></tr><tr><th>Class</th><td>logical</td></tr></table></div>
+<div class="tooltip" id="TT85"><table class="tooltip"><tr><th>Size</th><td>0 x 0</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT86"><table class="tooltip"><tr><th>Size</th><td>5 x 2</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT87"><table class="tooltip"><tr><th>Size</th><td>10 x 1</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT88"><table class="tooltip"><tr><th>Size</th><td>1 x 27</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT89"><table class="tooltip"><tr><th>Size</th><td>1 x 44</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT90"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>vision.private.CornerMetric</td></tr></table></div>
+<div class="tooltip" id="TT91"><table class="tooltip"><tr><th>Size</th><td>1 x 11</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT92"><table class="tooltip"><tr><th>Size</th><td>1 x 18</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT93"><table class="tooltip"><tr><th>Size</th><td>1 x 12</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT94"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>vision.private.CornerMetric</td></tr></table></div>
+<div class="tooltip" id="TT95"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>vision.private.CornerMetric</td></tr></table></div>
+<div class="tooltip" id="V1"><table class="tooltip"><tr><th>Value</th><td>     0</br></td></tr></table></div>
+<div class="tooltip" id="V2"><table class="tooltip"><tr><th>Value</th><td>single</br></td></tr></table></div>
+<div class="tooltip" id="V3"><table class="tooltip"><tr><th>Value</th><td>   352   288</br></td></tr></table></div>
+<div class="tooltip" id="V4"><table class="tooltip"><tr><th>Value</th><td>     1</br></td></tr></table></div>
+<div class="tooltip" id="V5"><table class="tooltip"><tr><th>Value</th><td>157.5</br></td></tr></table></div>
+<div class="tooltip" id="V6"><table class="tooltip"><tr><th>Value</th><td>Harris corner detection (Harris & Stephens)</br></td></tr></table></div>
+<div class="tooltip" id="V7"><table class="tooltip"><tr><th>Value</th><td>    0.1201    0.2339    0.2921    0.2339    0.1201</br></td></tr></table></div>
+<div class="tooltip" id="V8"><table class="tooltip"><tr><th>Value</th><td>       10000</br></td></tr></table></div>
+<div class="tooltip" id="V9"><table class="tooltip"><tr><th>Value</th><td>    11    11</br></td></tr></table></div>
+<div class="tooltip" id="V10"><table class="tooltip"><tr><th>Value</th><td>Floor</br></td></tr></table></div>
+<div class="tooltip" id="V11"><table class="tooltip"><tr><th>Value</th><td>Wrap</br></td></tr></table></div>
+<div class="tooltip" id="V12"><table class="tooltip"><tr><th>Value</th><td>Custom</br></td></tr></table></div>
+<div class="tooltip" id="V13"><table class="tooltip"><tr><th>Value</th><td></br>          DataTypeMode: Fixed-point: unspecified scaling</br>            Signedness: Auto</br>            WordLength: 16</br></td></tr></table></div>
+<div class="tooltip" id="V14"><table class="tooltip"><tr><th>Value</th><td></br>          DataTypeMode: Fixed-point: binary point scaling</br>            Signedness: Auto</br>            WordLength: 32</br>        FractionLength: 0</br></td></tr></table></div>
+<div class="tooltip" id="V15"><table class="tooltip"><tr><th>Value</th><td>Same as accumulator</br></td></tr></table></div>
+<div class="tooltip" id="V16"><table class="tooltip"><tr><th>Value</th><td>    0.0400</br></td></tr></table></div>
+<div class="tooltip" id="V17"><table class="tooltip"><tr><th>Value</th><td>    0.0100</br></td></tr></table></div>
+<div class="tooltip" id="V18"><table class="tooltip"><tr><th>Value</th><td>   2.2204e-16</br></td></tr></table></div>
+<div class="tooltip" id="V19"><table class="tooltip"><tr><th>Value</th><td>  System: <a href="matlab:help('vision.private.CornerMetric')" style="font-weight:bold;">vision.private.CornerMetric</a></br></br>  Properties:</br>                    Sensitivity: 0.04                                         </br>             IntensityThreshold: 0.01                                         </br>          MaximumAngleThreshold: '157.5'                                      </br>                CornerThreshold: 2.22044604925031e-16                         </br>                         Method: 'Harris corner detection (Harris & Stephens)'</br>    SmoothingFilterCoefficients: [10x1 double]                                </br>       CornerLocationOutputPort: false                                        </br>         MetricMatrixOutputPort: true                                         </br>             MaximumCornerCount: 10000                                        </br>               NeighborhoodSize: [11 11]                                      </br>                 RoundingMethod: 'Floor'                                      </br>                 OverflowAction: 'Wrap'                                       </br>           CoefficientsDataType: 'Custom'                                     </br>     CustomCoefficientsDataType: numerictype([],16)                           </br>                ProductDataType: 'Custom'                                     </br>          CustomProductDataType: numerictype([],32,0)                         </br>            AccumulatorDataType: 'Custom'                                     </br>      CustomAccumulatorDataType: numerictype([],32,0)                         </br>                 MemoryDataType: 'Custom'                                     </br>           CustomMemoryDataType: numerictype([],32,0)                         </br>           MetricOutputDataType: 'Same as accumulator'                        </br>     CustomMetricOutputDataType: numerictype([],32,0)                         </br>                                                                              </br></td></tr></table></div>
+<div class="tooltip" id="V20"><table class="tooltip"><tr><th>Value</th><td>Local intensity comparison (Rosten & Drummond)</br></td></tr></table></div>
+<div class="tooltip" id="V21"><table class="tooltip"><tr><th>Value</th><td>  System: <a href="matlab:help('vision.private.CornerMetric')" style="font-weight:bold;">vision.private.CornerMetric</a></br></br>  Properties:</br>                    Sensitivity: 0.04                                            </br>             IntensityThreshold: 0.01                                            </br>          MaximumAngleThreshold: '157.5'                                         </br>                CornerThreshold: 2.22044604925031e-16                            </br>                         Method: 'Local intensity comparison (Rosten & Drummond)'</br>    SmoothingFilterCoefficients: [10x1 double]                                   </br>       CornerLocationOutputPort: false                                           </br>         MetricMatrixOutputPort: true                                            </br>             MaximumCornerCount: 10000                                           </br>               NeighborhoodSize: [11 11]                                         </br>                 RoundingMethod: 'Floor'                                         </br>                 OverflowAction: 'Wrap'                                          </br>           CoefficientsDataType: 'Custom'                                        </br>     CustomCoefficientsDataType: numerictype([],16)                              </br>                ProductDataType: 'Custom'                                        </br>          CustomProductDataType: numerictype([],32,0)                            </br>            AccumulatorDataType: 'Custom'                                        </br>      CustomAccumulatorDataType: numerictype([],32,0)                            </br>                 MemoryDataType: 'Custom'                                        </br>           CustomMemoryDataType: numerictype([],32,0)                            </br>           MetricOutputDataType: 'Same as accumulator'                           </br>     CustomMetricOutputDataType: numerictype([],32,0)                            </br>                                                                                 </br></td></tr></table></div>
+<div class="tooltip" id="V22"><table class="tooltip"><tr><th>Value</th><td>Minimum eigenvalue (Shi & Tomasi)</br></td></tr></table></div>
+<div class="tooltip" id="V23"><table class="tooltip"><tr><th>Value</th><td>  System: <a href="matlab:help('vision.private.CornerMetric')" style="font-weight:bold;">vision.private.CornerMetric</a></br></br>  Properties:</br>                    Sensitivity: 0.04                               </br>             IntensityThreshold: 0.01                               </br>          MaximumAngleThreshold: '157.5'                            </br>                CornerThreshold: 2.22044604925031e-16               </br>                         Method: 'Minimum eigenvalue (Shi & Tomasi)'</br>    SmoothingFilterCoefficients: [10x1 double]                      </br>       CornerLocationOutputPort: false                              </br>         MetricMatrixOutputPort: true                               </br>             MaximumCornerCount: 10000                              </br>               NeighborhoodSize: [11 11]                            </br>                 RoundingMethod: 'Floor'                            </br>                 OverflowAction: 'Wrap'                             </br>           CoefficientsDataType: 'Custom'                           </br>     CustomCoefficientsDataType: numerictype([],16)                 </br>                ProductDataType: 'Custom'                           </br>          CustomProductDataType: numerictype([],32,0)               </br>            AccumulatorDataType: 'Custom'                           </br>      CustomAccumulatorDataType: numerictype([],32,0)               </br>                 MemoryDataType: 'Custom'                           </br>           CustomMemoryDataType: numerictype([],32,0)               </br>           MetricOutputDataType: 'Same as accumulator'              </br>     CustomMetricOutputDataType: numerictype([],32,0)               </br>                                                                    </br></td></tr></table></div>
+<div class="tooltip" id="V24"><table class="tooltip"><tr><th>Value</th><td>     1     1</br></td></tr></table></div>
+<div class="tooltip" id="V25"><table class="tooltip"><tr><th>Value</th><td>        1000</br></td></tr></table></div>
+<div class="tooltip" id="V26"><table class="tooltip"><tr><th>Value</th><td>Input port</br></td></tr></table></div>
+<div class="tooltip" id="V27"><table class="tooltip"><tr><th>Value</th><td>uint32</br></td></tr></table></div>
+<div class="tooltip" id="V28"><table class="tooltip"><tr><th>Value</th><td>  System: <a href="matlab:help('vision.LocalMaximaFinder')" style="font-weight:bold;">vision.LocalMaximaFinder</a></br></br>  Properties:</br>    MaximumNumLocalMaxima: 1000        </br>         NeighborhoodSize: [11 11]     </br>          ThresholdSource: 'Input port'</br>         HoughMatrixInput: false       </br>            IndexDataType: 'uint32'    </br>                                       </br></td></tr></table></div>
+<div class="tooltip" id="V29"><table class="tooltip"><tr><th>Value</th><td>uint8</br></td></tr></table></div>
+<div class="tooltip" id="V30"><table class="tooltip"><tr><th>Value</th><td>Plus</br></td></tr></table></div>
+<div class="tooltip" id="V31"><table class="tooltip"><tr><th>Value</th><td>Property</br></td></tr></table></div>
+<div class="tooltip" id="V32"><table class="tooltip"><tr><th>Value</th><td>White</br></td></tr></table></div>
+<div class="tooltip" id="V33"><table class="tooltip"><tr><th>Value</th><td>   200   120    50</br></td></tr></table></div>
+<div class="tooltip" id="V34"><table class="tooltip"><tr><th>Value</th><td>Black</br></td></tr></table></div>
+<div class="tooltip" id="V35"><table class="tooltip"><tr><th>Value</th><td></br>          DataTypeMode: Fixed-point: binary point scaling</br>            Signedness: Auto</br>            WordLength: 32</br>        FractionLength: 14</br></td></tr></table></div>
+<div class="tooltip" id="V36"><table class="tooltip"><tr><th>Value</th><td>Same as product</br></td></tr></table></div>
+<div class="tooltip" id="V37"><table class="tooltip"><tr><th>Value</th><td>     0</br></td></tr></table></div>
+<div class="tooltip" id="V38"><table class="tooltip"><tr><th>Value</th><td>  System: <a href="matlab:help('vision.MarkerInserter')" style="font-weight:bold;">vision.MarkerInserter</a></br></br>  Properties:</br>                Shape: 'Plus'    </br>                 Size: 3         </br>    BorderColorSource: 'Property'</br>          BorderColor: 'White'   </br>         ROIInputPort: false     </br>                                 </br></td></tr></table></div>
+</div>
+</div>
+<!-- End Tooltips -->
+
+<div class="south">
+<ul class="ui-tabs-nav">
+<li class="ui-tabs-nav-item ui-tabs-selected"><span class="tab-link" id="summary"><span>Summary</span></span></li>
+<li class="ui-tabs-nav-item"><span class="tab-link" id="messages"><span>All Messages (0)</span></span></li>
+<li class="ui-tabs-nav-item"><span class="tab-link" id="watchlist"><span>Variables</span></span></li>
+<li class="ui-tabs-nav-item hidden"><span class="tab-link" id="watchload"><span>Variables</span></span></li>
+<li class="ui-tabs-nav-item"><span class="tab-link" id="buildlog1"><span>Target Build Log</span></span></li>
+</ul>
+
+<!-- Compilation Summary -->
+<div id="summarybody" class="ui-tabs-panel">
+<table cellpadding="1" cellspacing="4">
+<tr><td>C source code generated on:</td><td>10-Sep-2015 15:40:03</td></tr>
+<tr><td>Coding target:</td><td>Static Library</td></tr>
+<tr><td>Number of errors:</td><td><a href="javascript:selectMessagesTab();">0</a></td></tr>
+<tr><td>Number of warnings:</td><td><a href="javascript:selectMessagesTab();">0</a></td></tr>
+<tr><td>Number of notices:</td><td><a href="javascript:selectMessagesTab();">0</a></td></tr>
+</table>
+<p/><p/><table>
+<tr><td><b>Tell Us What You Think</b></td></tr>
+<tr><td>We value your feedback. Please take a few minutes to answer this short questionnaire regarding the Code Generation Report.</td></tr>
+<tr><td><a href="matlab: web('http://www.customersat3.com/TakeSurvey.asp?si=ELu7GTnTYtk%3D','-browser');">&gt;&gt;Provide Feedback</a></td></tr>
+</table>
+</div>
+
+<!-- Message Table -->
+<div id="messagesbody" class="ui-tabs-panel hidden">
+<div>
+<div class="msgsuccess">Code generation successful. Click here to <a href="javaScript:selectSummaryTab();">view summary</a>.</div>
+</div>
+</div>
+<!-- Watchlist Table -->
+<div id="watchlistbody" class="ui-tabs-panel hidden">
+</div>
+<div id="watchloadbody" class="ui-tabs-panel hidden">
+Loading Variables table ...
+</div>
+
+<!-- Target Build Log -->
+<div id="buildlog1body" class="ui-tabs-panel hidden">
+<div class="grayline"></div>
+<table cellpadding="4" cellspacing="1"><tr>
+<td align="left" class="td-linebottomrt-gray" colspan="2">Build Parameters</td>
+</tr>
+<tr><td align="left" valign="top" class="td-linebottomrt">Build directory</td>
+<td align="left" valign="top" class="td-linebottomrt-link"><a href="matlab: cd('C:\Work\Android\cornerSlider\mCameraSlider\jni\src\corner')">C:\Work\Android\cornerSlider\mCameraSlider\jni\src\corner</a></td></tr>
+<tr><td align="left" valign="top" class="td-linebottomrt">Make wrapper</td>
+<td align="left" valign="top" class="td-linebottomrt-link">.\myCorners_rtw.bat</td></tr>
+<tr><td align="left" valign="top" class="td-linebottomrt">Make command</td>
+<td align="left" valign="top" class="td-linebottomrt-link">nmake -f myCorners_rtw.mk all</td></tr>
+</table>
+<br/>
+<table border="1" cellpadding="4" cellspacing="1" width="100%">
+<tr><td align="left" class="td-linebottomrt-gray">Build Log</td></tr>
+<tr><td valign="top" class="td-script">
+<pre>
+<span class="td-line-number">    1   </span><span class="td-line-normal">Compilation suppressed: generating code only.</span>
+</pre>
+</td></tr></table>
+
+</div>
+</div>
+<!-- Begin MATLAB Code Panel -->
+<div class="center">
+<div class="center-title">
+<div class="ui-tabs-nav-item ui-tabs-selected">
+<span class="functiontitle">
+</span>
+<!-- Begin Call Sites -->
+<span id="callsiteselecttable" class="call-sites-tbl">
+<span id="callsiteselectlabel" class="filtered">Calls:</span>
+<select id="callsiteselect" onchange="callSiteChange(event)">
+<option value="callsiteprompt">Select a function call:</option>
+</select>
+</span>
+<!-- End Call Sites -->
+</div>
+</div>
+<div class="ui-tabs-panel">
+<div class="code" onmouseover="mcodeMouseOver(event);" onmouseout="mcodeMouseOut(event);"onclick="mcodeClick(event);">
+</div>
+</div>
+</div>
+<!-- End MATLAB Code Panel -->
+</body>
+</html>

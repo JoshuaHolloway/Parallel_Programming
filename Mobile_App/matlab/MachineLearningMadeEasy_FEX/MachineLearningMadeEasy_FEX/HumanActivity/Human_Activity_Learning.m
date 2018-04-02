@@ -1,11 +1,4 @@
 %% Human Activity Learning Using Mobile Phone Data
-% Human activity sensor data contains observations derived from
-% sensor measurements taken from smartphones worn by people while doing
-% different activities (walking, lying, sitting etc). The goal of this 
-% example is to provide a strategy to build a classifier that can 
-% automatically identify the activity type given the sensor measurements. 
-%
-% Copyright (c) 2015, MathWorks, Inc.
 
 %% Description of the Data
 %  The dataset consists of accelerometer and gyroscope data captured at 
@@ -40,7 +33,7 @@
 % * |downloadSensorData| : This function will download the dataset and
 % extract its contents to a folder called: UCI HAR Dataset
 % This folder must be present before you execute |saveSensorDataAsMATFiles|
-if ~exist('UCI HAR Dataset','file')
+if ~exist('UCI_HAR_Dataset','file')
     downloadSensorData;
 end
 
@@ -109,10 +102,10 @@ T_pca  = varfun(@Wpca1,rawSensorDataTest);
 humanActivityData = [T_mean, T_stdv, T_pca];
 humanActivityData.activity = testActivity;
 
-% Step 3: Use trained model to predict activity on new sensor data
+%% Step 3: Use trained model to predict activity on new sensor data
 % Make sure that you've exported 'trainedClassifier' from
 % ClassificationLearner
-plotActivityResults(trainedClassifier,rawSensorDataTest,humanActivityData,0.1)
+plotActivityResults(trainedModel,rawSensorDataTest,humanActivityData,0.1)
 
 %%
 % 
