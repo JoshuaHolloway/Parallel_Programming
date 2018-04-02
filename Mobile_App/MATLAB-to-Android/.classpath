@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="cornerSlider/mCameraSlider/gen"/>
+	<classpathentry kind="src" path="cornerSlider/mCameraSlider/src"/>
+	<classpathentry kind="src" path="cornerSlider/OpenCV Library - 2.4.8/gen"/>
+	<classpathentry kind="src" path="cornerSlider/OpenCV Library - 2.4.8/src"/>
+	<classpathentry kind="lib" path="cornerSlider/mCameraSlider/bin/dexedLibs/opencv library - 2.4.8-20693b069d333263199da5752021aa44.jar"/>
+	<classpathentry kind="lib" path="cornerSlider/OpenCV Library - 2.4.8/bin/opencv library - 2.4.8.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="cornerSlider/OpenCV Library - 2.4.8/bin/classes"/>
+</classpath>

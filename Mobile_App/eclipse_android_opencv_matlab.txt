@@ -1,0 +1,185 @@
+This dude's explanation is very good.  He explains how to get the SDK instead of Android Stdio.
+https://www.youtube.com/watch?v=zrH2pZHZyys
+
+Download Eclipse Neon with Android Support:
+http://www.eclipse.org/downloads/packages/eclipse-android-developers-includes-incubating-components/neon3
+
+I downloaded the ADT from here:
+https://stackoverflow.com/questions/28991505/download-link-to-android-sdk-with-eclipse
+
+I unzipped it to my home directory, which is here:
+/home/josh/adt-bundle-linux-x86_64-20140702
+
+
+Then, I followed the dude's video (see first link) to download the java SDK from the 
+android studio website and downloading the "Command line tools" (sdk-tools-linux-3859397.zip)
+
+I decompressed it an placed it inside the ADT directory (it is called tools):
+/home/josh/adt-bundle-linux-x86_64-20140702/tools
+
+
+I placed the eclpse neon download in the ADT directory here:
+/home/josh/adt-bundle-linux-x86_64-20140702/eclipse_neon
+
+Step 1: 
+cd to the directory, and sudo ./ open the install file.
+$ cd /home/josh/adt-bundle-linux-x86_64-20140702/eclipse_neon
+$ sudo ./eclipse
+
+It seems to not install, and asks which workspace to use.
+Even after completely uninstalling eclipse, still I get this same thing of not seeming to install.
+
+After selecting the workspace, I get a message that says:
+"A valide AVD was not detected. Do you want to create one?" 
+I selected no.
+
+Go to  help -> Install New Software:
+Work With: https://dl-ssl.google.com/android/eclipse
+
+Select all developer tools and select next.
+Select Next again, accept liscense and begin install.
+
+Restart eclipse when installation is complete.
+
+The SDK, which I downloaded at the beginning of this doc, is now used.
+Close eclipse and re-open it.
+Then go to Windows->Preferences.
+Android -> Browse (next to SDK Location)
+
+Next, is used the SDK folder from the ADT download instead of the SDK as decribed from old dude.
+
+Navigate to the downloaded SDK and select it:
+/home/josh/adt-bundle-linux-x86_64-20140702/sdk
+
+Note that I renamed the sdk directory to: android-sdk-linux
+
+Select OK.
+
+The android SDK manager does not open automatically.
+Select Window -> Android SDK Manager
+
+Install the following if they are not already installed:
+-Android SDK Tools
+-Android SDK Platform-tools
+-Android SDK Build-tools
+-Android 8.1.0 (API 27):
+	-SDK Platform
+	-Sources for Android SDK
+
+=============
+
+Now, I do the instructions from the MATLAB to Android made easy webinar:
+https://www.mathworks.com/videos/matlab-to-iphone-and-android-made-easy-107779.html?elqsid=1522651944900&potential_use=Student
+
+Open the demo in MATLAB:
+$ MATLAB&
+$ cd /home/josh/Desktop/Parallel_Vision_Research/Mobile_App/MATLAB-to-Android
+
+
+cd to the directory with the source code:
+$ cd /home/josh/Desktop/Parallel_Vision_Research/Mobile_App/MATLAB-to-Android/matlabCode/myCorners
+
+Open myCorners.m and then followed the "MATLAB to C Made Easy" webinar to get generate code:
+https://www.mathworks.com/videos/matlab-to-c-made-easy-81870.html
+
+Open MATLAB coder and follow the instructions.
+
+I got an error about the vision functions, but it runs in the MATLAB script.
+I suspect it is because the program does not know how to generate these functions
+in C/C++ because it does not know where OpenCV is.
+I think I need to add OpenCV to MATLAB as described here:
+https://www.mathworks.com/videos/using-opencv-with-matlab-97710.html
+
+The error was actually that the vision objects have been deprecated and replaced in the current 
+version of MATLAB!
+
+I simply erased all the vision objects with a the simplest possible operation.
+
+Restart eclipse.
+
+-------
+I then installed the NDK as described here:
+https://www.youtube.com/watch?v=N2onPuDZQVY
+
+This is the repo to the eclipse CDT for neon here:
+http://download.eclipse.org/tools/cdt/releases/9.2
+
+Help -> Intall new software ->add
+Name: CDT
+Location: http://download.eclipse.org/tools/cdt/releases/9.2
+
+Select "CDT Main Features" and select "Next", "Next", "Finish".
+
+
+Windows -> install new software
+
+The ADT option is not there.  I am re-installing it as described here:
+https://www.youtube.com/watch?v=oQK9Bcj5EB4
+
+Windows -> install new software -> Add:
+Name: ADT
+Location: https://dl-ssl.google.com/android/eclipse/
+
+Downloaded the NDK file from here:
+https://developer.android.com/ndk/downloads/index.html#stable-downloads
+
+and I put that shit here:
+/home/josh/adt-bundle-linux-x86_64-20140702
+
+
+========================================
+Remember that you modified the code from the accelorometer machine learning example from here:
+https://www.mathworks.com/matlabcentral/fileexchange/50232-machine-learning-made-easy
+
+Code is in the mobile systems directory in the repo.
+
+There is a corresponding explanation of how to generate C-code using the machine learning tool here:
+https://www.mathworks.com/help/stats/c-generate-code-and-classification-learner.html
+
+For the project, need to generate C-code of the machine learning model, and then map it into the android app.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

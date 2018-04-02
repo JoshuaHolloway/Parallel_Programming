@@ -7,7 +7,8 @@
  */
 #include <jni.h>
 #include <stdlib.h>
-#include "driver_android_slider.h"
+#include "driver_android_slider2.h"
+
 
 extern JavaVM *cachedJvm;
 extern jobject cachedActivityObj;

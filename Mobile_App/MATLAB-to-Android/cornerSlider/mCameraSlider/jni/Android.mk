@@ -1,7 +1,8 @@
 LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 # Need to update the following line to point to your own OpenCV.mk
-include C:\MATLAB\SupportPackages\R2015a\OpenCV-2.4.9-android-sdk\sdk\native\jni\OpenCV.mk
+#include C:\MATLAB\SupportPackages\R2015a\OpenCV-2.4.9-android-sdk\sdk\native\jni\OpenCV.mk
+include /home/josh/OpenCV-2.4.9-android-sdk/sdk/native/jni/OpenCV.mk
 
 LOCAL_MODULE := mCameraSlider
                 

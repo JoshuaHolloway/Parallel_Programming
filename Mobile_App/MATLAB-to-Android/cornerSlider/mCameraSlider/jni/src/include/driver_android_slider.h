@@ -2,7 +2,7 @@
  *
  * Copyright 2013-2014 The MathWorks, Inc.
  */
- 
+
 #if ( defined(MATLAB_MEX_FILE) || defined(RSIM_PARAMETER_LOADING) ||  defined(RSIM_WITH_SL_SOLVER) )
 /* This will be run in Rapid Accelerator Mode */
 
@@ -22,7 +22,7 @@ void terminateSlider();
 
 #define SLIDER_INIT(id,min,value,max,steps) initSlider(id,min,value,max,steps)
 #define SLIDER_GETVAL(id,min,max,steps) getSliderValue(id,min,max,steps)
-#define SLIDER_DISPVAL(id,value) dispSliderValue(id,value) 
+#define SLIDER_DISPVAL(id,value) dispSliderValue(id,value)
 #define SLIDER_TERMINATE() terminateSlider()
 
-#endif 
+#endif

@@ -2,12 +2,12 @@
 ## Makefile generated for MATLAB file/project 'myCorners'. 
 ## 
 ## Makefile     : myCorners_rtw.mk
-## Generated on : Thu Sep 10 15:40:01 2015
-## MATLAB Coder version: 3.0 (R2015b)
+## Generated on : Mon Apr 02 02:26:16 2018
+## MATLAB Coder version: 4.0 (R2018a)
 ## 
 ## Build Info:
 ## 
-## Final product: $(RELATIVE_PATH_TO_ANCHOR)\myCorners.lib
+## Final product: $(RELATIVE_PATH_TO_ANCHOR)/myCorners.a
 ## Product type : static-library
 ## 
 ###########################################################################
@@ -20,64 +20,44 @@
 # PRODUCT_NAME            Name of the system to build
 # MAKEFILE                Name of this makefile
 # COMPUTER                Computer type. See the MATLAB "computer" command.
-# PERL                    PERL Tool
-# GEN_LNK_SCRIPT          Perl script to generate the command file
-# CMD_FILE                Command file
 
 PRODUCT_NAME              = myCorners
 MAKEFILE                  = myCorners_rtw.mk
-COMPUTER                  = PCWIN64
-MATLAB_ROOT               = C:\MATLAB\R2015B~1
-MATLAB_BIN                = C:\MATLAB\R2015B~1\bin
-MATLAB_ARCH_BIN           = C:\MATLAB\R2015B~1\bin\win64
+COMPUTER                  = GLNXA64
+MATLAB_ROOT               = /usr/local/MATLAB/R2018a
+MATLAB_BIN                = /usr/local/MATLAB/R2018a/bin
+MATLAB_ARCH_BIN           = $(MATLAB_BIN)/glnxa64
 MASTER_ANCHOR_DIR         = 
-START_DIR                 = C:\Work\Android\matlabCode\myCorners
-ARCH                      = win64
+START_DIR                 = /home/josh/Desktop/Parallel_Vision_Research/Mobile_App/MATLAB-to-Android/matlabCode/myCorners
+ARCH                      = glnxa64
 RELATIVE_PATH_TO_ANCHOR   = .
-PERL                      = $(MATLAB_ROOT)\sys\perl\win32\bin\perl.exe
-GEN_LNK_SCRIPT            = $(MATLAB_ROOT)\rtw\c\tools\mkvc_lnk.pl
-CMD_FILE                  = $(PRODUCT_NAME).lnk
-NODEBUG                   = 1
+C_STANDARD_OPTS           = -ansi -pedantic -Wno-long-long -fwrapv
+CPP_STANDARD_OPTS         = -std=c++98 -pedantic -Wno-long-long -fwrapv
 
 ###########################################################################
 ## TOOLCHAIN SPECIFICATIONS
 ###########################################################################
 
-# Toolchain Name:          Microsoft Visual C++ 2012 v11.0 | nmake (64-bit Windows)
-# Supported Version(s):    11.0
-# ToolchainInfo Version:   R2015b
+# Toolchain Name:          GNU gcc/g++ v4.4.x | gmake (64-bit Linux)
+# Supported Version(s):    4.4.x
+# ToolchainInfo Version:   R2018a
 # Specification Revision:  1.0
 # 
-
-!include $(MATLAB_ROOT)\rtw\c\tools\vcdefs.mak
-
-
 #-------------------------------------------
 # Macros assumed to be defined elsewhere
 #-------------------------------------------
 
-# NODEBUG
-# cvarsdll
-# cvarsmt
-# conlibsmt
-# ldebug
-# conflags
-# cflags
+# C_STANDARD_OPTS
+# CPP_STANDARD_OPTS
 
 #-----------
 # MACROS
 #-----------
 
-MEX_OPTS_FILE       = $(MATLAB_ROOT)\bin\$(ARCH)\mexopts\msvc110opts.bat
-MW_EXTERNLIB_DIR    = $(MATLAB_ROOT)\extern\lib\win64\microsoft
-MW_LIB_DIR          = $(MATLAB_ROOT)\lib\win64
-MEX_ARCH            = -win64
-CPU                 = AMD64
-APPVER              = 5.02
-CVARSFLAG           = $(cvarsmt)
-CFLAGS_ADDITIONAL   = -D_CRT_SECURE_NO_WARNINGS
-CPPFLAGS_ADDITIONAL = -EHs -D_CRT_SECURE_NO_WARNINGS
-LIBS_TOOLCHAIN      = $(conlibs)
+WARN_FLAGS         = -Wall -W -Wwrite-strings -Winline -Wstrict-prototypes -Wnested-externs -Wpointer-arith -Wcast-align
+WARN_FLAGS_MAX     = $(WARN_FLAGS) -Wcast-qual -Wshadow
+CPP_WARN_FLAGS     = -Wall -W -Wwrite-strings -Winline -Wpointer-arith -Wcast-align
+CPP_WARN_FLAGS_MAX = $(CPP_WARN_FLAGS) -Wcast-qual -Wshadow
 
 TOOLCHAIN_SRCS = 
 TOOLCHAIN_INCS = 
@@ -87,24 +67,24 @@ TOOLCHAIN_LIBS =
 # BUILD TOOL COMMANDS
 #------------------------
 
-# C Compiler: Microsoft Visual C Compiler
-CC = cl
+# C Compiler: GNU C Compiler
+CC = gcc
 
-# Linker: Microsoft Visual C Linker
-LD = link
+# Linker: GNU Linker
+LD = g++
 
-# C++ Compiler: Microsoft Visual C++ Compiler
-CPP = cl
+# C++ Compiler: GNU C++ Compiler
+CPP = g++
 
-# C++ Linker: Microsoft Visual C++ Linker
-CPP_LD = link
+# C++ Linker: GNU C++ Linker
+CPP_LD = g++
 
-# Archiver: Microsoft Visual C/C++ Archiver
-AR = lib
+# Archiver: GNU Archiver
+AR = ar
 
 # MEX Tool: MEX Tool
-MEX_PATH = $(MATLAB_BIN)
-MEX = $(MEX_PATH)\mex
+MEX_PATH = $(MATLAB_ARCH_BIN)
+MEX = "$(MEX_PATH)/mex"
 
 # Download: Download
 DOWNLOAD =
@@ -112,67 +92,80 @@ DOWNLOAD =
 # Execute: Execute
 EXECUTE = $(PRODUCT)
 
-# Builder: NMAKE Utility
-MAKE = nmake
+# Builder: GMAKE Utility
+MAKE_PATH = %MATLAB%/bin/glnxa64
+MAKE = "$(MAKE_PATH)/gmake"
 
 
 #-------------------------
 # Directives/Utilities
 #-------------------------
 
-CDEBUG              = -Zi
-C_OUTPUT_FLAG       = -Fo
-LDDEBUG             = /DEBUG
-OUTPUT_FLAG         = -out:
-CPPDEBUG            = -Zi
-CPP_OUTPUT_FLAG     = -Fo
-CPPLDDEBUG          = /DEBUG
-OUTPUT_FLAG         = -out:
+CDEBUG              = -g
+C_OUTPUT_FLAG       = -o
+LDDEBUG             = -g
+OUTPUT_FLAG         = -o
+CPPDEBUG            = -g
+CPP_OUTPUT_FLAG     = -o
+CPPLDDEBUG          = -g
+OUTPUT_FLAG         = -o
 ARDEBUG             =
-STATICLIB_OUTPUT_FLAG = -out:
+STATICLIB_OUTPUT_FLAG =
 MEX_DEBUG           = -g
-RM                  = @del
+RM                  = @rm -f
 ECHO                = @echo
-MV                  = @ren
-RUN                 = @cmd /C
+MV                  = @mv
+RUN                 =
 
 #----------------------------------------
 # "Faster Builds" Build Configuration
 #----------------------------------------
 
-ARFLAGS              = /nologo
-CFLAGS               = $(cflags) $(CVARSFLAG) $(CFLAGS_ADDITIONAL) \
-                       /Od /Oy-
-CPPFLAGS             = /TP $(cflags) $(CVARSFLAG) $(CPPFLAGS_ADDITIONAL) \
-                       /Od /Oy-
-CPP_LDFLAGS          = $(ldebug) $(conflags) $(LIBS_TOOLCHAIN)
-CPP_SHAREDLIB_LDFLAGS  = $(ldebug) $(conflags) $(LIBS_TOOLCHAIN) \
-                         -dll -def:$(DEF_FILE)
+ARFLAGS              = ruvs
+CFLAGS               = -c $(C_STANDARD_OPTS) -fPIC \
+                       -O0
+CPPFLAGS             = -c $(CPP_STANDARD_OPTS) -fPIC \
+                       -O0
+CPP_LDFLAGS          = -Wl,-rpath,"$(MATLAB_ARCH_BIN)",-L"$(MATLAB_ARCH_BIN)"
+CPP_SHAREDLIB_LDFLAGS  = -shared -Wl,-rpath,"$(MATLAB_ARCH_BIN)",-L"$(MATLAB_ARCH_BIN)" -Wl,--no-undefined
 DOWNLOAD_FLAGS       =
 EXECUTE_FLAGS        =
-LDFLAGS              = $(ldebug) $(conflags) $(LIBS_TOOLCHAIN)
-MEX_CFLAGS           = $(MEX_ARCH) OPTIMFLAGS="/Od /Oy- $(MDFLAG) $(DEFINES)" $(MEX_OPTS_FLAG)
+LDFLAGS              = -Wl,-rpath,"$(MATLAB_ARCH_BIN)",-L"$(MATLAB_ARCH_BIN)"
+MEX_CPPFLAGS         = -R2018a -MATLAB_ARCH=$(ARCH) $(INCLUDES) \
+                         \
+                       CXXOPTIMFLAGS="$(C_STANDARD_OPTS)  \
+                       -O0 \
+                        $(DEFINES)" \
+                         \
+                       -silent
+MEX_CPPLDFLAGS       = LDFLAGS=='$$LDFLAGS'
+MEX_CFLAGS           = -R2018a -MATLAB_ARCH=$(ARCH) $(INCLUDES) \
+                         \
+                       COPTIMFLAGS="$(C_STANDARD_OPTS)  \
+                       -O0 \
+                        $(DEFINES)" \
+                         \
+                       -silent
 MEX_LDFLAGS          = LDFLAGS=='$$LDFLAGS'
 MAKE_FLAGS           = -f $(MAKEFILE)
-SHAREDLIB_LDFLAGS    = $(ldebug) $(conflags) $(LIBS_TOOLCHAIN) \
-                       -dll -def:$(DEF_FILE)
+SHAREDLIB_LDFLAGS    = -shared -Wl,-rpath,"$(MATLAB_ARCH_BIN)",-L"$(MATLAB_ARCH_BIN)" -Wl,--no-undefined
 
 #--------------------
 # File extensions
 #--------------------
 
 H_EXT               = .h
-OBJ_EXT             = .obj
+OBJ_EXT             = .o
 C_EXT               = .c
-EXE_EXT             = .exe
-SHAREDLIB_EXT       = .dll
+EXE_EXT             =
+SHAREDLIB_EXT       = .so
 HPP_EXT             = .hpp
-OBJ_EXT             = .obj
+OBJ_EXT             = .o
 CPP_EXT             = .cpp
-EXE_EXT             = .exe
-SHAREDLIB_EXT       = .dll
-STATICLIB_EXT       = .lib
-MEX_EXT             = .mexw64
+EXE_EXT             =
+SHAREDLIB_EXT       = .so
+STATICLIB_EXT       = .a
+MEX_EXT             = .mexa64
 MAKE_EXT            = .mk
 
 
@@ -180,7 +173,7 @@ MAKE_EXT            = .mk
 ## OUTPUT INFO
 ###########################################################################
 
-PRODUCT = $(RELATIVE_PATH_TO_ANCHOR)\myCorners.lib
+PRODUCT = $(RELATIVE_PATH_TO_ANCHOR)/myCorners.a
 PRODUCT_TYPE = "static-library"
 BUILD_TYPE = "Static Library"
 
@@ -188,7 +181,7 @@ BUILD_TYPE = "Static Library"
 ## INCLUDE PATHS
 ###########################################################################
 
-INCLUDES_BUILDINFO = $(START_DIR);C:\Work\Android\cornerSlider\mCameraSlider\jni\src\corner;$(MATLAB_ROOT)\extern\include;$(MATLAB_ROOT)\simulink\include;$(MATLAB_ROOT)\rtw\c\src;$(MATLAB_ROOT)\rtw\c\src\ext_mode\common;$(MATLAB_ROOT)\rtw\c\ert
+INCLUDES_BUILDINFO = -I/home/josh/Desktop/Parallel_Vision_Research/Mobile_App/MATLAB-to-Android/cornerSlider/mCameraSlider/jni/src/corner -I$(START_DIR) -I$(MATLAB_ROOT)/extern/include -I$(MATLAB_ROOT)/simulink/include -I$(MATLAB_ROOT)/rtw/c/src -I$(MATLAB_ROOT)/rtw/c/src/ext_mode/common -I$(MATLAB_ROOT)/rtw/c/ert
 
 INCLUDES = $(INCLUDES_BUILDINFO)
 
@@ -196,7 +189,7 @@ INCLUDES = $(INCLUDES_BUILDINFO)
 ## DEFINES
 ###########################################################################
 
-DEFINES_STANDARD = -DMODEL=myCorners -DHAVESTDIO -DUSE_RTMODEL
+DEFINES_STANDARD = -DMODEL=myCorners -DHAVESTDIO -DUSE_RTMODEL -DUNIX
 
 DEFINES = $(DEFINES_STANDARD)
 
@@ -204,7 +197,7 @@ DEFINES = $(DEFINES_STANDARD)
 ## SOURCE FILES
 ###########################################################################
 
-SRCS = C:\Work\Android\cornerSlider\mCameraSlider\jni\src\corner\myCorners.c
+SRCS = $(START_DIR)/../../cornerSlider/mCameraSlider/jni/src/corner/myCorners.c
 
 ALL_SRCS = $(SRCS)
 
@@ -212,7 +205,7 @@ ALL_SRCS = $(SRCS)
 ## OBJECTS
 ###########################################################################
 
-OBJS = myCorners.obj
+OBJS = myCorners.o
 
 ALL_OBJS = $(OBJS)
 
@@ -232,7 +225,7 @@ LIBS =
 ## SYSTEM LIBRARIES
 ###########################################################################
 
-SYSTEM_LIBS = 
+SYSTEM_LIBS =  -lm
 
 ###########################################################################
 ## ADDITIONAL TOOLCHAIN FLAGS
@@ -242,30 +235,34 @@ SYSTEM_LIBS =
 # C Compiler
 #---------------
 
-CFLAGS_BASIC = $(DEFINES) 
+CFLAGS_BASIC = $(DEFINES) $(INCLUDES)
 
-CFLAGS = $(CFLAGS) $(CFLAGS_BASIC)
+CFLAGS += $(CFLAGS_BASIC)
 
 #-----------------
 # C++ Compiler
 #-----------------
 
-CPPFLAGS_BASIC = $(DEFINES) 
+CPPFLAGS_BASIC = $(DEFINES) $(INCLUDES)
 
-CPPFLAGS = $(CPPFLAGS) $(CPPFLAGS_BASIC)
+CPPFLAGS += $(CPPFLAGS_BASIC)
+
+###########################################################################
+## INLINED COMMANDS
+###########################################################################
 
 ###########################################################################
 ## PHONY TARGETS
 ###########################################################################
 
-.PHONY : all build clean info prebuild download execute set_environment_variables
+.PHONY : all build clean info prebuild download execute
 
 
 all : build
-	@cmd /C "@echo ### Successfully generated all binary outputs."
+	@echo "### Successfully generated all binary outputs."
 
 
-build : set_environment_variables prebuild $(PRODUCT)
+build : prebuild $(PRODUCT)
 
 
 prebuild : 
@@ -277,11 +274,6 @@ download : build
 execute : download
 
 
-set_environment_variables : 
-	@set INCLUDE=$(INCLUDES);$(INCLUDE)
-	@set LIB=$(LIB)
-
-
 ###########################################################################
 ## FINAL TARGET
 ###########################################################################
@@ -291,11 +283,9 @@ set_environment_variables :
 #---------------------------------
 
 $(PRODUCT) : $(OBJS) $(PREBUILT_OBJS)
-	$(PERL) $(GEN_LNK_SCRIPT) $(CMD_FILE) $(OBJS)
-	@cmd /C "@echo ### Creating static library "$(PRODUCT)" ..."
-	$(AR) $(ARFLAGS) -out:$(PRODUCT) @$(CMD_FILE)
-	@cmd /C "@echo ### Created: $(PRODUCT)"
-	$(RM) $(CMD_FILE)
+	@echo "### Creating static library "$(PRODUCT)" ..."
+	$(AR) $(ARFLAGS)  $(PRODUCT) $(OBJS)
+	@echo "### Created: $(PRODUCT)"
 
 
 ###########################################################################
@@ -306,44 +296,48 @@ $(PRODUCT) : $(OBJS) $(PREBUILT_OBJS)
 # SOURCE-TO-OBJECT
 #---------------------
 
-.c.obj :
-	$(CC) $(CFLAGS) -Fo"$@" "$<"
+%.o : %.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
-.cpp.obj :
-	$(CPP) $(CPPFLAGS) -Fo"$@" "$<"
+%.o : %.cpp
+	$(CPP) $(CPPFLAGS) -o "$@" "$<"
 
 
-{$(RELATIVE_PATH_TO_ANCHOR)}.c.obj :
-	$(CC) $(CFLAGS) -Fo"$@" "$<"
+%.o : $(RELATIVE_PATH_TO_ANCHOR)/%.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
-{$(RELATIVE_PATH_TO_ANCHOR)}.cpp.obj :
-	$(CPP) $(CPPFLAGS) -Fo"$@" "$<"
+%.o : $(RELATIVE_PATH_TO_ANCHOR)/%.cpp
+	$(CPP) $(CPPFLAGS) -o "$@" "$<"
 
 
-{$(START_DIR)}.c.obj :
-	$(CC) $(CFLAGS) -Fo"$@" "$<"
+%.o : $(MATLAB_ROOT)/rtw/c/src/%.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
-{$(START_DIR)}.cpp.obj :
-	$(CPP) $(CPPFLAGS) -Fo"$@" "$<"
+%.o : $(MATLAB_ROOT)/rtw/c/src/%.cpp
+	$(CPP) $(CPPFLAGS) -o "$@" "$<"
 
 
-{C:\Work\Android\cornerSlider\mCameraSlider\jni\src\corner}.c.obj :
-	$(CC) $(CFLAGS) -Fo"$@" "$<"
+%.o : $(START_DIR)/%.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
-{C:\Work\Android\cornerSlider\mCameraSlider\jni\src\corner}.cpp.obj :
-	$(CPP) $(CPPFLAGS) -Fo"$@" "$<"
+%.o : $(START_DIR)/%.cpp
+	$(CPP) $(CPPFLAGS) -o "$@" "$<"
 
 
-{$(MATLAB_ROOT)\rtw\c\src}.c.obj :
-	$(CC) $(CFLAGS) -Fo"$@" "$<"
+%.o : /home/josh/Desktop/Parallel_Vision_Research/Mobile_App/MATLAB-to-Android/cornerSlider/mCameraSlider/jni/src/corner/%.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
-{$(MATLAB_ROOT)\rtw\c\src}.cpp.obj :
-	$(CPP) $(CPPFLAGS) -Fo"$@" "$<"
+%.o : /home/josh/Desktop/Parallel_Vision_Research/Mobile_App/MATLAB-to-Android/cornerSlider/mCameraSlider/jni/src/corner/%.cpp
+	$(CPP) $(CPPFLAGS) -o "$@" "$<"
+
+
+myCorners.o : $(START_DIR)/../../cornerSlider/mCameraSlider/jni/src/corner/myCorners.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
 ###########################################################################
@@ -358,34 +352,36 @@ $(ALL_OBJS) : $(MAKEFILE) rtw_proj.tmw
 ###########################################################################
 
 info : 
-	@cmd /C "@echo ### PRODUCT = $(PRODUCT)"
-	@cmd /C "@echo ### PRODUCT_TYPE = $(PRODUCT_TYPE)"
-	@cmd /C "@echo ### BUILD_TYPE = $(BUILD_TYPE)"
-	@cmd /C "@echo ### INCLUDES = $(INCLUDES)"
-	@cmd /C "@echo ### DEFINES = $(DEFINES)"
-	@cmd /C "@echo ### ALL_SRCS = $(ALL_SRCS)"
-	@cmd /C "@echo ### ALL_OBJS = $(ALL_OBJS)"
-	@cmd /C "@echo ### LIBS = $(LIBS)"
-	@cmd /C "@echo ### MODELREF_LIBS = $(MODELREF_LIBS)"
-	@cmd /C "@echo ### SYSTEM_LIBS = $(SYSTEM_LIBS)"
-	@cmd /C "@echo ### TOOLCHAIN_LIBS = $(TOOLCHAIN_LIBS)"
-	@cmd /C "@echo ### CFLAGS = $(CFLAGS)"
-	@cmd /C "@echo ### LDFLAGS = $(LDFLAGS)"
-	@cmd /C "@echo ### SHAREDLIB_LDFLAGS = $(SHAREDLIB_LDFLAGS)"
-	@cmd /C "@echo ### CPPFLAGS = $(CPPFLAGS)"
-	@cmd /C "@echo ### CPP_LDFLAGS = $(CPP_LDFLAGS)"
-	@cmd /C "@echo ### CPP_SHAREDLIB_LDFLAGS = $(CPP_SHAREDLIB_LDFLAGS)"
-	@cmd /C "@echo ### ARFLAGS = $(ARFLAGS)"
-	@cmd /C "@echo ### MEX_CFLAGS = $(MEX_CFLAGS)"
-	@cmd /C "@echo ### MEX_LDFLAGS = $(MEX_LDFLAGS)"
-	@cmd /C "@echo ### DOWNLOAD_FLAGS = $(DOWNLOAD_FLAGS)"
-	@cmd /C "@echo ### EXECUTE_FLAGS = $(EXECUTE_FLAGS)"
-	@cmd /C "@echo ### MAKE_FLAGS = $(MAKE_FLAGS)"
+	@echo "### PRODUCT = $(PRODUCT)"
+	@echo "### PRODUCT_TYPE = $(PRODUCT_TYPE)"
+	@echo "### BUILD_TYPE = $(BUILD_TYPE)"
+	@echo "### INCLUDES = $(INCLUDES)"
+	@echo "### DEFINES = $(DEFINES)"
+	@echo "### ALL_SRCS = $(ALL_SRCS)"
+	@echo "### ALL_OBJS = $(ALL_OBJS)"
+	@echo "### LIBS = $(LIBS)"
+	@echo "### MODELREF_LIBS = $(MODELREF_LIBS)"
+	@echo "### SYSTEM_LIBS = $(SYSTEM_LIBS)"
+	@echo "### TOOLCHAIN_LIBS = $(TOOLCHAIN_LIBS)"
+	@echo "### CFLAGS = $(CFLAGS)"
+	@echo "### LDFLAGS = $(LDFLAGS)"
+	@echo "### SHAREDLIB_LDFLAGS = $(SHAREDLIB_LDFLAGS)"
+	@echo "### CPPFLAGS = $(CPPFLAGS)"
+	@echo "### CPP_LDFLAGS = $(CPP_LDFLAGS)"
+	@echo "### CPP_SHAREDLIB_LDFLAGS = $(CPP_SHAREDLIB_LDFLAGS)"
+	@echo "### ARFLAGS = $(ARFLAGS)"
+	@echo "### MEX_CFLAGS = $(MEX_CFLAGS)"
+	@echo "### MEX_CPPFLAGS = $(MEX_CPPFLAGS)"
+	@echo "### MEX_LDFLAGS = $(MEX_LDFLAGS)"
+	@echo "### MEX_CPPLDFLAGS = $(MEX_CPPLDFLAGS)"
+	@echo "### DOWNLOAD_FLAGS = $(DOWNLOAD_FLAGS)"
+	@echo "### EXECUTE_FLAGS = $(EXECUTE_FLAGS)"
+	@echo "### MAKE_FLAGS = $(MAKE_FLAGS)"
 
 
 clean : 
 	$(ECHO) "### Deleting all derived files..."
-	@if exist $(PRODUCT) $(RM) $(PRODUCT)
+	$(RM) $(PRODUCT)
 	$(RM) $(ALL_OBJS)
 	$(ECHO) "### Deleted all derived files."
 

@@ -1,0 +1,12 @@
+MEX {
+	global:
+		mexFunction;
+		mexfilerequiredapiversion;
+		emlrtMexFcnProperties;
+		myCorners;
+		myCorners_initialize;
+		myCorners_terminate;
+		myCorners_atexit;
+	local:
+		*;
+};
