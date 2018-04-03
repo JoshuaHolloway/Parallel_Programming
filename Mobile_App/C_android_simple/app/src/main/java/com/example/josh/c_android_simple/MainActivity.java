@@ -35,9 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         array3 = test(array1, array2);
 
-        float temp1 = array3[0];
-        float temp2 = array3[1];
-        float temp3 = array3[2];
+
     }
 
     /**
