@@ -51,8 +51,10 @@ learning_rate = 0.01
 
 X = tf.placeholder(tf.float32,shape=[None,num_inputs]) # how is the data passed into thic column vector?
 hidden = layer(input=X, num_inputs=num_inputs, num_neurons=num_hidden, method=1)
-outputs = fully_connected(hidden,num_outputs,activation_fn=None) # Linear act. func
-#outputs = layer(input=hidden, num_inputs=num_hidden, num_neurons=num_outputs, method=1)
+#outputs = fully_connected(hidden,num_outputs,activation_fn=None) # Linear act. func
+
+# Only works with the build in fully_connected functio
+outputs = layer(input=hidden, num_inputs=num_hidden, num_neurons=num_outputs, method=0)
 
 # What dataype is outputs?
 print('outputs is a '+str(type(outputs)))
