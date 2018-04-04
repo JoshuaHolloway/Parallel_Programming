@@ -85,7 +85,8 @@ classificationLearner
 % 
 
 %% Load Test Data
-load rawSensorData_test
+%%%%%%load rawSensorData_test - COMMENTED OUT TO RUN ENTIRE SCRIPT WITHOUT
+%%%%%%OPENNING THE APP - josh
 
 %% Visualize classifier performance on test data
 %
@@ -93,6 +94,8 @@ load rawSensorData_test
 rawSensorDataTest = table(...
     total_acc_x_test, total_acc_y_test, total_acc_z_test, ...
     body_gyro_x_test, body_gyro_y_test, body_gyro_z_test);
+
+
 
 % Step 2: Extract features from raw sensor data
 T_mean = varfun(@Wmean, rawSensorDataTest);

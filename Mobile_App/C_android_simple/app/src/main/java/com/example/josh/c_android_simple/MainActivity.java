@@ -21,21 +21,35 @@ public class MainActivity extends AppCompatActivity {
         tv.setText(stringFromJNI());
 
         // Test the C-function:
-        float[] array3 = new float[3];
-        float[] array1 = new float[3];
-        float[] array2 = new float[3];
+        int N = 4;
+        float[] array3 = new float[N];
+        float[] array1 = new float[N];
+        float[] array2 = new float[N];
 
         array1[0] = 0;
         array1[1] = 1;
         array1[2] = 2;
+        array1[3] = 3;
 
         array2[0] = 0;
         array2[1] = 1;
         array2[2] = 2;
+        array2[3] = 3;
 
         array3 = test(array1, array2);
 
+        // Test the MATLAB generated C-code that performs mat-mult on a set of 2x2 matrices
+        float[] mat3 = new float[4];
+        float[] mat1 = new float[4];
+        float[] mat2 = new float[4];
 
+        mat1[0] = 0; mat2[0] = 0;
+        mat1[1] = 1; mat2[1] = 1;
+        mat1[2] = 2; mat2[2] = 2;
+        mat1[3] = 3; mat2[3] = 3;
+
+
+        mat3 = test_matlab(mat1, mat2);
     }
 
     /**
@@ -44,4 +58,5 @@ public class MainActivity extends AppCompatActivity {
      */
     public native String stringFromJNI();
     public native float[] test(float[] array1, float[] array2);
+    public native float[] test_matlab(float[] array1, float[] array2);
 }

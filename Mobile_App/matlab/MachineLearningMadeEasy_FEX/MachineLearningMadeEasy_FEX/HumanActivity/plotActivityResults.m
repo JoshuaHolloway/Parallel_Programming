@@ -46,15 +46,25 @@ ann2 = annotation(fig,'textbox',[ax1.Position(1) ax1.Position(2)+0.04 ax1.Positi
 
 %% Loop through the raw data and plot the sensor values
 try
+    josh = height(humanActivityTest)
 for ii = 600:height(humanActivityTest)
     
+    
+    
+    % THERE IS AN ERROR IN THE FOLLOWING LINE THAT THROWS THE ERROR -josh
     activity = predict(mdl,humanActivityTest{ii,1:end-1});
 
+    disp('DEBUG')
+    
+    
     if activity == humanActivityTest.activity(ii)
         predclr = [0 0.7 0.3];
     else
         predclr = [1 0 0];
     end
+    
+    
+    
 	set(ann1,'String',['Predicted Activity   : ' char(activity)],...
         'BackgroundColor',predclr);
     set(ann2,'String',['Actual Activity        : ' char(humanActivityTest.activity(ii))],...
@@ -64,14 +74,19 @@ for ii = 600:height(humanActivityTest)
     L(2).YData = g*rawSensorDataTest.total_acc_y_test(ii,:);
     L(3).YData = g*rawSensorDataTest.total_acc_z_test(ii,:);
 
+    
+    
 	L(4).YData =   rawSensorDataTest.body_gyro_x_test(ii,:);
     L(5).YData =   rawSensorDataTest.body_gyro_y_test(ii,:);
     L(6).YData =   rawSensorDataTest.body_gyro_z_test(ii,:);
 
     drawnow
     pause(delay)
+    
+    
 end
 catch err
+    
 end
 
 function cname = getClassifierName(trainedClassifier)
