@@ -5,7 +5,7 @@
  * File: _coder_mypredictCL_info.h 
  *  
  * MATLAB Coder version            : 4.0 
- * C/C++ source code generated on  : 04-Apr-2018 05:25:33 
+ * C/C++ source code generated on  : 04-Apr-2018 06:26:45 
  */
 
 #ifndef _CODER_MYPREDICTCL_INFO_H

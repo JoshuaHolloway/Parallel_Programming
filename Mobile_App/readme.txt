@@ -26,14 +26,8 @@ accelerometer (x,y,z) gyroscope (x,y,z)
 Description of generating C-code from model from here:
 https://www.mathworks.com/help/stats/c-generate-code-and-classification-learner.html
 
-0. Use the link in step 3 to train an SVM model. Run the classificationLearner app.
-
-1. In the Export section, click Export Model, and then select Export Compact Model. Click OK in the dialog box.
-
-2. The structure trainedModel appears in the MATLAB Workspace. The field ClassificationSVM of trainedModel contains the compact model.
-
-3. At the command line, save the compact model to a file called ClassificationLearnerModel.mat in your current folder.
-saveCompactModel(trainedModel.ClassificationSVM,'ClassificationLearnerModel');
-4. 
-
+Note: Code from that example generates correctly it seems.  Three step process to integrate the SVM from the activity detection into the app:
+1.) Generate C code from the SVM (i.e. modify the price prediction example)
+2.) In VS use the generated code and pass in the same values that are passed into the MALTAB equivalent code.
+3.) Integrate into Android.
 
