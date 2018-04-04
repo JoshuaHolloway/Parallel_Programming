@@ -37,19 +37,8 @@ public class MainActivity extends AppCompatActivity {
         array2[3] = 3;
 
         array3 = test(array1, array2);
+        int temp = 0;
 
-        // Test the MATLAB generated C-code that performs mat-mult on a set of 2x2 matrices
-        float[] mat3 = new float[4];
-        float[] mat1 = new float[4];
-        float[] mat2 = new float[4];
-
-        mat1[0] = 0; mat2[0] = 0;
-        mat1[1] = 1; mat2[1] = 1;
-        mat1[2] = 2; mat2[2] = 2;
-        mat1[3] = 3; mat2[3] = 3;
-
-
-        mat3 = test_matlab(mat1, mat2);
     }
 
     /**
@@ -58,5 +47,4 @@ public class MainActivity extends AppCompatActivity {
      */
     public native String stringFromJNI();
     public native float[] test(float[] array1, float[] array2);
-    public native float[] test_matlab(float[] array1, float[] array2);
 }

@@ -3,8 +3,9 @@ SVM in Android
 Step 1: Pass data from Java to C++ in android.
 
 Step 2: Do step 1 with code generated from MATLAB:
-	2.a) Arrays   -Done
-	2.b) Matrices -Done with matrix addition, now doing mat-mult naive with nested for-loops
+        2.a) Arrays   -Done
+        2.b) Matrices -Done with matrix addition, now doing mat-mult naive with nested for-loops
+                      -Done with matrix multiplication.
 
 Step 3: Repeat step 2 with C++ code generated from MATLAB using the SVM model trained in MATLAB.
 https://www.mathworks.com/matlabcentral/fileexchange/50232-machine-learning-made-easy?focused=6801923&tab=example
