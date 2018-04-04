@@ -10,24 +10,6 @@ from tensorflow.examples.tutorials.mnist import input_data
 import tensorflow as tf
 
 FLAGS = None
-
-
-def weight_variable(shape):
-  initial = tf.truncated_normal(shape, stddev=0.1)
-  return tf.Variable(initial)
-
-def bias_variable(shape):
-  initial = tf.constant(0.1, shape=shape)
-  return tf.Variable(initial)
-
-def conv2d(x, W):
-  return tf.nn.conv2d(x, W, strides=[1, 1, 1, 1], padding='SAME')
-
-def max_pool_2x2(x):
-  return tf.nn.max_pool(x, ksize=[1, 2, 2, 1],
-                        strides=[1, 2, 2, 1], padding='SAME')
-
-
 #===============================================================================
 def main(_):
   # Import data
@@ -53,8 +35,14 @@ def main(_):
   b2 = tf.Variable(tf.zeros([784]))
   y = tf.matmul(y1, W2) + b2
 
+  # Layer 3: to be added to autoencoder
+  W3 = tf.Variable(tf.zeros([200, 10]))
+  b3 = tf.Variable(tf.zeros([10]))
+  y3 = tf.matmul(y1, W3) + b3
+
   # Loss:
   mse = tf.reduce_mean(tf.square(y - x))
+  # drop a softmax here for y3 vs. y_
 
   # Specify how one step of training looks with specified loss function
   # Under the hood: add new op to computational graph including
@@ -63,6 +51,7 @@ def main(_):
   # -ops to apply update steps to the parameters
   #train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
   train_step = tf.train.GradientDescentOptimizer(0.5).minimize(mse)
+  # train_step3 for classifier network
 
   # Build session:
   sess = tf.InteractiveSession()
@@ -70,6 +59,7 @@ def main(_):
   # Initialize variables
   tf.global_variables_initializer().run()
 
+  # REPEAT THIS LOOP AFTER LEARNED ENCODER
   # Train the net
   for _ in range(1000):
 
@@ -91,6 +81,16 @@ def main(_):
 
   # Evaluate accuracy on test set
   print(sess.run(accuracy, feed_dict={x: mnist.test.images}))
+  print('done training autoencoder')
+  print('beginning to train classifier with learned encoder')
+
+
+  #Extract the encoder
+  #Add new layer to encoder with softmax classifier => arch: 784-200-10
+  #Train while holding W1,b1 constant.
+  tf.stop_gradient(W1)
+  tf.stop_gradient(b1)
+  print('W1.shape =' + str(W1.shape))
 
 
 if __name__ == '__main__':
