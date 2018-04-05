@@ -41,6 +41,34 @@ def tensor_2_nparray(tensor):
     sess.run(tensor)
     return tensor.eval(sess)
 #===============================================================================
+def mosiac(array):
+    # Convert the rows of array into matrices of dimension sqrt(cols)xsqrt(cols)
+    print('Inside mosiac()')
+    print('array.shape[0] = ' + str(array.shape[0]))
+    print('array.shape[1] = ' + str(array.shape[1]))
+    square = int(np.sqrt(array.shape[1]))
+    row_elems = 5
+    col_elems = row_elems
+    mat = np.zeros([row_elems * square, col_elems * square])
+    for i in range(row_elems):
+        for j in range(col_elems):
+            lower_i = i*square
+            upper_i = i*square+square
+            lower_j = j*square
+            upper_j = j*square+square
+            mat[lower_i : upper_i, lower_j : upper_j] = array[i*row_elems+j,:].reshape(square,square)
+    plt.matshow(mat)
+    plt.show()
+#===============================================================================
+def reg(W, lambd, type):
+    if type == 'L1':
+        return (1 / lambd) * tf.reduce_sum(tf.abs(W))
+    elif type == 'L2':
+        return (1 / lambd) * tf.reduce_sum(tf.square(W))
+#===============================================================================
+def leaky_relu(z, name=None):
+    return tf.maximum(0.01 * z, z, name=name)
+#===============================================================================
 def main(_):
     # Import data
     mnist = input_data.read_data_sets(FLAGS.data_dir, one_hot=True)
@@ -54,19 +82,23 @@ def main(_):
     #===========================================================================
 
     # Network 1: Auto-Encoder: 784 -> 200 -> 784, Classifier: 784 -> 200 -> 10
-    y1, W1, b1 = layer(input=x,  num_inputs=784, num_neurons=200) #Layer 1-encoder
-    y2, W2, b2 = layer(input=y1, num_inputs=200, num_neurons=784) #Layer 2-decoder
+
+    y0 = tf.layers.dense(x, 400, activation=leaky_relu)
+    z1, W1, b1 = layer(input=y0,  num_inputs=400, num_neurons=200) #Layer 1-encoder
+    y1 = tf.nn.sigmoid(z1)
+    y01 = tf.layers.dense(y1, 400, activation=leaky_relu)
+    y2, W2, b2 = layer(input=y01, num_inputs=400, num_neurons=784) #Layer 2-decoder
     # Dims:
     # y1 is ?x200 -> ? corresponds to M
     # x is ?x784
     # W1 is 784x200 => x * W1  is [?x784]*[784x200] = [?x200]
 
-    import numpy as np
     p = np.array([0.01,0.1,0.5,0.8])
     mse = tf.reduce_mean(tf.square(y2 - x))
-    loss = mse + sparsity_constraint(0.0000001, p_hat(y1)) # NEED TO ADD FROBENIUS NORM OF W1 and W2 sill
+    beta = 1
+    loss = mse + beta * sparsity_constraint(0.01, p_hat(y1)) # NEED TO ADD FROBENIUS NORM OF W1 and W2 sill
 
-    alpha = 0.001
+    alpha = 0.1
     step = tf.train.GradientDescentOptimizer(alpha).minimize(loss)
 
     # Train the net - auto-encoder:
@@ -80,24 +112,16 @@ def main(_):
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32)) # Cast to float and sum them
     print(sess.run(accuracy, feed_dict={x: mnist.test.images})) # Evaluate accuracy on test set
 
-    w1 = tensor_2_nparray(W1)
-    w1 = w1.T
+    w1 = tensor_2_nparray(W1).T
+    #w1 = w1.T
 
     print('Type of W1 is '+str(type(W1)))
     print('Shape of W1 is '+str(W1.get_shape()))
     print('Type of w1 is '+str(type(w1)))
     print('Shape of w1 is '+str(w1.shape))
 
-    row_elems = 50
-    col_elems = row_elems
-    mat = np.zeros([row_elems*28, col_elems*28])
-    for i in range(row_elems):
-        for j in range(col_elems):
-            mat[i*28:i*28+28,j*28:j*28+28] = w1[i*2+j,:].reshape(28,28)
 
 
-    plt.matshow(mat)
-    plt.show()
 
 
 
@@ -109,9 +133,8 @@ def main(_):
     #Train while holding W1,b1 constant.
     tf.stop_gradient(W1)
     tf.stop_gradient(b1)
-    y1 = tf.matmul(x, W1) + b1
-    tf.stop_gradient(W1)
-    tf.stop_gradient(b1)
+    #y1 = tf.matmul(x, W1) + b1
+
 
     #===========================================================================
     #===NETWORK 2=ENCODER + CLASSIFIER 784-200-10===============================
@@ -157,6 +180,10 @@ def main(_):
     # Evaluate accuracy on test set
     print(sess.run(accuracy, feed_dict={x: mnist.test.images,
                                       y: mnist.test.labels}))
+
+
+    # Draw the mosiac of encoder weights
+    mosiac(w1)
 
 #===============================================================================
 if __name__ == '__main__':
