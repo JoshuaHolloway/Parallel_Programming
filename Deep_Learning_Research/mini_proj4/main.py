@@ -20,16 +20,30 @@ def arch(type, input, labels):
     y1, W1, b1 = layer(input=input,  num_inputs=784, num_neurons=200) #Layer 1-encoder
     if type == 'autoencoder':
       y2, W2, b2 = layer(input=y1, num_inputs=200, num_neurons=784) #Layer 2-decoder
-      mse_net1 = tf.reduce_mean(tf.square(y2 - input))
-      return y2, W1, b1, mse_net1
+      prediction=y2
+      error = prediction - labels
+      loss = tf.reduce_mean(tf.square(error))
+      step = tf.train.GradientDescentOptimizer(0.5).minimize(loss)
+      correct_prediction = tf.reduce_mean(tf.square(error)) # change this for classification to: correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
+      accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32)) # Cast to float and sum them
+      return y2, W1, b1, step, accuracy
     elif type == 'classifier-1':
       y2_softmax, W2_softmax, b2_softmax = layer(input=y1, num_inputs=200, num_neurons=10) #Layer 2-classifier
-      #cross_entropy_net1 = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y, logits=y2_softmax))
-      return y2_softmax
+      prediction=y2_softmax
+      loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=prediction,labels=labels))
+      step = tf.train.GradientDescentOptimizer(0.5).minimize(loss)
+      correct_prediction = tf.equal(tf.argmax(prediction, 1), tf.argmax(labels, 1))
+      accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32)) # Cast to float and sum them
+      return y2_softmax, step, accuracy
   elif type == 'classifier-2':
     yy1, WW1, bb1 = layer(input=input,  num_inputs=784, num_neurons=200) #Layer 1
     yy2_softmax, WW2_softmax, bb2_softmax = layer(input=yy1, num_inputs=200, num_neurons=10) #Layer 2
-    return yy2_softmax
+    prediction = yy2_softmax
+    loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=yy2_softmax, labels=labels))
+    step = tf.train.GradientDescentOptimizer(0.5).minimize(loss)
+    correct_prediction = tf.equal(tf.argmax(prediction, 1), tf.argmax(labels, 1))
+    accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32)) # Cast to float and sum them
+    return yy2_softmax, step, accuracy
 #===============================================================================
 def main(_):
   # Import data
@@ -39,19 +53,10 @@ def main(_):
   x = tf.placeholder(tf.float32, [None, 784])
   y = tf.placeholder(tf.float32, [None, 10])
 
-  # Define architecture
-  y2, W1, b1, mse_net1  = arch(type='autoencoder', input=x, labels=x)   #Net-1: Autoencoder: 784->200->784
-  y2_softmax = arch(type='classifier-1',  input=x, labels=y)  #Net-1: Classifier:  784->200->10
-  yy2_softmax = arch(type='classifier-2', input=x, labels=y) #Net-2: 784->200->10
-
-  # Loss:
-  #mse_net1 = tf.reduce_mean(tf.square(y2 - x))
-  cross_entropy_net1 = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y, logits=y2_softmax))
-  cross_entropy_net2 = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y, logits=yy2_softmax))
-
-  train_step__MSE_net1 = tf.train.GradientDescentOptimizer(0.5).minimize(mse_net1)
-  train_step_Xentropy_net1 = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy_net1)
-  train_step_Xentropy_net2 = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy_net2)
+  # Define architectures
+  y2, W1, b1, train_step__MSE_net1, accuracy_net1      = arch(type='autoencoder', input=x, labels=x)   #Net-1: Autoencoder: 784->200->784
+  y2_softmax, train_step_Xentropy_net1, accuracy_net1classifier  = arch(type='classifier-1',  input=x, labels=y) #Net-1: Classifier:  784->200->10
+  yy2_softmax, train_step_Xentropy_net2, accuracy_net2classifier = arch(type='classifier-2', input=x, labels=y)  #Net-2: 784->200->10
 
   # Train the net - auto-encoder:
   tf.global_variables_initializer().run() # Initialize variables
@@ -60,12 +65,7 @@ def main(_):
     sess.run(train_step__MSE_net1, feed_dict={x: batch_xs})#Execute y2 = W2 *(W1*x + b1) + b2
 
   # Test trained model
-  correct_prediction = tf.reduce_mean(tf.square(y2 - x)) # change this for classification to: correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
-  accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32)) # Cast to float and sum them
-  print(sess.run(accuracy, feed_dict={x: mnist.test.images})) # Evaluate accuracy on test set
-
-  print('done training autoencoder')
-  print('beginning to train classifier with learned encoder')
+  print(sess.run(accuracy_net1, feed_dict={x: mnist.test.images})) # Evaluate accuracy on test set
 
   #Extract the encoder
   #Add new layer to encoder with softmax classifier => arch: 784-200-10
@@ -79,14 +79,9 @@ def main(_):
     batch_xs, batch_ys = mnist.train.next_batch(100)#Grab batch
     sess.run(train_step_Xentropy_net1, feed_dict={x: batch_xs, y: batch_ys})
 
-  # Test trained model
-  correct_prediction = tf.equal(tf.argmax(y2_softmax, 1), tf.argmax(y, 1))
-  accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32)) # Cast to float and sum them
-
   # Evaluate accuracy on test set
-  print(sess.run(accuracy, feed_dict={x: mnist.test.images,
+  print(sess.run(accuracy_net1classifier, feed_dict={x: mnist.test.images,
                                       y: mnist.test.labels}))
-
 
   # Train net 2:
   tf.global_variables_initializer().run() # Initialize variables
@@ -94,12 +89,8 @@ def main(_):
     batch_xs, batch_ys = mnist.train.next_batch(100)#Grab batch
     sess.run(train_step_Xentropy_net2, feed_dict={x: batch_xs, y: batch_ys})
 
-  # Test trained model
-  correct_prediction = tf.equal(tf.argmax(y2_softmax, 1), tf.argmax(y, 1))
-  accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32)) # Cast to float and sum them
-
   # Evaluate accuracy on test set
-  print(sess.run(accuracy, feed_dict={x: mnist.test.images,
+  print(sess.run(accuracy_net2classifier, feed_dict={x: mnist.test.images,
                                       y: mnist.test.labels}))
 #===============================================================================
 if __name__ == '__main__':
