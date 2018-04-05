@@ -1,14 +1,12 @@
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-
 import argparse
 import sys
-
 from tensorflow.examples.tutorials.mnist import input_data
-
 import tensorflow as tf
-
+import numpy as np
+import matplotlib.pyplot as plt
 FLAGS = None
 # Build session
 sess = tf.InteractiveSession()
@@ -21,6 +19,9 @@ def layer(input, num_inputs, num_neurons):
   return layer_name, W, b
 #===============================================================================
 def KL(p, q):
+    # KL-Divergence between PMF's P and Q
+    # p is scalar
+    # q is
     return p * tf.log(p/q) + (1-p) * tf.log((1-p) / (1-q))
 #===============================================================================
 def p_hat(a):
@@ -31,6 +32,14 @@ def p_hat(a):
 #===============================================================================
 def sparsity_constraint(p, y):
     return tf.reduce_sum(KL(p, p_hat(y))) # Penalize neuron's too active
+#===============================================================================
+def tensor_board():
+    writer = tf.summary.FileWriter("./output",sess.graph)
+    writer.close()
+#===============================================================================
+def tensor_2_nparray(tensor):
+    sess.run(tensor)
+    return tensor.eval(sess)
 #===============================================================================
 def main(_):
     # Import data
@@ -55,7 +64,7 @@ def main(_):
     import numpy as np
     p = np.array([0.01,0.1,0.5,0.8])
     mse = tf.reduce_mean(tf.square(y2 - x))
-    loss = mse + sparsity_constraint(p[2], p_hat(y1)) # NEED TO ADD FROBENIUS NORM OF W1 and W2 sill
+    loss = mse + sparsity_constraint(0.0000001, p_hat(y1)) # NEED TO ADD FROBENIUS NORM OF W1 and W2 sill
 
     alpha = 0.001
     step = tf.train.GradientDescentOptimizer(alpha).minimize(loss)
@@ -71,19 +80,25 @@ def main(_):
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32)) # Cast to float and sum them
     print(sess.run(accuracy, feed_dict={x: mnist.test.images})) # Evaluate accuracy on test set
 
-    import numpy as np
-    sess.run(W1)
-    print('josh')
-    print('josh')
-    print('josh')
-    print('josh')
-    print('josh')
-    print('josh')
-    print(W1)
+    w1 = tensor_2_nparray(W1)
+    w1 = w1.T
+
+    print('Type of W1 is '+str(type(W1)))
+    print('Shape of W1 is '+str(W1.get_shape()))
+    print('Type of w1 is '+str(type(w1)))
+    print('Shape of w1 is '+str(w1.shape))
+
+    row_elems = 50
+    col_elems = row_elems
+    mat = np.zeros([row_elems*28, col_elems*28])
+    for i in range(row_elems):
+        for j in range(col_elems):
+            mat[i*28:i*28+28,j*28:j*28+28] = w1[i*2+j,:].reshape(28,28)
 
 
-    writer = tf.summary.FileWriter("./output",sess.graph)
-    writer.close()
+    plt.matshow(mat)
+    plt.show()
+
 
 
     print('done training autoencoder')
