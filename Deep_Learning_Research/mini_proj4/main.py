@@ -1,17 +1,12 @@
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-
 import argparse
 import sys
-
 from tensorflow.examples.tutorials.mnist import input_data
-
 import tensorflow as tf
-
 FLAGS = None
-# Build session:
-sess = tf.InteractiveSession()
+sess = tf.InteractiveSession() # Build session
 #===============================================================================
 def layer(input, num_inputs, num_neurons):
   initializer = tf.variance_scaling_initializer()
@@ -19,6 +14,22 @@ def layer(input, num_inputs, num_neurons):
   b = tf.Variable(tf.zeros([num_neurons]))
   layer_name = tf.matmul(input, W) + b
   return layer_name, W, b
+#===============================================================================
+def arch(type, input, labels):
+  if type == 'autoencoder' or type == 'classifier-1':
+    y1, W1, b1 = layer(input=input,  num_inputs=784, num_neurons=200) #Layer 1-encoder
+    if type == 'autoencoder':
+      y2, W2, b2 = layer(input=y1, num_inputs=200, num_neurons=784) #Layer 2-decoder
+      mse_net1 = tf.reduce_mean(tf.square(y2 - input))
+      return y2, W1, b1, mse_net1
+    elif type == 'classifier-1':
+      y2_softmax, W2_softmax, b2_softmax = layer(input=y1, num_inputs=200, num_neurons=10) #Layer 2-classifier
+      #cross_entropy_net1 = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y, logits=y2_softmax))
+      return y2_softmax
+  elif type == 'classifier-2':
+    yy1, WW1, bb1 = layer(input=input,  num_inputs=784, num_neurons=200) #Layer 1
+    yy2_softmax, WW2_softmax, bb2_softmax = layer(input=yy1, num_inputs=200, num_neurons=10) #Layer 2
+    return yy2_softmax
 #===============================================================================
 def main(_):
   # Import data
@@ -28,17 +39,13 @@ def main(_):
   x = tf.placeholder(tf.float32, [None, 784])
   y = tf.placeholder(tf.float32, [None, 10])
 
-  # Network 1: Auto-Encoder: 784 -> 200 -> 784, Classifier: 784 -> 200 -> 10
-  y1, W1, b1 = layer(input=x,  num_inputs=784, num_neurons=200) #Layer 1-encoder
-  y2, W2, b2 = layer(input=y1, num_inputs=200, num_neurons=784) #Layer 2-decoder
-  y2_softmax, W2_softmax, b2_softmax = layer(input=y1, num_inputs=200, num_neurons=10) #Layer 2-classifier
-
-  # Network 2: 784 -> 200 -> 10
-  yy1, WW1, bb1 = layer(input=x,  num_inputs=784, num_neurons=200) #Layer 1
-  yy2_softmax, WW2_softmax, bb2_softmax = layer(input=yy1, num_inputs=200, num_neurons=10) #Layer 2
+  # Define architecture
+  y2, W1, b1, mse_net1  = arch(type='autoencoder', input=x, labels=x)   #Net-1: Autoencoder: 784->200->784
+  y2_softmax = arch(type='classifier-1',  input=x, labels=y)  #Net-1: Classifier:  784->200->10
+  yy2_softmax = arch(type='classifier-2', input=x, labels=y) #Net-2: 784->200->10
 
   # Loss:
-  mse_net1 = tf.reduce_mean(tf.square(y2 - x))
+  #mse_net1 = tf.reduce_mean(tf.square(y2 - x))
   cross_entropy_net1 = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y, logits=y2_softmax))
   cross_entropy_net2 = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y, logits=yy2_softmax))
 

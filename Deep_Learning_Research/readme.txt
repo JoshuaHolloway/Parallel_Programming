@@ -1,5 +1,5 @@
 The project code is here:
-In /Parallel_Vision_Research/Deep_Learning_Research/mini_proj3/main.py
+In /Parallel_Vision_Research/Deep_Learning_Research/mini_proj4/main.py
 
 The network does this:
 -Train auto-encoder on MNIST with arch: 784-200-784
