@@ -11,12 +11,39 @@ FLAGS = None
 # Build session
 sess = tf.InteractiveSession()
 #===============================================================================
-def layer(input, num_inputs, num_neurons):
-  initializer = tf.variance_scaling_initializer()
-  W = tf.Variable(initializer([num_inputs, num_neurons])) # Num Inputs x Num Neurons
-  b = tf.Variable(tf.zeros([num_neurons]))
-  layer_name = tf.matmul(input, W) + b
-  return layer_name, W, b
+def layer1(input, num_inputs, num_neurons, activation):
+    initializer = tf.variance_scaling_initializer()
+    W = tf.Variable(initializer([num_inputs, num_neurons]),name='W1') # Num Inputs x Num Neurons
+    b = tf.Variable(tf.zeros([num_neurons]),name='b1')
+    Z = tf.matmul(input, W) + b
+    if activation == 'sigmoid':
+        A = tf.nn.sigmoid(Z)
+        return A, Z, W, b
+    elif activation == 'relu':
+        A = tf.nn.relu(Z)
+        return A, Z, W, b
+    elif activation == 'tanh':
+        A = tf.nn.tanh(Z)
+        return A, Z, W, b
+    elif activation == 'linear':
+        return Z, W, b
+#===============================================================================
+def layer2(input, num_inputs, num_neurons, activation):
+    initializer = tf.variance_scaling_initializer()
+    W = tf.Variable(initializer([num_inputs, num_neurons]),name='W2') # Num Inputs x Num Neurons
+    b = tf.Variable(tf.zeros([num_neurons]),name='b2')
+    Z = tf.matmul(input, W) + b
+    if activation == 'sigmoid':
+        A = tf.nn.sigmoid(Z)
+        return A, Z, W, b
+    elif activation == 'relu':
+        A = tf.nn.relu(Z)
+        return A, Z, W, b
+    elif activation == 'tanh':
+        A = tf.nn.tanh(Z)
+        return A, Z, W, b
+    elif activation == 'linear':
+        return Z, W, b
 #===============================================================================
 def KL(p, q):
     # KL-Divergence between PMF's P and Q
@@ -47,7 +74,7 @@ def mosiac(array):
     print('array.shape[0] = ' + str(array.shape[0]))
     print('array.shape[1] = ' + str(array.shape[1]))
     square = int(np.sqrt(array.shape[1]))
-    row_elems = 5
+    row_elems = 10
     col_elems = row_elems
     mat = np.zeros([row_elems * square, col_elems * square])
     for i in range(row_elems):
@@ -66,8 +93,11 @@ def reg(W, lambd, type):
     elif type == 'L2':
         return (1 / lambd) * tf.reduce_sum(tf.square(W))
 #===============================================================================
-def leaky_relu(z, name=None):
-    return tf.maximum(0.01 * z, z, name=name)
+def leaky_relu(Z, beta):
+    return tf.maximum(Z, beta * Z)
+#===============================================================================
+def mse(Y, A):
+    return tf.reduce_mean(tf.square(A - Y))
 #===============================================================================
 def main(_):
     # Import data
@@ -82,67 +112,61 @@ def main(_):
     #===========================================================================
 
     # Network 1: Auto-Encoder: 784 -> 200 -> 784, Classifier: 784 -> 200 -> 10
-
-    y0 = tf.layers.dense(x, 400, activation=leaky_relu)
-    z1, W1, b1 = layer(input=y0,  num_inputs=400, num_neurons=200) #Layer 1-encoder
-    y1 = tf.nn.sigmoid(z1)
-    y01 = tf.layers.dense(y1, 400, activation=leaky_relu)
-    y2, W2, b2 = layer(input=y01, num_inputs=400, num_neurons=784) #Layer 2-decoder
+    A1, Z1, W1, b1 = layer1(input=x,  num_inputs=784, num_neurons=200, activation='sigmoid') #Layer 1-encoder
+    y2, W2, b2 = layer2(input=A1, num_inputs=200, num_neurons=784, activation='linear') #Layer 2-decoder
     # Dims:
     # y1 is ?x200 -> ? corresponds to M
     # x is ?x784
     # W1 is 784x200 => x * W1  is [?x784]*[784x200] = [?x200]
 
-    p = np.array([0.01,0.1,0.5,0.8])
-    mse = tf.reduce_mean(tf.square(y2 - x))
-    beta = 1
-    loss = mse + beta * sparsity_constraint(0.01, p_hat(y1)) # NEED TO ADD FROBENIUS NORM OF W1 and W2 sill
+    #p = np.array([0.01,0.1,0.5,0.8])
+    #beta = 0
+    #loss = mse(y2, x) + beta * sparsity_constraint(0.8, p_hat(y1)) # NEED TO ADD FROBENIUS NORM OF W1 and W2 sill
+    loss = mse(y2, x)
 
-    alpha = 0.1
-    step = tf.train.GradientDescentOptimizer(alpha).minimize(loss)
+    alpha = 0.001
+    var_list_1 = [W1,b1,W2,b2]
+    step = tf.train.GradientDescentOptimizer(alpha).minimize(loss, var_list=var_list_1)
+
+    #train_a = tf.train.GradientDescentOptimizer(0.1).minimize(loss_a, var_list=[A])
+    #train_b = tf.train.GradientDescentOptimizer(0.1).minimize(loss_b, var_list=[B])
+
+    ## Saver object
+    #saver = tf.train.Saver()
 
     # Train the net - auto-encoder:
     tf.global_variables_initializer().run() # Initialize variables
     for _ in range(1000):
         batch_xs, batch_ys = mnist.train.next_batch(100)#Grab batch
+        #mosiac(batch_xs)
         sess.run(step, feed_dict={x: batch_xs})#Execute y2 = W2 *(W1*x + b1) + b2
+
+    ## Save graph and parameters
+    #saver.save(sess,'my_test_model')
 
     # Test trained model
     correct_prediction = tf.reduce_mean(tf.square(y2 - x)) # change this for classification to: correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32)) # Cast to float and sum them
     print(sess.run(accuracy, feed_dict={x: mnist.test.images})) # Evaluate accuracy on test set
 
-    w1 = tensor_2_nparray(W1).T
-    #w1 = w1.T
-
-    print('Type of W1 is '+str(type(W1)))
-    print('Shape of W1 is '+str(W1.get_shape()))
-    print('Type of w1 is '+str(type(w1)))
-    print('Shape of w1 is '+str(w1.shape))
-
-
-
-
-
-
-    print('done training autoencoder')
-    print('beginning to train classifier with learned encoder')
-
     #Extract the encoder
     #Add new layer to encoder with softmax classifier => arch: 784-200-10
     #Train while holding W1,b1 constant.
     tf.stop_gradient(W1)
     tf.stop_gradient(b1)
-    #y1 = tf.matmul(x, W1) + b1
 
+    # Draw the mosiac of encoder weights
+    mosiac(tensor_2_nparray(W1).T)
 
     #===========================================================================
     #===NETWORK 2=ENCODER + CLASSIFIER 784-200-10===============================
     #===========================================================================
 
-    y2_softmax, W2_softmax, b2_softmax = layer(input=y1, num_inputs=200, num_neurons=10) #Layer 2-classifier
+
+    y2_softmax, W2_softmax, b2_softmax = layer2(input=A1, num_inputs=200, num_neurons=10, activation='linear') #Layer 2-classifier
+    var_list_2 = [W2_softmax,b2_softmax]
     cross_entropy_net1 = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y, logits=y2_softmax))
-    train_step_Xentropy_net1 = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy_net1)
+    train_step_Xentropy_net1 = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy_net1, var_list=var_list_2)
 
     # Train the net - classifier:
     tf.global_variables_initializer().run() # Initialize variables
@@ -162,8 +186,8 @@ def main(_):
     #===NETWORK 3=FRESH CLASSIFIER 784-200-10===================================
     #===========================================================================
     # Create brand new network and train it:
-    y1, W1, b1 = layer(input=x,  num_inputs=784, num_neurons=200) #Layer 1-encoder
-    y2_softmax, W2_softmax, b2_softmax = layer(input=y1, num_inputs=200, num_neurons=10) #Layer 2-classifier
+    A1, y1, W1, b1 = layer1(input=x,  num_inputs=784, num_neurons=200, activation='sigmoid') #Layer 1-encoder
+    y2_softmax, W2_softmax, b2_softmax = layer2(input=A1, num_inputs=200, num_neurons=10, activation='linear') #Layer 2-classifier
     cross_entropy_net1 = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y, logits=y2_softmax))
     train_step_Xentropy_net1 = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy_net1)
 
@@ -182,8 +206,7 @@ def main(_):
                                       y: mnist.test.labels}))
 
 
-    # Draw the mosiac of encoder weights
-    mosiac(w1)
+
 
 #===============================================================================
 if __name__ == '__main__':
