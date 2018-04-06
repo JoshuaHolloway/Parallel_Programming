@@ -198,3 +198,16 @@ for digit_index in range(n_test_digits):
     plt.subplot(n_test_digits, 2, digit_index * 2 + 2)
     plot_image(outputs_val[digit_index])
     plt.show()
+#===============================================================================
+# E-Visualizing the extracted features
+with tf.Session() as sess:
+    saver.restore(sess, "./my_model_sparse.ckpt") # not shown in the book
+    weights1_val = W1.eval()
+
+for i in range(5):
+    plt.subplot(1, 5, i + 1)
+    plot_image(weights1_val.T[i])
+
+save_fig("extracted_features_plot") # not shown
+plt.show()                          # not shown
+#===============================================================================
