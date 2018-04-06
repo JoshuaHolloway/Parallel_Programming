@@ -99,6 +99,10 @@ def leaky_relu(Z, beta):
 def mse(Y, A):
     return tf.reduce_mean(tf.square(A - Y))
 #===============================================================================
+def shape(X):
+    print(type(X))
+    return X.get_shape()
+#===============================================================================
 def main(_):
     # Import data
     mnist = input_data.read_data_sets(FLAGS.data_dir, one_hot=True)
@@ -114,15 +118,18 @@ def main(_):
     # Network 1: Auto-Encoder: 784 -> 200 -> 784, Classifier: 784 -> 200 -> 10
     A1, Z1, W1, b1 = layer1(input=x,  num_inputs=784, num_neurons=200, activation='sigmoid') #Layer 1-encoder
     y2, W2, b2 = layer2(input=A1, num_inputs=200, num_neurons=784, activation='linear') #Layer 2-decoder
+
+
+
+
     # Dims:
     # y1 is ?x200 -> ? corresponds to M
     # x is ?x784
     # W1 is 784x200 => x * W1  is [?x784]*[784x200] = [?x200]
 
-    #p = np.array([0.01,0.1,0.5,0.8])
-    #beta = 0
-    #loss = mse(y2, x) + beta * sparsity_constraint(0.8, p_hat(y1)) # NEED TO ADD FROBENIUS NORM OF W1 and W2 sill
-    loss = mse(y2, x)
+    p = np.array([0.01,0.1,0.5,0.8])
+    beta = 3
+    loss = mse(y2, x) + beta * sparsity_constraint(p[0], p_hat(A1)) # NEED TO ADD FROBENIUS NORM OF W1 and W2 sill
 
     alpha = 0.001
     var_list_1 = [W1,b1,W2,b2]
@@ -156,6 +163,9 @@ def main(_):
     tf.stop_gradient(b1)
 
     # Draw the mosiac of encoder weights
+    print('shape of A1 and W1:')
+    print(shape(A1))
+    print(shape(W1))
     mosiac(tensor_2_nparray(W1).T)
 
     #===========================================================================
