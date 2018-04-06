@@ -171,8 +171,6 @@ def main(_):
     #===========================================================================
     #===NETWORK 2=ENCODER + CLASSIFIER 784-200-10===============================
     #===========================================================================
-
-
     y2_softmax, W2_softmax, b2_softmax = layer2(input=A1, num_inputs=200, num_neurons=10, activation='linear') #Layer 2-classifier
     var_list_2 = [W2_softmax,b2_softmax]
     cross_entropy_net1 = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y, logits=y2_softmax))
@@ -214,10 +212,6 @@ def main(_):
     # Evaluate accuracy on test set
     print(sess.run(accuracy, feed_dict={x: mnist.test.images,
                                       y: mnist.test.labels}))
-
-
-
-
 #===============================================================================
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
