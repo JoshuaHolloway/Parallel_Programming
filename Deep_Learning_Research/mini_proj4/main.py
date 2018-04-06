@@ -119,9 +119,6 @@ def main(_):
     A1, Z1, W1, b1 = layer1(input=x,  num_inputs=784, num_neurons=200, activation='sigmoid') #Layer 1-encoder
     y2, W2, b2 = layer2(input=A1, num_inputs=200, num_neurons=784, activation='linear') #Layer 2-decoder
 
-
-
-
     # Dims:
     # y1 is ?x200 -> ? corresponds to M
     # x is ?x784
