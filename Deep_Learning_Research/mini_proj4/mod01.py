@@ -7,7 +7,6 @@ from __future__ import division, print_function, unicode_literals
 import tensorflow as tf
 import numpy as np
 import numpy.random as rnd
-import matplotlib.pyplot as plt
 import os
 import sys
 
@@ -18,8 +17,8 @@ def reset_graph(seed=42):
     np.random.seed(seed)
 
 # To plot pretty figures
-#import matplotlib
-#import matplotlib.pyplot as plt
+import matplotlib
+import matplotlib.pyplot as plt
 plt.rcParams['axes.labelsize'] = 14
 plt.rcParams['xtick.labelsize'] = 12
 plt.rcParams['ytick.labelsize'] = 12
@@ -27,73 +26,7 @@ plt.rcParams['ytick.labelsize'] = 12
 # Datset
 from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets("/tmp/data/")
-#===============================================================================
-#=JOSH==========================================================================
-#===============================================================================
-def layer(input, num_inputs, num_neurons, activation):
-    initializer = tf.variance_scaling_initializer()
-    W = tf.Variable(initializer([num_inputs, num_neurons])) # Num Inputs x Num Neurons
-    b = tf.Variable(tf.zeros([num_neurons]))
-    Z = tf.matmul(input, W) + b
-    if activation == 'sigmoid':
-        A = tf.nn.sigmoid(Z)
-        return A, Z, W, b
-    elif activation == 'relu':
-        A = tf.nn.relu(Z)
-        return A, Z, W, b
-    elif activation == 'tanh':
-        A = tf.nn.tanh(Z)
-        return A, Z, W, b
-    elif activation == 'linear':
-        return Z, W, b
-#===============================================================================
-def tensor_2_nparray(tensor):
-    sess.run(tensor)
-    return tensor.eval(sess)
-#===============================================================================
-def shape(X):
-    print(type(X))
-    return X.get_shape()
-#===============================================================================
-def mosiac(array):
-    # Convert the rows of array into matrices of dimension sqrt(cols)xsqrt(cols)
-    print('Inside mosiac()')
-    print('array.shape[0] = ' + str(array.shape[0]))
-    print('array.shape[1] = ' + str(array.shape[1]))
-    square = int(np.sqrt(array.shape[1]))
-    row_elems = 10
-    col_elems = row_elems
-    mat = np.zeros([row_elems * square, col_elems * square])
-    for i in range(row_elems):
-        for j in range(col_elems):
-            lower_i = i*square
-            upper_i = i*square+square
-            lower_j = j*square
-            upper_j = j*square+square
-            mat[lower_i : upper_i, lower_j : upper_j] = array[i*row_elems+j,:].reshape(square,square)
-    plt.imshow(mat, cmap='gray')
-    plt.show()
-#===============================================================================
-def KL(p, q):
-    # KL-Divergence between PMF's P and Q
-    # p is scalar
-    # q is
-    return p * tf.log(p/q) + (1-p) * tf.log((1-p) / (1-q))
-#===============================================================================
-def p_hat(a):
-    # Averate activation of each neuron in encoder for all M examples
-    # Input is [? x 200]
-    # Output is (200,)
-    return tf.reduce_mean(a, axis=0) # Sum across rows - each row is an example
-#===============================================================================
-def MSE(Y, A):
-    return tf.reduce_mean(tf.square(A - Y))
-#===============================================================================
-def sparsity_constraint(p, p_hat):
-    return tf.reduce_sum(KL(p, p_hat)) # Penalize neuron's too active
-#===============================================================================
-#===============================================================================
-#===============================================================================
+
 #A couple utility functions to plot grayscale 28x28 image:
 def save_fig(fig_id, tight_layout=True):
 
@@ -107,108 +40,235 @@ def save_fig(fig_id, tight_layout=True):
         plt.tight_layout()
     plt.savefig(path, format='png', dpi=300)
     plt.show()
-#===============================================================================
-def itterate_over_examples(dataset, step, loss):
-    for iteration in range(n_batches):
-        x, y = dataset
-        sess.run(step, feed_dict={X: x})
-    sess.run(loss, feed_dict={X: x})
-    saver.save(sess, "./my_model_sparse.ckpt")
-#===============================================================================
-#===============================================================================
-# G-Sparse Autoencoder
-reset_graph()
-
-alpha = 0.01
-p = np.array([0.01,0.1,0.5,0.8])
-beta = 0.001
-
-X = tf.placeholder(tf.float32, shape=[None, 784])
-
-# REPLACED:
-A1, Z1, W1, b1 = layer(input=X,  num_inputs=784, num_neurons=200, activation='sigmoid') #Layer 1-encoder
-A2, W2, b2 = layer(input=A1, num_inputs=200, num_neurons=784, activation='linear') #Layer 2-decoder
-
-## Replacing:@
-## Replacing:@
-## Replacing:@
-loss = MSE(A2, X) + beta * sparsity_constraint(p[3], p_hat(A1))
-step = tf.train.AdamOptimizer(alpha).minimize(loss)
-init = tf.global_variables_initializer()
-saver = tf.train.Saver()
-
-n_epochs = 20
-batch_size = 1000
-
-
-tensor = np.zeros([7840,7840,n_epochs])
-with tf.Session() as sess:
-    init.run()
-    for epoch in range(n_epochs):
-
-        # Itterate over batches
-        n_batches = mnist.train.num_examples // batch_size
-
-        # Itterate over examples in each batch
-        itterate_over_examples(mnist.train.next_batch(batch_size), step, loss)
-        #for iteration in range(n_batches):
-    #        #print("\r{}%".format(100 * iteration // n_batches), end="")
-    #        #sys.stdout.flush()
-    #        X_batch, y_batch = mnist.train.next_batch(batch_size)
-    #        sess.run(step, feed_dict={X: X_batch})
-        #reconstruction_loss_val, sparsity_loss_val, loss_val = sess.run([reconstruction_loss, sparsity_loss, loss], feed_dict={X: X_batch})
-        #print("\r{}".format(epoch), "Train MSE:", reconstruction_loss_val, "\tSparsity loss:", sparsity_loss_val, "\tTotal loss:", loss_val)
-        #saver.save(sess, "./my_model_sparse.ckpt")
-
-        # JOSH - Drop in function to display the weights
-        # Draw the mosiac of encoder weights
-        w1 = tensor_2_nparray(W1)
-        print('w1.shape = ' + str(w1.shape))
-
-        # print the mosiac every epoch -Store to array!
-        mosiac(tensor_2_nparray(W1).T)
-
-
-
-        # INSTEAD OF SAVING HERE SIMPLY PLOT FROM THIS LOCATION.
-
-#show_reconstructed_digits(X, A2, "./my_model_sparse.ckpt")
-#===============================================================================
-# D-Visualizing the reconstruction
-n_test_digits = 2
-X_test = mnist.test.images[:n_test_digits]
-
-with tf.Session() as sess:
-    saver.restore(sess, "./my_model_sparse.ckpt") # not shown in the book
-    outputs_val = A2.eval(feed_dict={X: X_test})
 
 def plot_image(image, shape=[28, 28]):
     plt.imshow(image.reshape(shape), cmap="Greys", interpolation="nearest")
     plt.axis("off")
-
-for digit_index in range(n_test_digits):
-    plt.subplot(n_test_digits, 2, digit_index * 2 + 1)
-    plot_image(X_test[digit_index])
-    plt.subplot(n_test_digits, 2, digit_index * 2 + 2)
-    plot_image(outputs_val[digit_index])
     plt.show()
+
+def plot_multiple_images(images, n_rows, n_cols, pad=2):
+    images = images - images.min()  # make the minimum == 0, so the padding looks white
+    w,h = images.shape[1:]
+    image = np.zeros(((w+pad)*n_rows+pad, (h+pad)*n_cols+pad))
+    for y in range(n_rows):
+        for x in range(n_cols):
+            image[(y*(h+pad)+pad):(y*(h+pad)+pad+h),(x*(w+pad)+pad):(x*(w+pad)+pad+w)] = images[y*n_cols+x]
+    plt.imshow(image, cmap="Greys", interpolation="nearest")
+    plt.axis("off")
+    plt.show()
+#===============================================================================
+# B-Training one auto-encoder at a time in a single graph
+reset_graph()
+
+n_inputs = 28 * 28
+n_hidden1 = 300
+n_hidden2 = 150  # codings
+n_hidden3 = n_hidden1
+n_outputs = n_inputs
+
+learning_rate = 0.01
+l2_reg = 0.0001
+
+activation = tf.nn.elu
+regularizer = tf.contrib.layers.l2_regularizer(l2_reg)
+initializer = tf.contrib.layers.variance_scaling_initializer()
+
+X = tf.placeholder(tf.float32, shape=[None, n_inputs])
+
+weights1_init = initializer([n_inputs, n_hidden1])
+weights2_init = initializer([n_hidden1, n_hidden2])
+weights3_init = initializer([n_hidden2, n_hidden3])
+weights4_init = initializer([n_hidden3, n_outputs])
+
+weights1 = tf.Variable(weights1_init, dtype=tf.float32, name="weights1")
+weights2 = tf.Variable(weights2_init, dtype=tf.float32, name="weights2")
+weights3 = tf.Variable(weights3_init, dtype=tf.float32, name="weights3")
+weights4 = tf.Variable(weights4_init, dtype=tf.float32, name="weights4")
+
+biases1 = tf.Variable(tf.zeros(n_hidden1), name="biases1")
+biases2 = tf.Variable(tf.zeros(n_hidden2), name="biases2")
+biases3 = tf.Variable(tf.zeros(n_hidden3), name="biases3")
+biases4 = tf.Variable(tf.zeros(n_outputs), name="biases4")
+
+hidden1 = activation(tf.matmul(X, weights1) + biases1)
+hidden2 = activation(tf.matmul(hidden1, weights2) + biases2)
+hidden3 = activation(tf.matmul(hidden2, weights3) + biases3)
+outputs = tf.matmul(hidden3, weights4) + biases4
+
+reconstruction_loss = tf.reduce_mean(tf.square(outputs - X))
+
+optimizer = tf.train.AdamOptimizer(learning_rate)
+
+# Got rid of phases!
+# Got rid of phases!
+# Got rid of phases!
+# Got rid of phases!
+phase1_outputs = outputs
+phase1_reconstruction_loss = tf.reduce_mean(tf.square(phase1_outputs - X))
+phase1_reg_loss = regularizer(weights1) + regularizer(weights4) + regularizer(weights2) + regularizer(weights3)
+phase1_loss = phase1_reconstruction_loss + phase1_reg_loss
+phase1_training_op = optimizer.minimize(phase1_loss)
+
+init = tf.global_variables_initializer()
+saver = tf.train.Saver()
+
+training_ops = [phase1_training_op]
+reconstruction_losses = [phase1_reconstruction_loss]
+n_epochs = 4
+batch_sizes = 150
+
+with tf.Session() as sess:
+    init.run()
+    for epoch in range(n_epochs):
+        n_batches = mnist.train.num_examples // batch_sizes
+        for iteration in range(n_batches):
+            print("\r{}%".format(100 * iteration // n_batches), end="")
+            sys.stdout.flush()
+            X_batch, y_batch = mnist.train.next_batch(batch_sizes)
+            sess.run(training_ops[0], feed_dict={X: X_batch})
+        loss_train = reconstruction_losses[0].eval(feed_dict={X: X_batch})
+        print("\r{}".format(epoch), "Train MSE:", loss_train)
+        saver.save(sess, "./my_model_one_at_a_time.ckpt")
+    loss_test = reconstruction_loss.eval(feed_dict={X: mnist.test.images})
+    print("Test MSE:", loss_test)
+#===============================================================================
+# C-Cache the frozen weights
+#training_ops = [phase1_training_op, phase2_training_op]
+training_ops = [phase1_training_op]
+#reconstruction_losses = [phase1_reconstruction_loss, phase2_reconstruction_loss]
+reconstruction_losses = [phase1_reconstruction_loss]
+n_epochs = [4, 4]
+batch_sizes = [150, 150]
+
+with tf.Session() as sess:
+    init.run()
+    #for phase in range(2):
+    for phase in range(1):
+        print("Training phase #{}".format(phase + 1))
+        if phase == 1:
+            hidden1_cache = hidden1.eval(feed_dict={X: mnist.train.images})
+        for epoch in range(n_epochs[phase]):
+            n_batches = mnist.train.num_examples // batch_sizes[phase]
+            for iteration in range(n_batches):
+                print("\r{}%".format(100 * iteration // n_batches), end="")
+                sys.stdout.flush()
+                if phase == 1:
+                    indices = rnd.permutation(mnist.train.num_examples)
+                    hidden1_batch = hidden1_cache[indices[:batch_sizes[phase]]]
+                    feed_dict = {hidden1: hidden1_batch}
+                    sess.run(training_ops[phase], feed_dict=feed_dict)
+                else:
+                    X_batch, y_batch = mnist.train.next_batch(batch_sizes[phase])
+                    feed_dict = {X: X_batch}
+                    sess.run(training_ops[phase], feed_dict=feed_dict)
+            loss_train = reconstruction_losses[phase].eval(feed_dict=feed_dict)
+            print("\r{}".format(epoch), "Train MSE:", loss_train)
+            saver.save(sess, "./my_model_cache_frozen.ckpt")
+    loss_test = reconstruction_loss.eval(feed_dict={X: mnist.test.images})
+    print("Test MSE:", loss_test)
 #===============================================================================
 # E-Visualizing the extracted features
 with tf.Session() as sess:
-    saver.restore(sess, "./my_model_sparse.ckpt") # not shown in the book
-    #weights1_val = W1.eval()
-    w1 = tensor_2_nparray(W1)
-    print('w1.shape = ' + str(w1.shape))
+    saver.restore(sess, "./my_model_one_at_a_time.ckpt") # not shown in the book
+    weights1_val = weights1.eval()
 
-    #print('shape of W1:')
-    #print(shape(W1))
-    mosiac(tensor_2_nparray(W1).T)
-
-
-for i in range(10):
+for i in range(5):
     plt.subplot(1, 5, i + 1)
-    plot_image(w1.T[i])
+    plot_image(weights1_val.T[i])
 
 save_fig("extracted_features_plot") # not shown
 plt.show()                          # not shown
 #===============================================================================
+# F-Unsupervised pre-training
+# Small neural net for  MNIST training
+reset_graph()
+
+n_inputs = 28 * 28
+n_hidden1 = n_hidden1
+n_hidden2 = n_hidden2
+n_outputs = 10
+
+learning_rate = 0.01
+l2_reg = 0.0005
+
+activation = tf.nn.elu
+regularizer = tf.contrib.layers.l2_regularizer(l2_reg)
+initializer = tf.contrib.layers.variance_scaling_initializer()
+
+X = tf.placeholder(tf.float32, shape=[None, n_inputs])
+y = tf.placeholder(tf.int32, shape=[None])
+
+weights1_init = initializer([n_inputs, n_hidden1])
+weights2_init = initializer([n_hidden1, n_hidden2])
+weights3_init = initializer([n_hidden2, n_outputs])
+
+weights1 = tf.Variable(weights1_init, dtype=tf.float32, name="weights1")
+weights2 = tf.Variable(weights2_init, dtype=tf.float32, name="weights2")
+weights3 = tf.Variable(weights3_init, dtype=tf.float32, name="weights3")
+
+biases1 = tf.Variable(tf.zeros(n_hidden1), name="biases1")
+biases2 = tf.Variable(tf.zeros(n_hidden2), name="biases2")
+biases3 = tf.Variable(tf.zeros(n_outputs), name="biases3")
+
+hidden1 = activation(tf.matmul(X, weights1) + biases1)
+hidden2 = activation(tf.matmul(hidden1, weights2) + biases2)
+logits = tf.matmul(hidden2, weights3) + biases3
+
+cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(labels=y, logits=logits)
+reg_loss = regularizer(weights1) + regularizer(weights2) + regularizer(weights3)
+loss = cross_entropy + reg_loss
+optimizer = tf.train.AdamOptimizer(learning_rate)
+training_op = optimizer.minimize(loss)
+
+correct = tf.nn.in_top_k(logits, y, 1)
+accuracy = tf.reduce_mean(tf.cast(correct, tf.float32))
+
+init = tf.global_variables_initializer()
+pretrain_saver = tf.train.Saver([weights1, weights2, biases1, biases2])
+saver = tf.train.Saver()
+
+## Regular training (without pre-training):
+n_epochs = 4
+batch_size = 150
+n_labeled_instances = 20000
+
+with tf.Session() as sess:
+    init.run()
+    for epoch in range(n_epochs):
+        n_batches = n_labeled_instances // batch_size
+        for iteration in range(n_batches):
+            print("\r{}%".format(100 * iteration // n_batches), end="")
+            sys.stdout.flush()
+            indices = rnd.permutation(n_labeled_instances)[:batch_size]
+            X_batch, y_batch = mnist.train.images[indices], mnist.train.labels[indices]
+            sess.run(training_op, feed_dict={X: X_batch, y: y_batch})
+        accuracy_val = accuracy.eval(feed_dict={X: X_batch, y: y_batch})
+        print("\r{}".format(epoch), "Train accuracy:", accuracy_val, end=" ")
+        saver.save(sess, "./my_model_supervised.ckpt")
+        accuracy_val = accuracy.eval(feed_dict={X: mnist.test.images, y: mnist.test.labels})
+        print("Regular training (without pre-training):")
+        print("Test accuracy:", accuracy_val)
+
+# Now, reusing the first two layers of the auto-encoder we pretrained:
+n_epochs = 4
+batch_size = 150
+n_labeled_instances = 20000
+
+#training_op = optimizer.minimize(loss, var_list=[weights3, biases3])  # Freeze layers 1 and 2 (optional)
+with tf.Session() as sess:
+    init.run()
+    pretrain_saver.restore(sess, "./my_model_cache_frozen.ckpt")
+    for epoch in range(n_epochs):
+        n_batches = n_labeled_instances // batch_size
+        for iteration in range(n_batches):
+            print("\r{}%".format(100 * iteration // n_batches), end="")
+            sys.stdout.flush()
+            indices = rnd.permutation(n_labeled_instances)[:batch_size]
+            X_batch, y_batch = mnist.train.images[indices], mnist.train.labels[indices]
+            sess.run(training_op, feed_dict={X: X_batch, y: y_batch})
+        accuracy_val = accuracy.eval(feed_dict={X: X_batch, y: y_batch})
+        print("\r{}".format(epoch), "Train accuracy:", accuracy_val, end="\t")
+        saver.save(sess, "./my_model_supervised_pretrained.ckpt")
+        accuracy_val = accuracy.eval(feed_dict={X: mnist.test.images, y: mnist.test.labels})
+        print("Reusing the first two layers of auto-encoder:")
+        print("Test accuracy:", accuracy_val)
