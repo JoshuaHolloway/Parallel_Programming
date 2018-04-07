@@ -45,17 +45,6 @@ def plot_image(image, shape=[28, 28]):
     plt.imshow(image.reshape(shape), cmap="Greys", interpolation="nearest")
     plt.axis("off")
     plt.show()
-
-def plot_multiple_images(images, n_rows, n_cols, pad=2):
-    images = images - images.min()  # make the minimum == 0, so the padding looks white
-    w,h = images.shape[1:]
-    image = np.zeros(((w+pad)*n_rows+pad, (h+pad)*n_cols+pad))
-    for y in range(n_rows):
-        for x in range(n_cols):
-            image[(y*(h+pad)+pad):(y*(h+pad)+pad+h),(x*(w+pad)+pad):(x*(w+pad)+pad+w)] = images[y*n_cols+x]
-    plt.imshow(image, cmap="Greys", interpolation="nearest")
-    plt.axis("off")
-    plt.show()
 #===============================================================================
 # B-Training one auto-encoder at a time in a single graph
 reset_graph()
@@ -96,7 +85,6 @@ hidden3 = activation(tf.matmul(hidden2, weights3) + biases3)
 outputs = tf.matmul(hidden3, weights4) + biases4
 
 reconstruction_loss = tf.reduce_mean(tf.square(outputs - X))
-
 optimizer = tf.train.AdamOptimizer(learning_rate)
 
 # Got rid of phases!
@@ -107,13 +95,12 @@ phase1_outputs = outputs
 phase1_reconstruction_loss = tf.reduce_mean(tf.square(phase1_outputs - X))
 phase1_reg_loss = regularizer(weights1) + regularizer(weights4) + regularizer(weights2) + regularizer(weights3)
 phase1_loss = phase1_reconstruction_loss + phase1_reg_loss
-phase1_training_op = optimizer.minimize(phase1_loss)
+optimizer___ = optimizer.minimize(phase1_loss)
 
 init = tf.global_variables_initializer()
 saver = tf.train.Saver()
 
-training_ops = [phase1_training_op]
-reconstruction_losses = [phase1_reconstruction_loss]
+
 n_epochs = 4
 batch_sizes = 150
 
@@ -125,45 +112,33 @@ with tf.Session() as sess:
             print("\r{}%".format(100 * iteration // n_batches), end="")
             sys.stdout.flush()
             X_batch, y_batch = mnist.train.next_batch(batch_sizes)
-            sess.run(training_ops[0], feed_dict={X: X_batch})
-        loss_train = reconstruction_losses[0].eval(feed_dict={X: X_batch})
+            sess.run(optimizer___, feed_dict={X: X_batch})
+        loss_train = phase1_reconstruction_loss.eval(feed_dict={X: X_batch})
         print("\r{}".format(epoch), "Train MSE:", loss_train)
         saver.save(sess, "./my_model_one_at_a_time.ckpt")
     loss_test = reconstruction_loss.eval(feed_dict={X: mnist.test.images})
     print("Test MSE:", loss_test)
 #===============================================================================
 # C-Cache the frozen weights
-#training_ops = [phase1_training_op, phase2_training_op]
-training_ops = [phase1_training_op]
+#training_ops = [optimizer___, phase2_training_op]
+training_ops = [optimizer___]
 #reconstruction_losses = [phase1_reconstruction_loss, phase2_reconstruction_loss]
 reconstruction_losses = [phase1_reconstruction_loss]
-n_epochs = [4, 4]
-batch_sizes = [150, 150]
+
 
 with tf.Session() as sess:
     init.run()
-    #for phase in range(2):
-    for phase in range(1):
-        print("Training phase #{}".format(phase + 1))
-        if phase == 1:
-            hidden1_cache = hidden1.eval(feed_dict={X: mnist.train.images})
-        for epoch in range(n_epochs[phase]):
-            n_batches = mnist.train.num_examples // batch_sizes[phase]
-            for iteration in range(n_batches):
-                print("\r{}%".format(100 * iteration // n_batches), end="")
-                sys.stdout.flush()
-                if phase == 1:
-                    indices = rnd.permutation(mnist.train.num_examples)
-                    hidden1_batch = hidden1_cache[indices[:batch_sizes[phase]]]
-                    feed_dict = {hidden1: hidden1_batch}
-                    sess.run(training_ops[phase], feed_dict=feed_dict)
-                else:
-                    X_batch, y_batch = mnist.train.next_batch(batch_sizes[phase])
-                    feed_dict = {X: X_batch}
-                    sess.run(training_ops[phase], feed_dict=feed_dict)
-            loss_train = reconstruction_losses[phase].eval(feed_dict=feed_dict)
-            print("\r{}".format(epoch), "Train MSE:", loss_train)
-            saver.save(sess, "./my_model_cache_frozen.ckpt")
+
+    for epoch in range(n_epochs):
+        n_batches = mnist.train.num_examples // batch_sizes
+        for iteration in range(n_batches):
+            print("\r{}%".format(100 * iteration // n_batches), end="")
+            sys.stdout.flush()
+
+
+            X_batch, y_batch = mnist.train.next_batch(batch_sizes)
+            feed_dict = {X: X_batch}
+            sess.run(training_ops, feed_dict=feed_dict)
     loss_test = reconstruction_loss.eval(feed_dict={X: mnist.test.images})
     print("Test MSE:", loss_test)
 #===============================================================================
