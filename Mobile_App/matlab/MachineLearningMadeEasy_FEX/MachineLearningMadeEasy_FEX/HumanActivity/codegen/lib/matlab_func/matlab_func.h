@@ -5,7 +5,7 @@
  * File: matlab_func.h
  *
  * MATLAB Coder version            : 4.0
- * C/C++ source code generated on  : 04-Apr-2018 04:54:08
+ * C/C++ source code generated on  : 05-Apr-2018 07:10:16
  */
 
 #ifndef MATLAB_FUNC_H
@@ -18,7 +18,7 @@
 #include "matlab_func_types.h"
 
 /* Function Declarations */
-extern void matlab_func(const double x[4], const double y[4], double z[4]);
+extern double matlab_func(double x, double y);
 
 #endif
 

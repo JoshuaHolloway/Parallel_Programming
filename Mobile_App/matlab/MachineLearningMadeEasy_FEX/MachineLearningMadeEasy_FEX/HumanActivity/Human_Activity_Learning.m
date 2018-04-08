@@ -95,8 +95,6 @@ rawSensorDataTest = table(...
     total_acc_x_test, total_acc_y_test, total_acc_z_test, ...
     body_gyro_x_test, body_gyro_y_test, body_gyro_z_test);
 
-
-
 % Step 2: Extract features from raw sensor data
 T_mean = varfun(@Wmean, rawSensorDataTest);
 T_stdv = varfun(@Wstd,rawSensorDataTest);

@@ -5,7 +5,7 @@
  * File: main.c
  *
  * MATLAB Coder version            : 4.0
- * C/C++ source code generated on  : 04-Apr-2018 04:54:08
+ * C/C++ source code generated on  : 05-Apr-2018 07:10:16
  */
 
 /*************************************************************************/
@@ -40,30 +40,10 @@
 #include "matlab_func_initialize.h"
 
 /* Function Declarations */
-static void argInit_2x2_real_T(double result[4]);
 static double argInit_real_T(void);
 static void main_matlab_func(void);
 
 /* Function Definitions */
-
-/*
- * Arguments    : double result[4]
- * Return Type  : void
- */
-static void argInit_2x2_real_T(double result[4])
-{
-  int idx0;
-  int idx1;
-
-  /* Loop over the array to initialize each element. */
-  for (idx0 = 0; idx0 < 2; idx0++) {
-    for (idx1 = 0; idx1 < 2; idx1++) {
-      /* Set the value of the array element.
-         Change this value to the value that the application requires. */
-      result[idx0 + (idx1 << 1)] = argInit_real_T();
-    }
-  }
-}
 
 /*
  * Arguments    : void
@@ -80,17 +60,11 @@ static double argInit_real_T(void)
  */
 static void main_matlab_func(void)
 {
-  double dv0[4];
-  double dv1[4];
-  double z[4];
+  double z;
 
   /* Initialize function 'matlab_func' input arguments. */
-  /* Initialize function input argument 'x'. */
-  /* Initialize function input argument 'y'. */
   /* Call the entry-point 'matlab_func'. */
-  argInit_2x2_real_T(dv0);
-  argInit_2x2_real_T(dv1);
-  matlab_func(dv0, dv1, z);
+  z = matlab_func(argInit_real_T(), argInit_real_T());
 }
 
 /*

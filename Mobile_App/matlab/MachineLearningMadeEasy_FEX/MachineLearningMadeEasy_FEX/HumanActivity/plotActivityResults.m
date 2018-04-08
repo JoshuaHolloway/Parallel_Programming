@@ -35,6 +35,10 @@ title(ax1,sprintf('Human Activity Mobile Sensor Data'));
 xlabel(ax2,'Time (s)')
 ylabel(ax2,'Gyroscope Readings rad \cdot sec{-1}')
 legend(ax2,'show')
+
+% DEBUG:
+getClassifierName(mdl)
+
 title(ax2,['Classifier: ', getClassifierName(mdl)]);
 
 ann1 = annotation(fig,'textbox',[ax1.Position(1:3) 0.04],...

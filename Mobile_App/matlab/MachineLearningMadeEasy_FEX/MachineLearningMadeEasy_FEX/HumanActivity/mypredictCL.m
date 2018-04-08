@@ -12,21 +12,21 @@ function label = mypredictCL(X) %#codegen
 
 % Load trained classification model and model parameters
 SVM = loadCompactModel('ClassificationLearnerModel');
-data = coder.load('ModelParameters');
-removeVars = data.removeVars;
-pcaCenters = data.pcaCenters;
-pcaCoefficients = data.pcaCoefficients;
-SVM = loadCompactModel('ClassificationLearnerModel');
-
-% Remove unused predictor variables
-keepvars = 1:size(X,2);
-idx = ~ismember(keepvars,removeVars);
-keepvars = keepvars(idx);
-XwoID = X(:,keepvars);
-
-% Transform predictors via PCA
-Xpca = bsxfun(@minus,XwoID,pcaCenters)*pcaCoefficients;
+% data = coder.load('ModelParameters');
+% removeVars = data.removeVars;
+% pcaCenters = data.pcaCenters;
+% pcaCoefficients = data.pcaCoefficients;
+% SVM = loadCompactModel('ClassificationLearnerModel');
+% 
+% % Remove unused predictor variables
+% keepvars = 1:size(X,2);
+% idx = ~ismember(keepvars,removeVars);
+% keepvars = keepvars(idx);
+% XwoID = X(:,keepvars);
+% 
+% % Transform predictors via PCA
+% Xpca = bsxfun(@minus,XwoID,pcaCenters)*pcaCoefficients;
 
 % Generate label from SVM
-label = predict(SVM,Xpca);
+%label = predict(SVM,Xpca);
 end
