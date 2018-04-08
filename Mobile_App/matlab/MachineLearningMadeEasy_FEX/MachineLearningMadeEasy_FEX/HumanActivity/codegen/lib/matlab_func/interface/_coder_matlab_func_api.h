@@ -5,7 +5,7 @@
  * File: _coder_matlab_func_api.h
  *
  * MATLAB Coder version            : 4.0
- * C/C++ source code generated on  : 04-Apr-2018 04:54:08
+ * C/C++ source code generated on  : 05-Apr-2018 07:10:16
  */
 
 #ifndef _CODER_MATLAB_FUNC_API_H
@@ -24,7 +24,7 @@ extern emlrtCTX emlrtRootTLSGlobal;
 extern emlrtContext emlrtContextGlobal;
 
 /* Function Declarations */
-extern void matlab_func(real_T x[4], real_T y[4], real_T z[4]);
+extern real_T matlab_func(real_T x, real_T y);
 extern void matlab_func_api(const mxArray * const prhs[2], int32_T nlhs, const
   mxArray *plhs[1]);
 extern void matlab_func_atexit(void);
