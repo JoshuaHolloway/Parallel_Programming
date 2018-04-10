@@ -4,7 +4,8 @@ function plotRawSensorData(rawSensor1,rawSensor2,rawSensor3,activity,n_obs)
 if nargin < 5 
     n_obs = size(rawSensor1,1);
 end
-g = 9.81;
+%g = 9.81;
+g = 1;
 
 rawTS(:,1) = reshape(rawSensor1(1:n_obs,:)',[],1);
 rawTS(:,2) = reshape(rawSensor2(1:n_obs,:)',[],1);

@@ -1,4 +1,5 @@
 %% Human Activity Learning Using Mobile Phone Data
+clear, clc, close all;
 
 %% Description of the Data
 %  The dataset consists of accelerometer and gyroscope data captured at 
@@ -37,7 +38,7 @@ if ~exist('UCI_HAR_Dataset','file')
     downloadSensorData;
 end
 
-%% Load data frome individual files and save as MAT file for reuse
+%% Load data from individual files and save as MAT file for reuse
 %%
 % * |saveSensorDataAsMATFiles| : This function will load the data from the individual
 % source files and save the data in a single MAT file for easy accesss 
@@ -54,14 +55,13 @@ plotRawSensorData(total_acc_x_train, total_acc_y_train, ...
 
 %% Create Table variable
 rawSensorDataTrain = table(...
-    total_acc_x_train, total_acc_y_train, total_acc_z_train, ...
-    body_gyro_x_train, body_gyro_y_train, body_gyro_z_train);
+    total_acc_x_train, total_acc_y_train, total_acc_z_train);%, ...
+%    body_gyro_x_train, body_gyro_y_train, body_gyro_z_train);
 
 %% Pre-process Training Data: *Feature Extraction*
 % Lets start with a simple preprocessing technique. Since the raw sensor 
 % data contain fixed-width sliding windows of 2.56sec (128 readings/window) 
 % lets start with a simple average feature for every 128 points
-
 humanActivityData = varfun(@Wmean,rawSensorDataTrain);
 humanActivityData.activity = trainActivity;
 
@@ -69,12 +69,12 @@ humanActivityData.activity = trainActivity;
 classificationLearner
 
 %% Additional Feature Extraction
-
 T_mean = varfun(@Wmean, rawSensorDataTrain);
 T_stdv = varfun(@Wstd,rawSensorDataTrain);
 T_pca  = varfun(@Wpca1,rawSensorDataTrain);
 
-humanActivityData = [T_mean, T_stdv, T_pca];
+%humanActivityData = [T_mean, T_stdv, T_pca];
+humanActivityData = [T_mean, T_stdv];
 humanActivityData.activity = trainActivity;
 
 %% Use the new features to train a model and assess its performance 

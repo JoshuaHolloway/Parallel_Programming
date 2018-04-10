@@ -1,49 +1,46 @@
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-import argparse
-import sys
-from tensorflow.examples.tutorials.mnist import input_data
+## A- SETUP
+
+# To support both python 2 and python 3
+from __future__ import division, print_function, unicode_literals
+
+# Common imports
 import tensorflow as tf
 import numpy as np
+import matplotlib
 import matplotlib.pyplot as plt
-FLAGS = None
-# Build session
-sess = tf.InteractiveSession()
+import numpy.random as rnd
+import os
+import sys
+
+# to make this notebook's output stable across runs
+def reset_graph(seed=42):
+    tf.reset_default_graph()
+    tf.set_random_seed(seed)
+    np.random.seed(seed)
+
+
+
+def plot_image(image, shape=[28, 28]):
+    plt.imshow(image.reshape(shape), cmap="Greys", interpolation="nearest")
+    plt.axis("off")
+    plt.show()
 #===============================================================================
-def layer1(input, num_inputs, num_neurons, activation):
-    initializer = tf.variance_scaling_initializer()
-    W = tf.Variable(initializer([num_inputs, num_neurons]),name='W1') # Num Inputs x Num Neurons
-    b = tf.Variable(tf.zeros([num_neurons]),name='b1')
-    Z = tf.matmul(input, W) + b
-    if activation == 'sigmoid':
-        A = tf.nn.sigmoid(Z)
-        return A, Z, W, b
-    elif activation == 'relu':
-        A = tf.nn.relu(Z)
-        return A, Z, W, b
-    elif activation == 'tanh':
-        A = tf.nn.tanh(Z)
-        return A, Z, W, b
-    elif activation == 'linear':
-        return Z, W, b
 #===============================================================================
-def layer2(input, num_inputs, num_neurons, activation):
-    initializer = tf.variance_scaling_initializer()
-    W = tf.Variable(initializer([num_inputs, num_neurons]),name='W2') # Num Inputs x Num Neurons
-    b = tf.Variable(tf.zeros([num_neurons]),name='b2')
-    Z = tf.matmul(input, W) + b
-    if activation == 'sigmoid':
-        A = tf.nn.sigmoid(Z)
-        return A, Z, W, b
-    elif activation == 'relu':
-        A = tf.nn.relu(Z)
-        return A, Z, W, b
-    elif activation == 'tanh':
-        A = tf.nn.tanh(Z)
-        return A, Z, W, b
-    elif activation == 'linear':
-        return Z, W, b
+#===============================================================================
+# Global
+p = np.array([0.01,0.1,0.5,0.8])
+alpha = 0.01
+lambd= 0.0001
+beta = 0
+
+n_epochs = 4
+batch_sizes = 150
+from tensorflow.examples.tutorials.mnist import input_data
+dataset = input_data.read_data_sets("/tmp/data/")
+n_batches = dataset.train.num_examples // batch_sizes
+
+n_labeled_instances = 1000
+#n_batches = n_labeled_instances // batch_sizes
 #===============================================================================
 def KL(p, q):
     # KL-Divergence between PMF's P and Q
@@ -93,126 +90,177 @@ def reg(W, lambd, type):
     elif type == 'L2':
         return (1 / lambd) * tf.reduce_sum(tf.square(W))
 #===============================================================================
-def leaky_relu(Z, beta):
-    return tf.maximum(Z, beta * Z)
-#===============================================================================
 def mse(Y, A):
     return tf.reduce_mean(tf.square(A - Y))
+def mean(X):
+    return tf.reduce_mean(tf.square(X))
 #===============================================================================
 def shape(X):
     print(type(X))
     return X.get_shape()
 #===============================================================================
-def main(_):
-    # Import data
-    mnist = input_data.read_data_sets(FLAGS.data_dir, one_hot=True)
+def init_encoder():
 
-    # Create the model
-    x = tf.placeholder(tf.float32, [None, 784])
-    y = tf.placeholder(tf.float32, [None, 10])
+    n_inputs = 28 * 28
+    n_A1 = 200
 
-    #===========================================================================
-    #===NETWORK 1=AUTO-ENCODER + CLASSIFIER 784-200-784=========================
-    #===========================================================================
+    X = tf.placeholder(tf.float32, shape=[None, n_inputs])
 
-    # Network 1: Auto-Encoder: 784 -> 200 -> 784, Classifier: 784 -> 200 -> 10
-    A1, Z1, W1, b1 = layer1(input=x,  num_inputs=784, num_neurons=200, activation='sigmoid') #Layer 1-encoder
-    y2, W2, b2 = layer2(input=A1, num_inputs=200, num_neurons=784, activation='linear') #Layer 2-decoder
+    weights1_init = initializer([n_inputs, n_A1])
 
-    # Dims:
-    # y1 is ?x200 -> ? corresponds to M
-    # x is ?x784
-    # W1 is 784x200 => x * W1  is [?x784]*[784x200] = [?x200]
+    weights1 = tf.Variable(weights1_init, dtype=tf.float32, name="weights1")
 
-    p = np.array([0.01,0.1,0.5,0.8])
-    beta = 3
-    loss = mse(y2, x) + beta * sparsity_constraint(p[0], p_hat(A1)) # NEED TO ADD FROBENIUS NORM OF W1 and W2 sill
+    biases1 = tf.Variable(tf.zeros(n_A1), name="biases1")
 
-    alpha = 0.001
-    var_list_1 = [W1,b1,W2,b2]
-    step = tf.train.GradientDescentOptimizer(alpha).minimize(loss, var_list=var_list_1)
+    A1 = tf.nn.sigmoid(tf.matmul(X, weights1) + biases1)
 
-    #train_a = tf.train.GradientDescentOptimizer(0.1).minimize(loss_a, var_list=[A])
-    #train_b = tf.train.GradientDescentOptimizer(0.1).minimize(loss_b, var_list=[B])
-
-    ## Saver object
-    #saver = tf.train.Saver()
-
-    # Train the net - auto-encoder:
-    tf.global_variables_initializer().run() # Initialize variables
-    for _ in range(1000):
-        batch_xs, batch_ys = mnist.train.next_batch(100)#Grab batch
-        #mosiac(batch_xs)
-        sess.run(step, feed_dict={x: batch_xs})#Execute y2 = W2 *(W1*x + b1) + b2
-
-    ## Save graph and parameters
-    #saver.save(sess,'my_test_model')
-
-    # Test trained model
-    correct_prediction = tf.reduce_mean(tf.square(y2 - x)) # change this for classification to: correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
-    accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32)) # Cast to float and sum them
-    print(sess.run(accuracy, feed_dict={x: mnist.test.images})) # Evaluate accuracy on test set
-
-    #Extract the encoder
-    #Add new layer to encoder with softmax classifier => arch: 784-200-10
-    #Train while holding W1,b1 constant.
-    tf.stop_gradient(W1)
-    tf.stop_gradient(b1)
-
-    # Draw the mosiac of encoder weights
-    print('shape of A1 and W1:')
-    print(shape(A1))
-    print(shape(W1))
-    mosiac(tensor_2_nparray(W1).T)
-
-    #===========================================================================
-    #===NETWORK 2=ENCODER + CLASSIFIER 784-200-10===============================
-    #===========================================================================
-    y2_softmax, W2_softmax, b2_softmax = layer2(input=A1, num_inputs=200, num_neurons=10, activation='linear') #Layer 2-classifier
-    var_list_2 = [W2_softmax,b2_softmax]
-    cross_entropy_net1 = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y, logits=y2_softmax))
-    train_step_Xentropy_net1 = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy_net1, var_list=var_list_2)
-
-    # Train the net - classifier:
-    tf.global_variables_initializer().run() # Initialize variables
-    for _ in range(1000):
-        batch_xs, batch_ys = mnist.train.next_batch(100)#Grab batch
-        sess.run(train_step_Xentropy_net1, feed_dict={x: batch_xs, y: batch_ys})
-
-    # Test trained model
-    correct_prediction = tf.equal(tf.argmax(y2_softmax, 1), tf.argmax(y, 1))
-    accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32)) # Cast to float and sum them
-
-    # Evaluate accuracy on test set
-    print(sess.run(accuracy, feed_dict={x: mnist.test.images,
-                                      y: mnist.test.labels}))
-
-    #===========================================================================
-    #===NETWORK 3=FRESH CLASSIFIER 784-200-10===================================
-    #===========================================================================
-    # Create brand new network and train it:
-    A1, y1, W1, b1 = layer1(input=x,  num_inputs=784, num_neurons=200, activation='sigmoid') #Layer 1-encoder
-    y2_softmax, W2_softmax, b2_softmax = layer2(input=A1, num_inputs=200, num_neurons=10, activation='linear') #Layer 2-classifier
-    cross_entropy_net1 = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y, logits=y2_softmax))
-    train_step_Xentropy_net1 = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy_net1)
-
-    # Train the net - classifier:
-    tf.global_variables_initializer().run() # Initialize variables
-    for _ in range(1000):
-        batch_xs, batch_ys = mnist.train.next_batch(100)#Grab batch
-        sess.run(train_step_Xentropy_net1, feed_dict={x: batch_xs, y: batch_ys})
-
-    # Test trained model
-    correct_prediction = tf.equal(tf.argmax(y2_softmax, 1), tf.argmax(y, 1))
-    accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32)) # Cast to float and sum them
-
-    # Evaluate accuracy on test set
-    print(sess.run(accuracy, feed_dict={x: mnist.test.images,
-                                      y: mnist.test.labels}))
+    return X, weights1, biases1, A1
 #===============================================================================
-if __name__ == '__main__':
-  parser = argparse.ArgumentParser()
-  parser.add_argument('--data_dir', type=str, default='/tmp/tensorflow/mnist/input_data',
-                      help='Directory for storing input data')
-  FLAGS, unparsed = parser.parse_known_args()
-  tf.app.run(main=main, argv=[sys.argv[0]] + unparsed)
+def init():
+
+    n_inputs = 28 * 28
+    n_A1 = 200
+    n_outputs = n_inputs
+
+    X, weights1, biases1, A1  = init_encoder()
+    weights4_init = initializer([n_A1, n_outputs])
+    weights4 = tf.Variable(weights4_init, dtype=tf.float32, name="weights4")
+    biases4 = tf.Variable(tf.zeros(n_outputs), name="biases4")
+    Y2 = tf.matmul(A1, weights4) + biases4
+
+    return X, weights1, weights4, biases1, biases4, A1, Y2
+#===============================================================================
+def init2():
+
+    n_inputs = 28 * 28
+    n_A1 = 200
+    n_outputs = 10
+
+
+    activation = tf.nn.elu
+    regularizer = tf.contrib.layers.l2_regularizer(lambd)
+    initializer = tf.contrib.layers.variance_scaling_initializer()
+
+    y = tf.placeholder(tf.int32, shape=[None])
+
+    X, weights1, biases1, A1  = init_encoder()
+    weights3_init = initializer([n_A1, n_outputs])
+    weights3 = tf.Variable(weights3_init, dtype=tf.float32, name="weights3")
+    biases3 = tf.Variable(tf.zeros(n_outputs), name="biases3")
+    Z = tf.matmul(A1, weights3) + biases3
+
+    return X, y, weights1, weights3, biases1, weights3, Z
+
+#===============================================================================
+# Train auto-encoder
+tf.reset_default_graph()
+
+
+
+
+
+activation = tf.nn.elu
+
+initializer = tf.contrib.layers.variance_scaling_initializer()
+
+X, weights1, weights4, biases1, biases4, A1, Y2 = init()
+
+
+reconstruction_loss = tf.reduce_mean(tf.square(Y2 - X))
+
+
+Y2 = Y2
+
+
+
+decay = tf.contrib.layers.l2_regularizer(lambd)
+loss = mse(Y2, X) + beta * sparsity_constraint(p[0], p_hat(A1)) + decay(weights1) + decay(weights4)
+
+step = tf.train.AdamOptimizer(alpha).minimize(loss)
+
+
+
+init = tf.global_variables_initializer()
+saver = tf.train.Saver()
+
+
+
+
+with tf.Session() as sess:
+    init.run()
+    for epoch in range(n_epochs):
+
+        for iteration in range(n_batches):
+
+            x, y = dataset.train.next_batch(batch_sizes)
+            sess.run(step, feed_dict={X: x})
+        print("\r{}".format(epoch), "Train MSE:", mse(X, Y2).eval(feed_dict={X: x}))
+        saver.save(sess, "./params.ckpt")
+    print("Test MSE:", reconstruction_loss.eval(feed_dict={X: dataset.test.images}))
+
+    # Display weight matrix
+    saver.restore(sess, "./params.ckpt")
+    mosiac(tensor_2_nparray(weights1).T)
+
+#===============================================================================
+# F-Unsupervised pre-training
+# Small neural net for  MNIST training
+reset_graph()
+
+
+# Get weights
+X, Y, weights1, weights3, biases1, weights3, Z = init2()
+
+cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(labels=Y, logits=Z)
+loss = cross_entropy + decay(weights1) + decay(weights3)
+optimizer = tf.train.AdamOptimizer(alpha)
+training_op = optimizer.minimize(loss)
+
+
+accuracy = mean(tf.cast(tf.nn.in_top_k(Z, Y, 1), tf.float32))
+
+
+init = tf.global_variables_initializer()
+pretrain_saver = tf.train.Saver([weights1, biases1])
+saver = tf.train.Saver()
+
+## Regular training (without pre-training):
+
+print('n_batches = '+str(n_batches))
+print('n_batches = '+str(n_batches))
+print('n_batches = '+str(n_batches))
+print('n_batches = '+str(n_batches))
+print('n_batches = '+str(n_batches))
+
+with tf.Session() as sess:
+    init.run()
+    for epoch in range(n_epochs):
+        for iteration in range(n_batches):
+            print("\r{}%".format(100 * iteration // n_batches), end="")
+            sys.stdout.flush()
+            indices = rnd.permutation(1000)[:batch_sizes]
+            x, y_batch = dataset.train.images[indices], dataset.train.labels[indices]
+            sess.run(training_op, feed_dict={X: x, Y: y_batch})
+        accuracy_val = accuracy.eval(feed_dict={X: x, Y: y_batch})
+        print("\r{}".format(epoch), "Train accuracy:", accuracy_val, end=" ")
+        accuracy_val = accuracy.eval(feed_dict={X: dataset.test.images, Y: dataset.test.labels})
+        print("Regular training (without pre-training):")
+        print("Test accuracy:", accuracy_val)
+
+# Now, reusing the first two layers of the auto-encoder we pretrained:
+with tf.Session() as sess:
+    init.run()
+    pretrain_saver.restore(sess, "./params.ckpt")
+    for epoch in range(n_epochs):
+        for iteration in range(n_batches):
+            print("\r{}%".format(100 * iteration // n_batches), end="")
+            sys.stdout.flush()
+            indices = rnd.permutation(n_labeled_instances)[:batch_sizes]
+            x, y_batch = dataset.train.images[indices], dataset.train.labels[indices]
+            sess.run(training_op, feed_dict={X: x, Y: y_batch})
+        accuracy_val = accuracy.eval(feed_dict={X: x, Y: y_batch})
+        print("\r{}".format(epoch), "Train accuracy:", accuracy_val, end="\t")
+
+        accuracy_val = accuracy.eval(feed_dict={X: dataset.test.images, Y: dataset.test.labels})
+        print("Reusing the first two layers of auto-encoder:")
+        print("Test accuracy:", accuracy_val)
