@@ -1,28 +1,27 @@
 #include <iostream>
 #include <string>
 using std::cout;
-using std::endl;
 using std::string;
 //===================
 #include <windows.h>
 #include <iostream> 
 #include <fstream>
 #include <stdio.h>
-//----------
-struct Array
+//-----------
+struct Vector
 {
-	float* arr = nullptr;
+	float* val = nullptr;
 	size_t length;
-	Array(size_t size)
+	Vector(size_t length)
 	{
-		arr = new float[size];
-		this->length = size;
+		val = new float[length];
+		this->length = length;
 	}
 };
-//--------------------------
-Array conv(Array x, Array h)
+//-----------------------------
+Vector conv(Vector x, Vector h)
 {
-	Array y(x.length);
+	Vector y(x.length);
 	for (int i = 0; i < x.length; ++i)
 	{
 		float Pvalue = 0.0f;
@@ -30,9 +29,91 @@ Array conv(Array x, Array h)
 		for (int j = 0; j < h.length; j++)
 		{
 			if (N_start_point + j >= 0 && N_start_point + j < x.length)
-				Pvalue += x.arr[N_start_point + j] * h.arr[j];
+				Pvalue += x.val[N_start_point + j] * h.val[j];
 		}
-		y.arr[i] = Pvalue;
+		y.val[i] = Pvalue;
+	}
+	return y;
+}
+//===========
+struct Matrix
+{
+	float* val = nullptr;
+	size_t rows;
+	size_t cols;
+	size_t length;
+
+	Matrix(size_t rows, size_t cols)
+	{
+		
+		length = rows * cols;
+		this->rows = rows;
+		this->cols = cols;
+		val = new float[length];
+	}
+	
+	void set(size_t i, size_t j, float val)
+	{
+		this->val[i * cols + j] = val;
+	}
+
+	float at(size_t i, size_t j)
+	{
+		return val[i * cols + j];
+	}
+
+	void ones()
+	{
+		for (int i = 0; i < rows; ++i)
+		{
+			for (int j = 0; j < cols; ++j)
+			{
+				this->val[i * cols + j] = 1;
+			}
+		}
+	}
+
+	void zeros()
+	{
+		for (int i = 0; i < rows; ++i)
+		{
+			for (int j = 0; j < cols; ++j)
+			{
+				this->val[i * cols + j] = 0;
+			}
+		}
+	}
+
+	void count()
+	{
+		for (int i = 0; i < rows; ++i)
+		{
+			for (int j = 0; j < cols; ++j)
+			{
+				this->val[i * cols + j] = i * cols + j;
+			}
+		}
+	}
+};
+//-----------------------------
+Matrix conv(Matrix x, Matrix h)
+{
+	// Temporarily perform 1D conv along elements in each row
+
+	Matrix y(x.rows, x.cols);
+	for (int idy = 0; idy < x.rows; ++idy)
+	{
+		for (int idx = 0; idx < x.cols; ++idx)
+		{
+			float Pvalue = 0.0f;
+			int N_start_point = idy - h.cols / 2;
+			for (int j = 0; j < h.cols; j++)
+			{
+				if (N_start_point + j >= 0 && N_start_point + j < x.cols)
+					Pvalue += x.val[N_start_point + j] * h.val[j];
+			}
+			y.set(idx, idy, Pvalue);
+		}
 	}
 	return y;
 }
@@ -45,17 +126,37 @@ int main()
 	const size_t C[3] = { 4, 4, 2 };
 	const size_t D[3] = { 1, 2, 2 };
 
+
+	/// 1D:
 	const size_t width = 3, mask_width = 3;
-	Array x(3), h(3);
-	x.arr[0] = 1;	x.arr[1] = 2;	x.arr[2] = 3;
-	h.arr[0] = 1;	h.arr[1] = 1;	h.arr[2] = 1;
+	Vector x(3), h(3);
+	x.val[0] = 1;	x.val[1] = 2;	x.val[2] = 3;
+	h.val[0] = 1;	h.val[1] = 1;	h.val[2] = 1;
 	
-	Array y = conv(x, h);
+	Vector y = conv(x, h);
 
 	for (int i = 0; i < y.length; i++)
-		cout << y.arr[i] << " ";
+		cout << y.val[i] << " ";
 	cout << "\n";
-	
+
+	/// 2D:
+	Matrix X(3, 3);
+	X.count();
+
+	Matrix H(3, 3);
+	H.ones();
+
+	Matrix Y = conv(X, H);
+
+	for (int i = 0; i < Y.rows; ++i)
+	{
+		for (int j = 0; j < Y.cols; ++j)
+		{
+			cout << Y.at(i, j) << " ";
+		}
+		cout << "\n";
+	}
+
 	getchar();
 	return 0;
 }
