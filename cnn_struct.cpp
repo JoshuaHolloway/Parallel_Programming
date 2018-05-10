@@ -98,22 +98,39 @@ struct Matrix
 //-----------------------------
 Matrix conv(Matrix x, Matrix h)
 {
-	// Temporarily perform 1D conv along elements in each row
+	
 
 	Matrix y(x.rows, x.cols);
 	for (int idy = 0; idy < x.rows; ++idy)
 	{
+		
 		for (int idx = 0; idx < x.cols; ++idx)
 		{
+			
 			float Pvalue = 0.0f;
+
+			int M_start_point = idx - h.rows / 2;
 			int N_start_point = idy - h.cols / 2;
-			for (int j = 0; j < h.cols; j++)
+			for (int i = 0; i < h.rows; ++i)
 			{
-				if (N_start_point + j >= 0 && N_start_point + j < x.cols)
-					Pvalue += x.val[N_start_point + j] * h.val[j];
+				
+				for (int j = 0; j < h.cols; ++j)
+				{
+					
+
+					if ((M_start_point + i >= 0 && M_start_point + i < x.rows)
+						&& (N_start_point + j >= 0 && N_start_point + j < x.cols))
+					{
+						Pvalue += x.at(M_start_point + i, N_start_point + j) * h.at(i,j);
+					}
+				}
+				
 			}
 			y.set(idx, idy, Pvalue);
+			//cout << y.at(idx, idy) << " ";
+			//getchar();
 		}
+		//cout << "\n";
 	}
 	return y;
 }
@@ -137,7 +154,7 @@ int main()
 
 	for (int i = 0; i < y.length; i++)
 		cout << y.val[i] << " ";
-	cout << "\n";
+	cout << "\n\n 1D complete \n\n Start 2D: \n\n";
 
 	/// 2D:
 	Matrix X(3, 3);
