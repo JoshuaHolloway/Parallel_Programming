@@ -279,6 +279,27 @@ public:
 		}
 	};
 
+	void print()
+	{
+		for (int i = 0; i < filters; ++i)
+		{
+			cout << "\n ----------------- \n";
+			cout << "Volume " << i << " \n";
+			for (int j = 0; j < channels; ++j)
+			{
+				cout << "\n ----------------- \n";
+				cout << "Slice " << i << " \n";
+				for (int k = 0; k < rows; ++k)
+				{
+					for (int l = 0; l < cols; ++l)
+					{
+						cout << val[(i * dim4 * dim3 * dim2) + (j * dim4 * dim3) + (k * dim4) + l] << " ";
+					}
+					cout << "\n";
+				}
+			}
+		}
+	}
 };
 //===============================
 FeatureMap collapse(FeatureMap x)
@@ -391,38 +412,36 @@ FeatureMap conv(FeatureMap x, FeatureMap h)
 //-------------------------------------
 FeatureMap conv(FeatureMap x, Tensor h)
 {
+
+	// 2D conv with 3D feature maps with implicit matrix slice addition
+	// Input: One 3D feature map and one 4D tensor (set of filters)
+	// Output: One 3D feature map
 	FeatureMap y(x.rows, x.cols, h.filters);
-	for (int idq = 0; idq < h.filters; ++idq)
+	for (int idq = 0; idq < h.filters; ++idq) // out_channels
 	{
-		// Do 3D FeatureMap with 2D conv:
-		float Pvalue_z = 0.0f;
-		for (int idy = 0; idy < x.rows; ++idy)
+		for (int idy = 0; idy < x.rows; ++idy) // out_rows
 		{
-			for (int idx = 0; idx < x.cols; ++idx)
+			for (int idx = 0; idx < x.cols; ++idx) // out_cols
 			{
-				for (int idz = 0; idz < x.channels; ++idz)
+				float Pvalue = 0.0f;
+				for (int idz = 0; idz < x.channels; ++idz) // input_channels
 				{
-					// Perform 2D convolution over each channel
-					float Pvalue = 0.0f;
 
 					int M_start_point = idy - h.rows / 2;
 					int N_start_point = idx - h.cols / 2;
-					for (int i = 0; i < h.rows; ++i)
+					for (int i = 0; i < h.rows; ++i) // filter_rows
 					{
-						for (int j = 0; j < h.cols; ++j)
+						for (int j = 0; j < h.cols; ++j) // filter_cols
 						{
 							if ((M_start_point + i >= 0 && M_start_point + i < x.rows)
 								&& (N_start_point + j >= 0 && N_start_point + j < x.cols))
 							{
-								Pvalue += 
-									x.at(idz, M_start_point + i, N_start_point + j) 
-								* h.at(idq, idz, i, j);
+								Pvalue += x.at(idz, M_start_point + i, N_start_point + j) * h.at(idq, idz, i, j);
 							}
 						}
 					}
-					Pvalue_z += Pvalue; // accumulate 
+					y.set(idq, idy, idx, Pvalue);
 				}
-				y.set(idq, idy, idx, Pvalue_z);
 			}
 		}
 	}
@@ -437,34 +456,19 @@ int main()
 	const size_t C[3] = { 3, 3 };
 	const size_t D[3] = { 1, 2 };
 	const size_t K[1] = { 3 }; // filter sizes
-
-	/// 3D:
-	FeatureMap X3(3, 3, 2); // rows, cols, channels
-	X3.count();
-
-	FeatureMap H3(3, 3, 2);
-	H3.ones();
-
-	FeatureMap Y3 = conv(X3, H3);
-
-	cout << "X3.rows = " << X3.rows << "\n";
-	cout << "X3.cols = " << X3.cols << "\n";
-	cout << "X3.channel = " << X3.channels << "\n";
-
-	//cout << "\n\nX3: \n";			X3.print();
-	//cout << "\n\nH3: \n";			H3.print();
-	cout << "\n\nY3: \n";			Y3.print();
 	
 	/// 4D:
-	FeatureMap X4(D[0], R[0], C[0]);			X4.count();
-	//FeatureMap Y4(D[1], R[1], C[1]);			Y4.zeros();
+	FeatureMap X4(R[0], C[0], D[0]);			X4.count();
 	Tensor H4(D[1], D[0], K[0], K[0]);		H4.ones();
 
-
 	FeatureMap Y4 = conv(X4, H4);
-	
+	cout << "\n\nY4.rows = " << Y4.rows << "\n";
+	cout << "Y4.cols = " << Y4.cols << "\n";
+	cout << "Y4.channel = " << Y4.channels << "\n";
+
+
 	cout << "\n\nY4: \n";
-	//Y4.print();
+	Y4.print();
 
 	getchar();
 	return 0;
