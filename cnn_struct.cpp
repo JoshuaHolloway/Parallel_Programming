@@ -149,8 +149,151 @@ struct FeatureMap
 			}
 		}
 	}
+
+	void print()
+	{
+		for (int i = 0; i < channels; ++i)
+		{
+			cout << "\n ----------------- \n";
+			cout << "\n Slice " << i << " \n";
+			for (int j = 0; j < rows; ++j)
+			{
+				for (int k = 0; k < cols; ++k)
+				{
+					cout << val[i * rows * cols + j * cols + k] << " ";
+				}
+				cout << "\n";
+			}
+		}
+	}
 };
-//=============================
+//---------------
+class Tensor
+{
+private:
+	size_t dim1;
+	size_t dim2;
+	size_t dim3;
+	size_t dim4;
+public:
+	// pixel data
+	float* val = nullptr;
+
+	// (filters, channels, rows, cols)
+	size_t filters;		// dim 1
+	size_t channels;	// dim 2
+	size_t rows;			// dim 3
+	size_t cols;			// dim 4
+
+	// total number of pixels
+	size_t length;
+
+	// Constructor and destructor
+	Tensor(size_t filters, size_t channels, size_t rows, size_t cols)
+	{
+		length = rows * cols * channels * filters;
+
+		val = new float[length];
+
+		this->filters = filters;			this->dim1 = filters;
+		this->channels = channels;		this->dim2 = channels;
+		this->rows = rows;						this->dim3 = rows;
+		this->cols = cols;						this->dim4 = cols;
+	}
+	~Tensor() { delete[] val; }
+
+	// Easier indexing is achieved with (output_channel, input_channel, row, col)
+	void set(size_t i, size_t j, size_t k, size_t l, float val)
+	{
+		// i: dim1 - filters
+		// j: dim2 - channels
+		// k: dim3 - rows
+		// l: dim4 - cols
+
+		// 3D linear index: i * rows * cols + j * cols + k
+		// i * cols * rows + j * cols + k
+		// (i * dim3 * dim2) + (j * dim3) + k
+
+		// 4D linear index:
+		// (i * dim4 * dim3 * dim2) + (j * dim4 * dim3) + (k * dim4) + l
+
+		this->val[(i * dim4 * dim3 * dim2) + (j * dim4 * dim3) + (k * dim4) + l] = val;
+	}
+
+	float at(size_t i, size_t j, size_t k, size_t l) //(filters, channel, row, col)
+	{
+		return val[(i * dim4 * dim3 * dim2) + (j * dim4 * dim3) + (k * dim4) + l];
+	}
+
+	void ones()
+	{
+		for (int i = 0; i < dim1; ++i)
+		{
+			for (int j = 0; j < dim2; ++j)
+			{
+				for (int k = 0; k < dim3; ++k)
+				{
+					for (int l = 0; l < dim4; ++l)
+						this->val[(i * dim4 * dim3 * dim2) + (j * dim4 * dim3) + (k * dim4) + l] = 1;
+				}
+			}
+		}
+	}
+
+	void zeros()
+	{
+		for (int i = 0; i < dim1; ++i)
+		{
+			for (int j = 0; j < dim2; ++j)
+			{
+				for (int k = 0; k < dim3; ++k)
+				{
+					for (int l = 0; l < dim4; ++l)
+						this->val[(i * dim4 * dim3 * dim2) + (j * dim4 * dim3) + (k * dim4) + l] = 0;
+				}
+			}
+		}
+	}
+
+	void count()
+	{
+		for (int i = 0; i < dim1; ++i)
+		{
+			for (int j = 0; j < dim2; ++j)
+			{
+				for (int k = 0; k < dim3; ++k)
+				{
+					for (int l = 0; l < dim4; ++l)
+						this->val[(i * dim4 * dim3 * dim2) + (j * dim4 * dim3) + (k * dim4) + l]
+						= (i * dim4 * dim3 * dim2) + (j * dim4 * dim3) + (k * dim4) + l;
+				}
+			}
+		}
+	};
+
+};
+//===============================
+FeatureMap collapse(FeatureMap x)
+{
+	// add together the matrix slices in a feature map
+	FeatureMap y(x.rows, x.cols, 1);
+	for (int idy = 0; idy < x.rows; ++idy)
+	{
+		for (int idx = 0; idx < x.cols; ++idx)
+		{
+			float Pvalue = 0.0f;
+			for (int idz = 0; idz < x.channels; ++idz)
+			{
+				// Sum pixels in the z-dimension
+				Pvalue += x.at(idz, idy, idx);
+			}
+			// Store into the zeroth index of output feature map - i.e. matrix
+			y.set(0, idy, idx, Pvalue);
+		}
+	}
+	return y;
+}
+//-----------------------------
 Vector conv(Vector x, Vector h)
 {
 	Vector y(x.length);
@@ -212,14 +355,12 @@ FeatureMap conv(FeatureMap x, FeatureMap h)
 			for (int idx = 0; idx < x.cols; ++idx)
 			{
 				// Perform 2D convolution over each channel
-
 				float Pvalue = 0.0f;
 
 				int M_start_point = idy - h.rows / 2;
 				int N_start_point = idx - h.cols / 2;
 				for (int i = 0; i < h.rows; ++i)
 				{
-
 					for (int j = 0; j < h.cols; ++j)
 					{
 						if ((M_start_point + i >= 0 && M_start_point + i < x.rows)
@@ -234,37 +375,55 @@ FeatureMap conv(FeatureMap x, FeatureMap h)
 			}
 		}
 	}
-	return y;
+	return collapse(y);
 }
+//-------------------------------------
+//FeatureMap conv(FeatureMap x, Tensor h)
+//{
+	//FeatureMap y(x.rows, x.cols, x.channels);
+	//for (int idz = 0; idz < x.channels; ++idz)
+	//{
+	//	for (int idy = 0; idy < x.rows; ++idy)
+	//	{
+	//		for (int idx = 0; idx < x.cols; ++idx)
+	//		{
+	//			// Perform 2D convolution over each channel
+
+	//			float Pvalue = 0.0f;
+
+	//			int M_start_point = idy - h.rows / 2;
+	//			int N_start_point = idx - h.cols / 2;
+	//			for (int i = 0; i < h.rows; ++i)
+	//			{
+
+	//				for (int j = 0; j < h.cols; ++j)
+	//				{
+	//					if ((M_start_point + i >= 0 && M_start_point + i < x.rows)
+	//						&& (N_start_point + j >= 0 && N_start_point + j < x.cols))
+	//					{
+	//						Pvalue += x.at(idz, M_start_point + i, N_start_point + j) * h.at(idz, i, j);
+	//					}
+	//				}
+
+	//			}
+	//			y.set(idz, idy, idx, Pvalue);
+	//		}
+	//	}
+	//}
+	//return y;
+//}
 //========
 int main()
 {
 	//     conv      pool
 	// 4x4x1 -> 4x4x2 -> 2x2x2
-	const size_t R[3] = { 4, 4, 2 };
-	const size_t C[3] = { 4, 4, 2 };
-	const size_t D[3] = { 1, 2, 2 };
-	
-	/// 2D:
-	Matrix X(3, 3);
-	X.count();
-
-	Matrix H(3, 3);
-	H.ones();
-
-	Matrix Y = conv(X, H);
-
-	for (int i = 0; i < Y.rows; ++i)
-	{
-		for (int j = 0; j < Y.cols; ++j)
-		{
-			cout << Y.at(i, j) << " ";
-		}
-		cout << "\n";
-	}
+	const size_t R[3] = { 3, 3 };
+	const size_t C[3] = { 3, 3 };
+	const size_t D[3] = { 1, 2 };
+	const size_t K[1] = { 3 }; // filter sizes
 
 	/// 3D:
-	FeatureMap X3(3, 3, 2);
+	FeatureMap X3(3, 3, 2); // rows, cols, channels
 	X3.count();
 
 	FeatureMap H3(3, 3, 2);
@@ -272,40 +431,24 @@ int main()
 
 	FeatureMap Y3 = conv(X3, H3);
 
-
 	cout << "X3.rows = " << X3.rows << "\n";
 	cout << "X3.cols = " << X3.cols << "\n";
 	cout << "X3.channel = " << X3.channels << "\n";
 
-	cout << "\n\nX3: \n";
-	for (int i = 0; i < X3.channels; ++i)
-	{
-		for (int j = 0; j < X3.rows; ++j)
-		{
-			for (int k = 0; k < X3.cols; ++k)
-			{
-				cout << X3.at(i, j, k) << " ";
-			}
-			cout << "\n";
-		}
-		cout << "\n ----------------- \n";
-	}
-
-
-
-	for (int i = 0; i < X3.channels; ++i)
-	{
-		for (int j = 0; j < X3.rows; ++j)
-		{
-			for (int k = 0; k < X3.cols; ++k)
-			{
-				cout << Y3.at(i, j, k) << " ";
-			}
-			cout << "\n";
-		}
-		cout << "\n ----------------- \n";
-	}
+	cout << "\n\nX3: \n";			X3.print();
+	cout << "\n\nY3: \n";			Y3.print();
 	
+
+
+	/// 4D:
+	FeatureMap X4(D[0], R[0], C[0]);			X4.count();
+	FeatureMap Y4(D[1], R[1], C[1]);			Y4.count();
+	Tensor H4(D[1], D[0], K[0], K[0]);
+
+
+
+
+
 
 	getchar();
 	return 0;
