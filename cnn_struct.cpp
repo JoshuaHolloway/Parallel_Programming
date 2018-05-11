@@ -29,13 +29,13 @@ struct Matrix
 
 	Matrix(size_t rows, size_t cols)
 	{
-		
+
 		length = rows * cols;
 		this->rows = rows;
 		this->cols = cols;
 		val = new float[length];
 	}
-	
+
 	void set(size_t i, size_t j, float val)
 	{
 		this->val[i * cols + j] = val;
@@ -186,7 +186,7 @@ public:
 	size_t rows;			// dim 3
 	size_t cols;			// dim 4
 
-	// total number of pixels
+										// total number of pixels
 	size_t length;
 
 
@@ -345,28 +345,28 @@ Matrix conv(Matrix x, Matrix h)
 	Matrix y(x.rows, x.cols);
 	for (int idy = 0; idy < x.rows; ++idy)
 	{
-		
+
 		for (int idx = 0; idx < x.cols; ++idx)
 		{
-			
+
 			float Pvalue = 0.0f;
 
 			int M_start_point = idx - h.rows / 2;
 			int N_start_point = idy - h.cols / 2;
 			for (int i = 0; i < h.rows; ++i)
 			{
-				
+
 				for (int j = 0; j < h.cols; ++j)
 				{
-					
+
 
 					if ((M_start_point + i >= 0 && M_start_point + i < x.rows)
 						&& (N_start_point + j >= 0 && N_start_point + j < x.cols))
 					{
-						Pvalue += x.at(M_start_point + i, N_start_point + j) * h.at(i,j);
+						Pvalue += x.at(M_start_point + i, N_start_point + j) * h.at(i, j);
 					}
 				}
-				
+
 			}
 			y.set(idx, idy, Pvalue);
 		}
@@ -388,7 +388,7 @@ FeatureMap conv(FeatureMap x, FeatureMap h)
 			float Pvalue = 0.0f;
 			for (int idz = 0; idz < x.channels; ++idz) // input_channels
 			{
-				
+
 				int M_start_point = idy - h.rows / 2;
 				int N_start_point = idx - h.cols / 2;
 				for (int i = 0; i < h.rows; ++i) // filter_rows
@@ -447,19 +447,55 @@ FeatureMap conv(FeatureMap x, Tensor h)
 	}
 	return y;
 }
+//===========================
+FeatureMap pool_ave(FeatureMap x)
+{
+	const size_t H = x.rows;
+	const size_t W = x.cols;
+	const size_t M = x.channels;
+	const size_t K = 2; // downsampling factor
+
+	FeatureMap S(H / K, W / K, x.channels); // rows, cols, channels
+
+	for (int m = 0; m < M; ++m)  // channels
+	{
+		for (int h = 0; h < H / K; ++h) // rows
+		{
+			for (int w = 0; w < W / K; ++w)
+			{
+				float temp = 0.0f;
+				for (int p = 0; p < K; ++p)
+				{
+					for (int q = 0; q < K; ++q)
+					{
+						temp += x.at(m, K*h + p, K*w + q) / float(K*K);
+					}
+				}
+				S.set(m, h, w, temp);
+			}
+		}
+	}
+
+	return S;
+}
 //========
 int main()
 {
 	//     conv      pool
 	// 4x4x1 -> 4x4x2 -> 2x2x2
-	const size_t R[3] = { 3, 3 };
-	const size_t C[3] = { 3, 3 };
+	const size_t R[3] = { 4, 4 };
+	const size_t C[3] = { 4, 4 };
 	const size_t D[3] = { 1, 2 };
 	const size_t K[1] = { 3 }; // filter sizes
-	
-	/// 4D:
+
+														 /// 4D:
 	FeatureMap X4(R[0], C[0], D[0]);			X4.count();
 	Tensor H4(D[1], D[0], K[0], K[0]);		H4.ones();
+
+	cout << "\n\nX4: \n";
+	X4.print();
+
+
 
 	FeatureMap Y4 = conv(X4, H4);
 	cout << "\n\nY4.rows = " << Y4.rows << "\n";
@@ -469,6 +505,10 @@ int main()
 
 	cout << "\n\nY4: \n";
 	Y4.print();
+
+	FeatureMap Z4 = pool_ave(Y4);
+	cout << "\n\nZ4: \n";
+	Z4.print();
 
 	getchar();
 	return 0;
