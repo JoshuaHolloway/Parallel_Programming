@@ -2,7 +2,7 @@
 #include <string>
 using std::cout;
 using std::string;
-//===================
+//===========
 #include <windows.h>
 #include <iostream> 
 #include <fstream>
@@ -18,24 +18,7 @@ struct Vector
 		this->length = length;
 	}
 };
-//-----------------------------
-Vector conv(Vector x, Vector h)
-{
-	Vector y(x.length);
-	for (int i = 0; i < x.length; ++i)
-	{
-		float Pvalue = 0.0f;
-		int N_start_point = i - h.length / 2;
-		for (int j = 0; j < h.length; j++)
-		{
-			if (N_start_point + j >= 0 && N_start_point + j < x.length)
-				Pvalue += x.val[N_start_point + j] * h.val[j];
-		}
-		y.val[i] = Pvalue;
-	}
-	return y;
-}
-//===========
+//-----------
 struct Matrix
 {
 	float* val = nullptr;
@@ -95,11 +78,98 @@ struct Matrix
 		}
 	}
 };
+//-----------
+struct FeatureMap
+{
+	float* val = nullptr;
+	size_t rows;
+	size_t cols;
+	size_t channels;
+	size_t length;
+
+	FeatureMap(size_t rows, size_t cols, size_t channels)
+	{
+		length = rows * cols * channels;
+		this->rows = rows;
+		this->cols = cols;
+		this->channels = channels;
+		val = new float[length];
+	}
+
+
+	// Easier indexing is achieved with (channel, row, col)
+	void set(size_t i, size_t j, size_t k, float val)
+	{
+		this->val[i * rows * cols + j * cols + k] = val;
+	}
+
+	float at(size_t i, size_t j, size_t k) //(channel, row, col)
+	{
+		return val[i * rows * cols + j * cols + k];
+	}
+
+	void ones()
+	{
+		for (int i = 0; i < channels; ++i)
+		{
+			for (int j = 0; j < rows; ++j)
+			{
+				for (int k = 0; k < cols; ++k)
+				{
+					this->val[i * rows * cols + j * cols + k] = 1;
+				}
+			}
+		}
+	}
+
+	void zeros()
+	{
+		for (int i = 0; i < channels; ++i)
+		{
+			for (int j = 0; j < rows; ++j)
+			{
+				for (int k = 0; k < cols; ++k)
+				{
+					this->val[i * rows * cols + j * cols + k] = 0;
+				}
+			}
+		}
+	}
+
+	void count()
+	{
+		for (int i = 0; i < channels; ++i)
+		{
+			for (int j = 0; j < rows; ++j)
+			{
+				for (int k = 0; k < cols; ++k)
+				{
+					this->val[i * rows * cols + j * cols + k] = i * rows * cols + j * cols + k;
+				}
+			}
+		}
+	}
+};
+//=============================
+Vector conv(Vector x, Vector h)
+{
+	Vector y(x.length);
+	for (int i = 0; i < x.length; ++i)
+	{
+		float Pvalue = 0.0f;
+		int N_start_point = i - h.length / 2;
+		for (int j = 0; j < h.length; j++)
+		{
+			if (N_start_point + j >= 0 && N_start_point + j < x.length)
+				Pvalue += x.val[N_start_point + j] * h.val[j];
+		}
+		y.val[i] = Pvalue;
+	}
+	return y;
+}
 //-----------------------------
 Matrix conv(Matrix x, Matrix h)
 {
-	
-
 	Matrix y(x.rows, x.cols);
 	for (int idy = 0; idy < x.rows; ++idy)
 	{
@@ -127,10 +197,42 @@ Matrix conv(Matrix x, Matrix h)
 				
 			}
 			y.set(idx, idy, Pvalue);
-			//cout << y.at(idx, idy) << " ";
-			//getchar();
 		}
-		//cout << "\n";
+	}
+	return y;
+}
+//-----------------------------
+FeatureMap conv(FeatureMap x, FeatureMap h)
+{
+	FeatureMap y(x.rows, x.cols, x.channels);
+	for (int idz = 0; idz < x.channels; ++idz)
+	{
+		for (int idy = 0; idy < x.rows; ++idy)
+		{
+			for (int idx = 0; idx < x.cols; ++idx)
+			{
+				// Perform 2D convolution over each channel
+
+				float Pvalue = 0.0f;
+
+				int M_start_point = idy - h.rows / 2;
+				int N_start_point = idx - h.cols / 2;
+				for (int i = 0; i < h.rows; ++i)
+				{
+
+					for (int j = 0; j < h.cols; ++j)
+					{
+						if ((M_start_point + i >= 0 && M_start_point + i < x.rows)
+							&& (N_start_point + j >= 0 && N_start_point + j < x.cols))
+						{
+							Pvalue += x.at(idz, M_start_point + i, N_start_point + j) * h.at(idz, i, j);
+						}
+					}
+
+				}
+				y.set(idz, idy, idx, Pvalue);
+			}
+		}
 	}
 	return y;
 }
@@ -142,20 +244,7 @@ int main()
 	const size_t R[3] = { 4, 4, 2 };
 	const size_t C[3] = { 4, 4, 2 };
 	const size_t D[3] = { 1, 2, 2 };
-
-
-	/// 1D:
-	const size_t width = 3, mask_width = 3;
-	Vector x(3), h(3);
-	x.val[0] = 1;	x.val[1] = 2;	x.val[2] = 3;
-	h.val[0] = 1;	h.val[1] = 1;	h.val[2] = 1;
 	
-	Vector y = conv(x, h);
-
-	for (int i = 0; i < y.length; i++)
-		cout << y.val[i] << " ";
-	cout << "\n\n 1D complete \n\n Start 2D: \n\n";
-
 	/// 2D:
 	Matrix X(3, 3);
 	X.count();
@@ -173,6 +262,50 @@ int main()
 		}
 		cout << "\n";
 	}
+
+	/// 3D:
+	FeatureMap X3(3, 3, 2);
+	X3.count();
+
+	FeatureMap H3(3, 3, 2);
+	H3.ones();
+
+	FeatureMap Y3 = conv(X3, H3);
+
+
+	cout << "X3.rows = " << X3.rows << "\n";
+	cout << "X3.cols = " << X3.cols << "\n";
+	cout << "X3.channel = " << X3.channels << "\n";
+
+	cout << "\n\nX3: \n";
+	for (int i = 0; i < X3.channels; ++i)
+	{
+		for (int j = 0; j < X3.rows; ++j)
+		{
+			for (int k = 0; k < X3.cols; ++k)
+			{
+				cout << X3.at(i, j, k) << " ";
+			}
+			cout << "\n";
+		}
+		cout << "\n ----------------- \n";
+	}
+
+
+
+	for (int i = 0; i < X3.channels; ++i)
+	{
+		for (int j = 0; j < X3.rows; ++j)
+		{
+			for (int k = 0; k < X3.cols; ++k)
+			{
+				cout << Y3.at(i, j, k) << " ";
+			}
+			cout << "\n";
+		}
+		cout << "\n ----------------- \n";
+	}
+	
 
 	getchar();
 	return 0;
