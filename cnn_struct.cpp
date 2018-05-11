@@ -518,40 +518,50 @@ FeatureMap pool_max(FeatureMap x)
 	} // end for over i
 	return y;
 }
-
+//========
+FeatureMap relu(FeatureMap z)
+{
+	for(int i = 0; i < z.channels; ++i)
+	{
+		for (int j = 0; j < z.rows; ++j)
+		{
+			for (int k = 0; k < z.cols; ++k)
+			{
+				if (z.at(i, j, k) < 0)
+					z.set(i, j, k, 0);
+			}
+		}
+	}
+	return z;
+}
 //========
 int main()
 {
 	//     conv      pool
+	//   2x(1x3x3) 
 	// 4x4x1 -> 4x4x2 -> 2x2x2
-	const size_t R[3] = { 4, 4 };
-	const size_t C[3] = { 4, 4 };
-	const size_t D[3] = { 1, 2 };
+	const size_t R[3] = { 4, 4, 2 };
+	const size_t C[3] = { 4, 4, 2 };
+	const size_t D[3] = { 1, 2, 2 };
 	const size_t K[1] = { 3 }; // filter sizes
 
-  /// 4D:
-	FeatureMap X4(R[0], C[0], D[0]);			X4.count();
-	Tensor H4(D[1], D[0], K[0], K[0]);		H4.ones();
+  
+	FeatureMap X0(R[0], C[0], D[0]);			X0.count();
+	Tensor H1(D[1], D[0], K[0], K[0]);		H1.ones();
 
-	cout << "\n\nX4: \n";
-	X4.print();
+	// Conv layer:
+	FeatureMap Z1 = conv(X0, H1);
 
-	FeatureMap Y4 = conv(X4, H4);
-	cout << "\n\nY4.rows = " << Y4.rows << "\n";
-	cout << "Y4.cols = " << Y4.cols << "\n";
-	cout << "Y4.channel = " << Y4.channels << "\n";
+	// ReLu:
+	FeatureMap A1 = relu(Z1);
 
-
-	cout << "\n\nY4: \n";
-	Y4.print();
-
-	FeatureMap Z4 = pool_ave(Y4);
-	cout << "\n\nZ4: \n";
-	Z4.print();
-
-	FeatureMap Z4max = pool_max(Y4);
+	// Pool layer:
+	FeatureMap Y1 = pool_max(A1);
 	cout << "\n\nZ4_max: \n";
-	Z4max.print();
+	Y1.print();
+
+
+
 
 	getchar();
 	return 0;
