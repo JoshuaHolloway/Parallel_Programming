@@ -186,7 +186,7 @@ public:
 	size_t rows;			// dim 3
 	size_t cols;			// dim 4
 
-										// total number of pixels
+	// total number of pixels
 	size_t length;
 
 
@@ -412,8 +412,9 @@ FeatureMap conv(FeatureMap x, FeatureMap h)
 //-------------------------------------
 FeatureMap conv(FeatureMap x, Tensor h)
 {
-
-	// 2D conv with 3D feature maps with implicit matrix slice addition
+	// 'same' 2D conv with 3D feature maps with implicit matrix slice addition
+	// Zero-padding is also implicit
+	//
 	// Input: One 3D feature map and one 4D tensor (set of filters)
 	// Output: One 3D feature map
 	FeatureMap y(x.rows, x.cols, h.filters);
@@ -478,6 +479,46 @@ FeatureMap pool_ave(FeatureMap x)
 
 	return S;
 }
+//-------------------------------
+FeatureMap pool_max(FeatureMap x)
+{
+	// downsampling factor:
+	const size_t K = 2; 
+
+	// output downsampled feature map:
+	FeatureMap y(x.rows / K, x.cols / K, x.channels); // rows, cols, channels
+
+	for (int i = 0; i < x.channels; ++i)
+	{
+		for (int j = 0; j < x.rows; j += K)
+		{
+			for (int k = 0; k < x.cols; k += K)
+			{
+				// Search inside the KxK block for max value
+				int max = 0;
+				for (int jj = j; jj < j + K; ++jj)
+				{
+					for (int kk = k; kk < k + K; ++kk)
+					{
+						if (jj == j && kk == k)
+						{
+							max = x.at(i,jj,kk);
+						}
+						else
+						{
+							if (x.at(i,jj,kk) > max)
+								max = x.at(i,jj,kk);
+						} // end if-else
+					}// end for over kk
+				} // end for over jj
+				//y[i][j / 2][k / 2] = max;
+				y.set(i, j / 2, k / 2, max);
+			} // end for over k
+		} // end for over j
+	} // end for over i
+	return y;
+}
+
 //========
 int main()
 {
@@ -488,14 +529,12 @@ int main()
 	const size_t D[3] = { 1, 2 };
 	const size_t K[1] = { 3 }; // filter sizes
 
-														 /// 4D:
+  /// 4D:
 	FeatureMap X4(R[0], C[0], D[0]);			X4.count();
 	Tensor H4(D[1], D[0], K[0], K[0]);		H4.ones();
 
 	cout << "\n\nX4: \n";
 	X4.print();
-
-
 
 	FeatureMap Y4 = conv(X4, H4);
 	cout << "\n\nY4.rows = " << Y4.rows << "\n";
@@ -509,6 +548,10 @@ int main()
 	FeatureMap Z4 = pool_ave(Y4);
 	cout << "\n\nZ4: \n";
 	Z4.print();
+
+	FeatureMap Z4max = pool_max(Y4);
+	cout << "\n\nZ4_max: \n";
+	Z4max.print();
 
 	getchar();
 	return 0;
