@@ -537,31 +537,42 @@ FeatureMap relu(FeatureMap z)
 //========
 int main()
 {
-	//     conv      pool
-	//   2x(1x3x3) 
-	// 4x4x1 -> 4x4x2 -> 2x2x2
-	const size_t R[3] = { 4, 4, 2 };
-	const size_t C[3] = { 4, 4, 2 };
-	const size_t D[3] = { 1, 2, 2 };
+	//  ---------Layer 1---------|------Layer 2---------
+	//   conv->relu->pool	       |  conv->relu->pool
+	//   2x(1x3x3)  	           |  4x(2x3x3) 
+	// 8x8x1 -> 8x8x2 -> 8x8x2 -> 4x4x2 -> 4x4x4 -> 4x4x4 -> 2x2x4
+	const size_t R[7] = { 8, 4, 2 };
+	const size_t C[7] = { 8, 4, 2 };
+	const size_t D[7] = { 1, 2, 4 };
 	const size_t K[1] = { 3 }; // filter sizes
 
-  
-	FeatureMap X0(R[0], C[0], D[0]);			X0.count();
-	Tensor H1(D[1], D[0], K[0], K[0]);		H1.ones();
+	FeatureMap X(R[0], C[0], D[0]);     X.count();
+	Tensor H1(D[1], D[0], K[0], K[0]);  H1.ones();
 
-	// Conv layer:
-	FeatureMap Z1 = conv(X0, H1);
+	// -----------
+	// LAYER 1:
+	// -----------
+
+	// Conv:
+	FeatureMap Z1 = conv(X, H1);
 
 	// ReLu:
 	FeatureMap A1 = relu(Z1);
 
-	// Pool layer:
+	// Pool:
 	FeatureMap Y1 = pool_max(A1);
 	cout << "\n\nZ4_max: \n";
 	Y1.print();
 
+	// -----------
+	// LAYER 2:
+	// -----------
+	Tensor H2(D[2], D[1], K[0], K[0]);   // 4x2x3x3
+	H2.ones();
 
-
+	FeatureMap Y2 = pool_max(relu(conv(Y1, H2)));
+	cout << "\n\nY2: \n";
+	Y2.print();
 
 	getchar();
 	return 0;
