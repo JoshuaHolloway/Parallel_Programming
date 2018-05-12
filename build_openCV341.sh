@@ -23,6 +23,7 @@ cd ~/opencv-3.4.1/
 mkdir build
 cd build
 
+# SEE BOTTOM FOR BUILD WITH DEBUGGING SYMBOLS!!!
 cmake -D CMAKE_BUILD_TYPE=RELEASE \
     -D CMAKE_INSTALL_PREFIX=/usr/local \
     -D INSTALL_PYTHON_EXAMPLES=ON \
