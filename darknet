@@ -1,8 +1,10 @@
 How I installed DarkNet with CUDA 8.0, cuDNN 5.1, and OpenCV 3.4.1 on Ubuntu 16.04 
 
-Note: Did not install Python bindings for OpenCV and did not install tensorflow.
-Tensorflow instructions are in the link at the beginning of the install cuda 8.0 instructions below.
+Note: Did not install Python bindings for OpenCV
 
+Note: After testing cuDNN with tensorflow as described at the end I realized that this install didn't work.
+The problem is with either cuDNN or CUDA.
+Come back to this after monday Jan 14th
 
 # Install of opencv:
 
@@ -86,3 +88,20 @@ Set these in the makefile:
 GPU=1
 CUDNN=0
 OPENCV=0
+
+# Installing tensorflow and then testing cuDNN and CUDA with it
+# Install anaconda and tensorflow
+$ wget http://repo.continuum.io/archive/Anaconda3-5.0.1-Linux-x86_64.sh
+$ chmod +x Anaconda3-5.0.1-Linux-x86_64.sh 
+$ ./Anaconda3-5.0.1-Linux-x86_64.sh
+$ source ~/.bashrc
+$ pip install tensorflow-gpu==1.2
+
+# Download models and get in that directory:
+$ git clone https://github.com/tensorflow/models.git
+$ python models-master/tutorials/image/imagenet/classify_image.py
+
+
+# test that shit:
+$ python models-master/tutorials/image/imagenet/classify_image.py
+
