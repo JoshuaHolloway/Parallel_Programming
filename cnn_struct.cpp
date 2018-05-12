@@ -693,13 +693,20 @@ int main()
 	Tensor H11(D[11], D[10], K, K); /* */ H11.ones(); // Layer 11
 	//Tensor H12(D[12], D[11], K, K); /* */ H12.ones(); // Layer 12 - Pool
 
-	/// Section 5 - layers 13-18
+	/// Section 5 - layers 13-18: conv(5x)-pool
 	Tensor H13(D[13], D[12], K, K); /* */ H13.ones(); // Layer 13
 	Tensor H14(D[14], D[13], K, K); /* */ H14.ones(); // Layer 14
 	Tensor H15(D[15], D[14], K, K); /* */ H15.ones(); // Layer 15
 	Tensor H16(D[16], D[15], K, K); /* */ H16.ones(); // Layer 16
 	Tensor H17(D[17], D[16], K, K); /* */ H17.ones(); // Layer 17
-	Tensor H18(D[18], D[17], K, K); /* */ H18.ones(); // Layer 18
+	//Tensor H18(D[18], D[17], K, K); /* */ H18.ones(); // Layer 18 - Pool
+
+	/// Section 6 - layers 19-23: conv(5x)
+	Tensor H19(D[18], D[17], K, K); /* */ H19.ones(); // Layer 19
+	Tensor H20(D[19], D[18], K, K); /* */ H20.ones(); // Layer 20
+	Tensor H21(D[20], D[19], K, K); /* */ H21.ones(); // Layer 21 
+	Tensor H22(D[21], D[20], K, K); /* */ H22.ones(); // Layer 22
+	Tensor H23(D[22], D[21], K, K); /* */ H23.ones(); // Layer 23
 
 	// Start CPU Timing
 	LARGE_INTEGER start_CPU, end_CPU, frequency_CPU;
@@ -769,6 +776,20 @@ int main()
 	FeatureMap A16 = relu(conv(A15, H16));
 	FeatureMap A17 = relu(conv(A16, H17));
 	FeatureMap A18 = pool_max(A17);
+
+	// -----------
+	// Section 6:
+	// -----------
+	cout << "\nSection 6: layers 19-23" << R[18] << "x" << C[18] << "x" << D[18] << " -> " << R[19] << "x" << C[19] << "x" << D[19] << " -> "
+		<< " -> " << R[20] << "x" << C[20] << "x" << D[20] << " -> " << R[21] << "x" << C[21] << "x" << D[21]
+		<< " -> " << R[22] << "x" << C[22] << "x" << D[22] << " -> " << R[23] << "x" << C[23] << "x" << D[23] << "\n";
+	cout << "From Darknet: 13x13x512 -> 13x13x1024 -> 13x13x512 -> 13x13x1024 -> 13x13x512 -> 13x13x1024 \n";
+	FeatureMap A19 = relu(conv(A18, H19));
+	FeatureMap A20 = relu(conv(A19, H20));
+	FeatureMap A21 = relu(conv(A20, H21));
+	FeatureMap A22 = relu(conv(A21, H22));
+	FeatureMap A23 = relu(conv(A22, H23));
+	
 
 
 	// End CPU Timing
