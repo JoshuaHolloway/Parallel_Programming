@@ -84,6 +84,5 @@ $ sudo chmod a+r /usr/local/cuda/include/cudnn.h /usr/local/cuda/lib64/libcudnn*
 Follow PJ-reddie's instructions to install with CUDA and OpenCV
 Set these in the makefile:
 GPU=1
-CUDNN=1
-OPENCV=1
-
+CUDNN=0
+OPENCV=0
