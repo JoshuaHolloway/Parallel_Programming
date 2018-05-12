@@ -3,7 +3,10 @@ sudo apt-get upgrade
 
 sudo apt-get install build-essential cmake pkg-config
 sudo apt-get install libjpeg8-dev libtiff5-dev libjasper-dev libpng12-dev
-sudo apt-get install libavcodec-dev libavformat-dev dlibswscale-dev libv4l-dev
+sudo apt-get install libavcodec-dev 
+sudo apt-get install libavformat-dev
+sudo apt-get install libv4l-dev
+sudo apt-get install libswscale-dev
 
 sudo apt-get install libswscale-dev
 
