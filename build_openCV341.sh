@@ -8,8 +8,6 @@ sudo apt-get install libavformat-dev
 sudo apt-get install libv4l-dev
 sudo apt-get install libswscale-dev
 
-sudo apt-get install libswscale-dev
-
 sudo apt-get install libxvidcore-dev libx264-dev
 sudo apt-get install libgtk-3-dev
 sudo apt-get install libatlas-base-dev gfortran
