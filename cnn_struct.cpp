@@ -672,21 +672,34 @@ int main()
 	D[24] = 1024;
 	D[25] = 1024;
 
+	/// Section 1 - layers 1,2: conv-pool
 	FeatureMap X(R[0], C[0], D[0]);     X.count();
 	Tensor H1(D[1], D[0], K, K); /* */ H1.ones(); // Layer 1
 	//Tensor H2(D[2], D[1], K, K); /* */ H2.ones(); // Layer 2 - Pool
+	
+	/// Section 2 - layers 3,4: conv-pool
 	Tensor H3(D[3], D[2], K, K); /* */ H3.ones(); // Layer 3
 	//Tensor H4(D[4], D[3], K, K); /* */ H4.ones(); // Layer 4 - Pool
+	
+	/// Section 3 - layers 5-8: conv(x3)-pool
 	Tensor H5(D[5], D[4], K, K); /* */ H5.ones(); // Layer 5
 	Tensor H6(D[6], D[5], K, K); /* */ H6.ones(); // Layer 6
 	Tensor H7(D[7], D[6], K, K); /* */ H7.ones(); // Layer 7
-	Tensor H8(D[8], D[7], K, K); /* */ H8.ones(); // Layer 8
-	//Tensor H9(D[9], D[8], K, K); /* */ H9.ones(); // Layer 9 - Pool
-	Tensor H10(D[10], D[9], K, K); /* */ H10.ones(); // Layer 10
+	//Tensor H8(D[8], D[7], K, K); /* */ H8.ones(); // Layer 8 - Pool
+
+	/// Section 4 - layers 9-12: conv(x3)-pool
+	Tensor H9( D[9 ], D[8 ], K, K); /* */ H9.ones(); // Layer 9
+	Tensor H10(D[10], D[9 ], K, K); /* */ H10.ones(); // Layer 10
 	Tensor H11(D[11], D[10], K, K); /* */ H11.ones(); // Layer 11
-	Tensor H12(D[12], D[11], K, K); /* */ H12.ones(); // Layer 12
+	//Tensor H12(D[12], D[11], K, K); /* */ H12.ones(); // Layer 12 - Pool
+
+	/// Section 5 - layers 13-18
 	Tensor H13(D[13], D[12], K, K); /* */ H13.ones(); // Layer 13
-	//Tensor H14(D[14], D[13], K, K); /* */ H14.ones(); // Layer 14 - Pool
+	Tensor H14(D[14], D[13], K, K); /* */ H14.ones(); // Layer 14
+	Tensor H15(D[15], D[14], K, K); /* */ H15.ones(); // Layer 15
+	Tensor H16(D[16], D[15], K, K); /* */ H16.ones(); // Layer 16
+	Tensor H17(D[17], D[16], K, K); /* */ H17.ones(); // Layer 17
+	Tensor H18(D[18], D[17], K, K); /* */ H18.ones(); // Layer 18
 
 	// Start CPU Timing
 	LARGE_INTEGER start_CPU, end_CPU, frequency_CPU;
@@ -694,11 +707,18 @@ int main()
 	QueryPerformanceFrequency(&frequency_CPU);
 	QueryPerformanceCounter(&start_CPU);
 
-	// |-----------section 1-----------|--------section 2---------|------------------------section 3------------------------|------------------section 4------------------------|
+	// |-----------section 1-----------|--------section 2---------|------------------------section 3------------------------|------------------section 4------------------------|------------------------------section 5------------------------------------|
 	// Layer:   1              2              3            4              5              6             7              8             9           10          11            12          13            14           15           16           17           18
 	//         conv           max           conv          max           conv           conv          conv            max          conv         conv        conv          max         conv          conv         conv         conv         conv         max 
 	// 416x416x3 -> 416x416x32 -> 208x208x32 -> 208x208x64 -> 104x104x64 -> 104x104x128 -> 104x104x64 ->  104x104x128 -> 52x52x128 -> 52x52x256 -> 52x52x128 -> 52x52x256 -> 26x26x256 -> 26x26x512 -> 26x26x256 -> 26x26x512 -> 26x26x256 -> 26x26x512 -> ...
 	//  D[0]=3       D[1]=32        D[2]=32       D[3]=64       D[4]=64       D[5]=128       D[6]=64        D[7]=128     D[8]=128      D[9]=256    D[10]=128    D[11]=256    D[12]=256    D[13]=512    D[14]=256    D[15]=512    D[16]=256    D[17]=512
+
+
+	//                                                         FEATURE-EXTRACTION   | DETECTION
+	//                conv         conv          conv          conv         conv          conv          conv          route conv reorg route conv conv detection
+	// ...-> 13x13x512 -> 13x13x1024 -> 13x13x512 -> 13x13x1024 -> 13x13x512 -> 13x13x1024 -> 13x13x1024 -> 13x13x1024 -> 
+	//       D[18]=512    D[19]=1024    D[20]=512    D[21]=1024    D[22]=512    D[23]=1024    D[24]=1024    D[25]=1024
+	//  |---------------------------section 6---------------------------------------|------------------------------section 5------------------------------------|
 
 	// -----------
 	// Section 1:
@@ -723,8 +743,7 @@ int main()
 	FeatureMap A5 = relu(conv(A3, H5));
 	FeatureMap A6 = relu(conv(A5, H6));
 	FeatureMap A7 = relu(conv(A6, H7));
-	FeatureMap A8 = relu(conv(A7, H8));
-	FeatureMap A9 = pool_max(A8);
+	FeatureMap A8 = pool_max(A7);
 	
 	// -----------
 	// Section 4:
@@ -732,11 +751,25 @@ int main()
 	cout << "\nSection 4: layers 9-12" << R[8] << "x" << C[8] << "x" << D[8] << " -> " << R[9] << "x" << C[9] << "x" << D[9] << " -> " << R[10] << "x" << C[10] << "x" << D[10]
 		<< " -> " << R[11] << "x" << C[11] << "x" << D[11] << " -> " << R[12] << "x" << C[12] << "x" << D[12] << "\n";
 	cout << "From Darknet: 52x52x128 -> 52x52x256 -> 52x52x128 -> 52x52x256 -> 26x26x256 \n";
+	FeatureMap A9 = relu(conv(A8, H9));
 	FeatureMap A10 = relu(conv(A9, H10));
 	FeatureMap A11 = relu(conv(A10, H11));
-	FeatureMap A12 = relu(conv(A11, H12));
+	FeatureMap A12 = pool_max(A11);
+
+	// -----------
+	// Section 5:
+	// -----------
+	cout << "\nSection 5: layers 13-18" << R[12] << "x" << C[12] << "x" << D[12] << " -> " << R[13] << "x" << C[13] << "x" << D[13] << " -> " << R[14] << "x" << C[14] << "x" << D[14]
+		<< " -> " << R[15] << "x" << C[15] << "x" << D[15] << " -> " << R[16] << "x" << C[16] << "x" << D[16]
+		<< " -> " << R[17] << "x" << C[17] << "x" << D[17] << " -> " << R[18] << "x" << C[18] << "x" << D[18] << "\n";
+	cout << "From Darknet: 26x26x256 -> 26x26x512 -> 26x26x256 -> 26x26x512 -> 26x26x256 -> 26x26x512 -> 13x13x512 \n";
 	FeatureMap A13 = relu(conv(A12, H13));
-	FeatureMap A14 = pool_max(A13);
+	FeatureMap A14 = relu(conv(A13, H14));
+	FeatureMap A15 = relu(conv(A14, H15));
+	FeatureMap A16 = relu(conv(A15, H16));
+	FeatureMap A17 = relu(conv(A16, H17));
+	FeatureMap A18 = pool_max(A17);
+
 
 	// End CPU Timing
 	QueryPerformanceCounter(&end_CPU);
