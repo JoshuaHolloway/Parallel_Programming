@@ -640,8 +640,8 @@ int main()
 	// =========================================================================================================================================
 	// =========================================================================================================================================
 
-const size_t R[26] = { 416, 416, 208, 208, 104, 104, 104, 104, 52, 52, 52, 52, 26, 26, 26, 26, 26, 26,13,13,13,13,13,13,13,13 }; // Rows    in each 2D matrix slice in each 3D feature map
-const size_t C[26] = { 416, 416, 208, 208, 104, 104, 104, 104, 52, 52, 52, 52, 26, 26, 26, 26, 26, 26,13,13,13,13,13,13,13,13 }; // Columns in each 2D matrix slice in each 3D feature map
+	const size_t R[26] = { 416, 416, 208, 208, 104, 104, 104, 104, 52, 52, 52, 52, 26, 26, 26, 26, 26, 26,13,13,13,13,13,13,13,13 }; // Rows    in each 2D matrix slice in each 3D feature map
+	const size_t C[26] = { 416, 416, 208, 208, 104, 104, 104, 104, 52, 52, 52, 52, 26, 26, 26, 26, 26, 26,13,13,13,13,13,13,13,13 }; // Columns in each 2D matrix slice in each 3D feature map
 	const size_t K = 3; // Filter size
 
 	size_t D[25];
@@ -672,7 +672,6 @@ const size_t C[26] = { 416, 416, 208, 208, 104, 104, 104, 104, 52, 52, 52, 52, 2
 	D[24] = 1024;
 	D[25] = 1024;
 
-
 	FeatureMap X(R[0], C[0], D[0]);     X.count();
 	Tensor H1(D[1], D[0], K, K); /* */ H1.ones(); // Layer 1
 	//Tensor H2(D[2], D[1], K, K); /* */ H2.ones(); // Layer 2 - Pool
@@ -683,6 +682,11 @@ const size_t C[26] = { 416, 416, 208, 208, 104, 104, 104, 104, 52, 52, 52, 52, 2
 	Tensor H7(D[7], D[6], K, K); /* */ H7.ones(); // Layer 7
 	Tensor H8(D[8], D[7], K, K); /* */ H8.ones(); // Layer 8
 	//Tensor H9(D[9], D[8], K, K); /* */ H9.ones(); // Layer 9 - Pool
+	Tensor H10(D[10], D[9], K, K); /* */ H10.ones(); // Layer 10
+	Tensor H11(D[11], D[10], K, K); /* */ H11.ones(); // Layer 11
+	Tensor H12(D[12], D[11], K, K); /* */ H12.ones(); // Layer 12
+	Tensor H13(D[13], D[12], K, K); /* */ H13.ones(); // Layer 13
+	//Tensor H14(D[14], D[13], K, K); /* */ H14.ones(); // Layer 14 - Pool
 
 	// Start CPU Timing
 	LARGE_INTEGER start_CPU, end_CPU, frequency_CPU;
@@ -690,7 +694,8 @@ const size_t C[26] = { 416, 416, 208, 208, 104, 104, 104, 104, 52, 52, 52, 52, 2
 	QueryPerformanceFrequency(&frequency_CPU);
 	QueryPerformanceCounter(&start_CPU);
 
-	// |-----------section 1-----------|--------section 2---------|------------------------section 3------------------------|
+	// |-----------section 1-----------|--------section 2---------|------------------------section 3------------------------|------------------section 4------------------------|
+	// Layer:   1              2              3            4              5              6             7              8             9           10          11            12          13            14           15           16           17           18
 	//         conv           max           conv          max           conv           conv          conv            max          conv         conv        conv          max         conv          conv         conv         conv         conv         max 
 	// 416x416x3 -> 416x416x32 -> 208x208x32 -> 208x208x64 -> 104x104x64 -> 104x104x128 -> 104x104x64 ->  104x104x128 -> 52x52x128 -> 52x52x256 -> 52x52x128 -> 52x52x256 -> 26x26x256 -> 26x26x512 -> 26x26x256 -> 26x26x512 -> 26x26x256 -> 26x26x512 -> ...
 	//  D[0]=3       D[1]=32        D[2]=32       D[3]=64       D[4]=64       D[5]=128       D[6]=64        D[7]=128     D[8]=128      D[9]=256    D[10]=128    D[11]=256    D[12]=256    D[13]=512    D[14]=256    D[15]=512    D[16]=256    D[17]=512
@@ -698,21 +703,21 @@ const size_t C[26] = { 416, 416, 208, 208, 104, 104, 104, 104, 52, 52, 52, 52, 2
 	// -----------
 	// Section 1:
 	// -----------
-	cout << "Section 1 - "<<R[0]<<"x"<<C[0]<<"x"<<D[0]<<" -> " << R[1] << "x" << C[1] << "x" << D[1] << " -> " << R[2] << "x" << C[2] << "x" << D[2] << "\n";
+	cout << "Section 1: layers 1-2" <<R[0]<<"x"<<C[0]<<"x"<<D[0]<<" -> " << R[1] << "x" << C[1] << "x" << D[1] << " -> " << R[2] << "x" << C[2] << "x" << D[2] << "\n";
 	cout << "From Darknet: 416x416x3 -> 416x416x32 -> 208x208x32 \n";
 	FeatureMap A1 = pool_max(relu(conv(X, H1)));
 
 	// -----------
 	// Section 2:
 	// -----------
-	cout << "\nSection 2: - " << R[2] << "x" << C[2] << "x" << D[2] << " -> " << R[3] << "x" << C[3] << "x" << D[3] << " -> " << R[4] << "x" << C[4] << "x" << D[4] << "\n";
+	cout << "\nSection 2: layers 3-4" << R[2] << "x" << C[2] << "x" << D[2] << " -> " << R[3] << "x" << C[3] << "x" << D[3] << " -> " << R[4] << "x" << C[4] << "x" << D[4] << "\n";
 	cout << "From Darknet: 208x208x32 -> 208x208x64 -> 104x104x64 \n";
 	FeatureMap A3 = pool_max(relu(conv(A1, H3)));
 
 	// -----------
 	// Section 3:
 	// -----------
-	cout << "\nSection 3: - " << R[4] << "x" << C[4] << "x" << D[4] << " -> " << R[5] << "x" << C[5] << "x" << D[5] << " -> " << R[6] << "x" << C[6] << "x" << D[6] 
+	cout << "\nSection 3: layers 5-8" << R[4] << "x" << C[4] << "x" << D[4] << " -> " << R[5] << "x" << C[5] << "x" << D[5] << " -> " << R[6] << "x" << C[6] << "x" << D[6] 
 		<< " -> " << R[7] << "x" << C[7] << "x" << D[7] << " -> " << R[8] << "x" << C[8] << "x" << D[8] << "\n";
 	cout << "From Darknet: 104x104x64 -> 104x104x128 -> 104x104x64 ->  104x104x128 -> 52x52x128 \n";
 	FeatureMap A5 = relu(conv(A3, H5));
@@ -720,6 +725,18 @@ const size_t C[26] = { 416, 416, 208, 208, 104, 104, 104, 104, 52, 52, 52, 52, 2
 	FeatureMap A7 = relu(conv(A6, H7));
 	FeatureMap A8 = relu(conv(A7, H8));
 	FeatureMap A9 = pool_max(A8);
+	
+	// -----------
+	// Section 4:
+	// -----------
+	cout << "\nSection 4: layers 9-12" << R[8] << "x" << C[8] << "x" << D[8] << " -> " << R[9] << "x" << C[9] << "x" << D[9] << " -> " << R[10] << "x" << C[10] << "x" << D[10]
+		<< " -> " << R[11] << "x" << C[11] << "x" << D[11] << " -> " << R[12] << "x" << C[12] << "x" << D[12] << "\n";
+	cout << "From Darknet: 52x52x128 -> 52x52x256 -> 52x52x128 -> 52x52x256 -> 26x26x256 \n";
+	FeatureMap A10 = relu(conv(A9, H10));
+	FeatureMap A11 = relu(conv(A10, H11));
+	FeatureMap A12 = relu(conv(A11, H12));
+	FeatureMap A13 = relu(conv(A12, H13));
+	FeatureMap A14 = pool_max(A13);
 
 	// End CPU Timing
 	QueryPerformanceCounter(&end_CPU);
