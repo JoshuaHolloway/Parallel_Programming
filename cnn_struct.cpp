@@ -527,8 +527,9 @@ FeatureMap relu(FeatureMap z)
 		{
 			for (int k = 0; k < z.cols; ++k)
 			{
+				// Leaky ReLu
 				if (z.at(i, j, k) < 0)
-					z.set(i, j, k, 0);
+					z.set(i, j, k, 0.1*z.at(i,j,k)); 
 			}
 		}
 	}
@@ -537,42 +538,198 @@ FeatureMap relu(FeatureMap z)
 //========
 int main()
 {
-	//  ---------Layer 1---------|------Layer 2---------
-	//   conv->relu->pool	       |  conv->relu->pool
-	//   2x(1x3x3)  	           |  4x(2x3x3) 
-	// 8x8x1 -> 8x8x2 -> 8x8x2 -> 4x4x2 -> 4x4x4 -> 4x4x4 -> 2x2x4
-	const size_t R[7] = { 8, 4, 2 };
-	const size_t C[7] = { 8, 4, 2 };
-	const size_t D[7] = { 1, 2, 4 };
-	const size_t K[1] = { 3 }; // filter sizes
+	// Full YOLO v1 newtork architecture:
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+	// Sections 1, 2, and 3:                          FM-1                                                    FM-2                      FM-3
+	// 448×448×3  →  224×224×64  →  112×112×64  →  112×112×192  →  56×56×192  →  56×56×128  →  56×56×256  → 56×56×256  →  56×56×512 → 28×28×512 
+	//         Conv(1)       Maxpool         Conv(2)         Maxpool        Conv(3)       Conv(4)       Conv(5)      Conv(6)      Maxpool
+	//        Stride-2       Stride2        Stride-1         Stride2        
+	//        64×3×7×7         2×2         192×64×3×3          2×2        128×192×1×1   256×128×3×3   256×256×1×1  256×512×3×3      2×2
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+	
+
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+	// Section 4:                                                                FM-4
+	// 28×28×512  →  28×28×256  →  28×28×512  →  28×28×512  →  28×28×1024  →  14×14×1024
+	//   Conv(7,9,11,13)  Conv(8,10,12,14)  Conv(15)      Conv(16)      Maxpool 
+	// 256×512×1×1    512×256×3×3         512×512×1×1   1024×512×3×3      2×2 
+	//      ^     [4x]     |                                           Stride-2                      
+  //      | <-<-<-<-<-<-<-                   
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+	// Section 5:                                                   FM-5
+	// 14×14×1024  →  14×14×512  →  14×14×1024  →  14×14×1024  →  7×7×1024
+	//       Conv(17,19)    Conv(18,20)      Conv(21)      Conv(22)       
+	//       512×1024×1×1   1024×512×3×3  1024×1024×3×3  1024×1024×3×3    
+	//             ^     [2x]     |                        Stride-2     
+	//             | <-<-<-<-<-<-<-                   
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+	// Section 6:                  FM-6
+	// 7×7×1024  →  7×7×1024  →  7×7×1024 
+	//       Conv(23)      Conv(24)      
+	//    1024×1024×3×3  1024×1024×3×3                   
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+	// Section 7:       FM-7
+	// 7×7×1024   →   7x7x256 (from darknet) 
+	//          "FC"1  
+	//      256×1024×1×1  (doen't say filter size - assuming 1x1 since called FC)
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+	// Section 8:       
+	// 7×7×256   →   12544  →   12544  →   1715  →   × ×
+	//          Vec      DropOut   "Connected" 
+	//                                     "Detection-Layer"
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+	// Paper says final output should by 7x7x30
+	// =========================================================================================================================================
+	// =========================================================================================================================================
+	// =========================================================================================================================================
+	// Full YOLO v2 newtork architecture:
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+	//layer     filters    size              input                output
+	//	0 conv      32  3 x 3 / 1   416 x 416 x   3   ->   416 x 416 x  32  0.299 BFLOPs
+	//	1 max           2 x 2 / 2   416 x 416 x  32   ->   208 x 208 x  32
+	//	2 conv      64  3 x 3 / 1   208 x 208 x  32   ->   208 x 208 x  64  1.595 BFLOPs
+	//	3 max           2 x 2 / 2   208 x 208 x  64   ->   104 x 104 x  64
+	//	4 conv     128  3 x 3 / 1   104 x 104 x  64   ->   104 x 104 x 128  1.595 BFLOPs
+	//	5 conv      64  1 x 1 / 1   104 x 104 x 128   ->   104 x 104 x  64  0.177 BFLOPs
+	//	6 conv     128  3 x 3 / 1   104 x 104 x  64   ->   104 x 104 x 128  1.595 BFLOPs
+	//	7 max           2 x 2 / 2   104 x 104 x 128   ->    52 x  52 x 128
+	//	8 conv     256  3 x 3 / 1    52 x  52 x 128   ->    52 x  52 x 256  1.595 BFLOPs
+	//	9 conv     128  1 x 1 / 1    52 x  52 x 256   ->    52 x  52 x 128  0.177 BFLOPs
+	//	10 conv    256  3 x 3 / 1    52 x  52 x 128   ->    52 x  52 x 256  1.595 BFLOPs
+	//	11 max          2 x 2 / 2    52 x  52 x 256   ->    26 x  26 x 256
+	//	12 conv    512  3 x 3 / 1    26 x  26 x 256   ->    26 x  26 x 512  1.595 BFLOPs
+	//	13 conv    256  1 x 1 / 1    26 x  26 x 512   ->    26 x  26 x 256  0.177 BFLOPs
+	//	14 conv    512  3 x 3 / 1    26 x  26 x 256   ->    26 x  26 x 512  1.595 BFLOPs
+	//	15 conv    256  1 x 1 / 1    26 x  26 x 512   ->    26 x  26 x 256  0.177 BFLOPs
+	//	16 conv    512  3 x 3 / 1    26 x  26 x 256   ->    26 x  26 x 512  1.595 BFLOPs
+	//	17 max          2 x 2 / 2    26 x  26 x 512   ->    13 x  13 x 512
+	//	18 conv   1024  3 x 3 / 1    13 x  13 x 512   ->    13 x  13 x1024  1.595 BFLOPs
+	//	19 conv    512  1 x 1 / 1    13 x  13 x1024   ->    13 x  13 x 512  0.177 BFLOPs
+	//	20 conv   1024  3 x 3 / 1    13 x  13 x 512   ->    13 x  13 x1024  1.595 BFLOPs
+	//	21 conv    512  1 x 1 / 1    13 x  13 x1024   ->    13 x  13 x 512  0.177 BFLOPs
+	//	22 conv   1024  3 x 3 / 1    13 x  13 x 512   ->    13 x  13 x1024  1.595 BFLOPs
+	//	23 conv   1024  3 x 3 / 1    13 x  13 x1024   ->    13 x  13 x1024  3.190 BFLOPs
+	//	24 conv   1024  3 x 3 / 1    13 x  13 x1024   ->    13 x  13 x1024  3.190 BFLOPs
+	//	25 route  16
+	//	26 conv     64  1 x 1 / 1    26 x  26 x 512   ->    26 x  26 x  64  0.044 BFLOPs
+	//	27 reorg / 2    26 x  26 x  64   ->    13 x  13 x 256
+	//	28 route  27 24
+	//	29 conv   1024  3 x 3 / 1    13 x  13 x1280   ->    13 x  13 x1024  3.987 BFLOPs
+	//	30 conv    425  1 x 1 / 1    13 x  13 x1024   ->    13 x  13 x 425  0.147 BFLOPs
+	//	31 detection
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+	//         conv           max           conv          max           conv           conv          conv            max          conv         conv        conv          max         conv          conv         conv         conv         conv         max 
+	// 416x416x3 -> 416x416x32 -> 208x208x32 -> 208x208x64 -> 104x104x64 -> 104x104x128 -> 104x104x64 ->  104x104x128 -> 52x52x128 -> 52x52x256 -> 52x52x128 -> 52x52x256 -> 26x26x256 -> 26x26x512 -> 26x26x256 -> 26x26x512 -> 26x26x256 -> 26x26x512 -> ...
+	//  D[0]=3       D[1]=32        D[2]=32       D[3]=64       D[4]=64       D[5]=128       D[6]=64        D[7]=128     D[8]=128      D[9]=256    D[10]=128    D[11]=256    D[12]=256    D[13]=512    D[14]=256    D[15]=512    D[16]=256    D[17]=512
+
+	//                                                         FEATURE-EXTRACTION   | DETECTION
+	//                conv         conv          conv          conv         conv          conv          conv          route conv reorg route conv conv detection
+	// ...-> 13x13x512 -> 13x13x1024 -> 13x13x512 -> 13x13x1024 -> 13x13x512 -> 13x13x1024 -> 13x13x1024 -> 13x13x1024 -> 
+	//       D[18]=512    D[19]=1024    D[20]=512    D[21]=1024    D[22]=512    D[23]=1024    D[24]=1024    D[25]=1024
+
+	// =========================================================================================================================================
+	// =========================================================================================================================================
+
+const size_t R[26] = { 416, 416, 208, 208, 104, 104, 104, 104, 52, 52, 52, 52, 26, 26, 26, 26, 26, 26,13,13,13,13,13,13,13,13 }; // Rows    in each 2D matrix slice in each 3D feature map
+const size_t C[26] = { 416, 416, 208, 208, 104, 104, 104, 104, 52, 52, 52, 52, 26, 26, 26, 26, 26, 26,13,13,13,13,13,13,13,13 }; // Columns in each 2D matrix slice in each 3D feature map
+	const size_t K = 3; // Filter size
+
+	size_t D[25];
+	D[0] = 3;
+	D[1] = 32;
+	D[2] = 32;
+	D[3] = 64;
+	D[4] = 64;
+	D[5] = 128;
+	D[6] = 64;
+	D[7] = 128;
+	D[8] = 128;
+	D[9] = 256;
+	D[10] = 128;
+	D[11] = 256;
+	D[12] = 256;
+	D[13] = 512;
+	D[14] = 256;
+	D[15] = 512;
+	D[16] = 256;
+	D[17] = 512;
+	D[18] = 512;
+	D[19] = 1024;
+	D[20] = 512;
+	D[21] = 1024;
+	D[22] = 512;
+	D[23] = 1024;
+	D[24] = 1024;
+	D[25] = 1024;
+
 
 	FeatureMap X(R[0], C[0], D[0]);     X.count();
-	Tensor H1(D[1], D[0], K[0], K[0]);  H1.ones();
+	Tensor H1(D[1], D[0], K, K); /* */ H1.ones(); // Layer 1
+	//Tensor H2(D[2], D[1], K, K); /* */ H2.ones(); // Layer 2 - Pool
+	Tensor H3(D[3], D[2], K, K); /* */ H3.ones(); // Layer 3
+	//Tensor H4(D[4], D[3], K, K); /* */ H4.ones(); // Layer 4 - Pool
+	Tensor H5(D[5], D[4], K, K); /* */ H5.ones(); // Layer 5
+	Tensor H6(D[6], D[5], K, K); /* */ H6.ones(); // Layer 6
+	Tensor H7(D[7], D[6], K, K); /* */ H7.ones(); // Layer 7
+	Tensor H8(D[8], D[7], K, K); /* */ H8.ones(); // Layer 8
+	//Tensor H9(D[9], D[8], K, K); /* */ H9.ones(); // Layer 9 - Pool
+
+	// Start CPU Timing
+	LARGE_INTEGER start_CPU, end_CPU, frequency_CPU;
+	double milliseconds_CPU, seconds_CPU, minutes_CPU;
+	QueryPerformanceFrequency(&frequency_CPU);
+	QueryPerformanceCounter(&start_CPU);
+
+	// |-----------section 1-----------|--------section 2---------|------------------------section 3------------------------|
+	//         conv           max           conv          max           conv           conv          conv            max          conv         conv        conv          max         conv          conv         conv         conv         conv         max 
+	// 416x416x3 -> 416x416x32 -> 208x208x32 -> 208x208x64 -> 104x104x64 -> 104x104x128 -> 104x104x64 ->  104x104x128 -> 52x52x128 -> 52x52x256 -> 52x52x128 -> 52x52x256 -> 26x26x256 -> 26x26x512 -> 26x26x256 -> 26x26x512 -> 26x26x256 -> 26x26x512 -> ...
+	//  D[0]=3       D[1]=32        D[2]=32       D[3]=64       D[4]=64       D[5]=128       D[6]=64        D[7]=128     D[8]=128      D[9]=256    D[10]=128    D[11]=256    D[12]=256    D[13]=512    D[14]=256    D[15]=512    D[16]=256    D[17]=512
 
 	// -----------
-	// LAYER 1:
+	// Section 1:
 	// -----------
-
-	// Conv:
-	FeatureMap Z1 = conv(X, H1);
-
-	// ReLu:
-	FeatureMap A1 = relu(Z1);
-
-	// Pool:
-	FeatureMap Y1 = pool_max(A1);
-	cout << "\n\nZ4_max: \n";
-	Y1.print();
+	cout << "Section 1 - "<<R[0]<<"x"<<C[0]<<"x"<<D[0]<<" -> " << R[1] << "x" << C[1] << "x" << D[1] << " -> " << R[2] << "x" << C[2] << "x" << D[2] << "\n";
+	cout << "From Darknet: 416x416x3 -> 416x416x32 -> 208x208x32 \n";
+	FeatureMap A1 = pool_max(relu(conv(X, H1)));
 
 	// -----------
-	// LAYER 2:
+	// Section 2:
 	// -----------
-	Tensor H2(D[2], D[1], K[0], K[0]);   // 4x2x3x3
-	H2.ones();
+	cout << "\nSection 2: - " << R[2] << "x" << C[2] << "x" << D[2] << " -> " << R[3] << "x" << C[3] << "x" << D[3] << " -> " << R[4] << "x" << C[4] << "x" << D[4] << "\n";
+	cout << "From Darknet: 208x208x32 -> 208x208x64 -> 104x104x64 \n";
+	FeatureMap A3 = pool_max(relu(conv(A1, H3)));
 
-	FeatureMap Y2 = pool_max(relu(conv(Y1, H2)));
-	cout << "\n\nY2: \n";
-	Y2.print();
+	// -----------
+	// Section 3:
+	// -----------
+	cout << "\nSection 3: - " << R[4] << "x" << C[4] << "x" << D[4] << " -> " << R[5] << "x" << C[5] << "x" << D[5] << " -> " << R[6] << "x" << C[6] << "x" << D[6] 
+		<< " -> " << R[7] << "x" << C[7] << "x" << D[7] << " -> " << R[8] << "x" << C[8] << "x" << D[8] << "\n";
+	cout << "From Darknet: 104x104x64 -> 104x104x128 -> 104x104x64 ->  104x104x128 -> 52x52x128 \n";
+	FeatureMap A5 = relu(conv(A3, H5));
+	FeatureMap A6 = relu(conv(A5, H6));
+	FeatureMap A7 = relu(conv(A6, H7));
+	FeatureMap A8 = relu(conv(A7, H8));
+	FeatureMap A9 = pool_max(A8);
+
+	// End CPU Timing
+	QueryPerformanceCounter(&end_CPU);
+	milliseconds_CPU = (end_CPU.QuadPart - start_CPU.QuadPart) *
+		1000.0 / frequency_CPU.QuadPart;
+	seconds_CPU = milliseconds_CPU / 1000;
+	minutes_CPU = seconds_CPU / 60;
+	fprintf(stderr, "\nCPU Time = %.3f milliseconds", milliseconds_CPU);
+	fprintf(stderr, "\nCPU Time = %.3f seconds", seconds_CPU);
+	fprintf(stderr, "\nCPU Time = %.3f minutes\n\n", minutes_CPU);
 
 	getchar();
 	return 0;
