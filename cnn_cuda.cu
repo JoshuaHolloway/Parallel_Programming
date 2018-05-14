@@ -1,5 +1,17 @@
 #include "header.h"
 //===============
+//-----------
+struct Vector
+{
+	float* val = nullptr;
+	size_t length;
+	Vector(size_t length)
+	{
+		val = new float[length];
+		this->length = length;
+	}
+};
+//---------------
 struct FeatureMap
 {
 	float* val = nullptr;
@@ -91,7 +103,6 @@ struct FeatureMap
 //---------------
 struct Tensor
 {
-
 	size_t dim1;
 	size_t dim2;
 	size_t dim3;
@@ -106,7 +117,7 @@ struct Tensor
 	size_t rows;			// dim 3
 	size_t cols;			// dim 4
 
-							// total number of pixels
+	// total number of pixels
 	size_t num_elems;
 
 
@@ -223,6 +234,41 @@ struct Tensor
 			}
 		}
 	}
+
+	template <class T, size_t dim_1, size_t dim_2>
+	void copy_4D_to_tensor(T(&kernel_2D)[dim_1][dim_2],
+		int filters, int channels, int rows, int cols)
+	{
+		assert(dim3 == dim_1); // rows
+		assert(dim4 == dim_2); // cols
+
+		// Copy the 2D filter template into the 4D tensor
+		// Replicate the matrices across channels in each filter
+		// Each 3D tensor is equivalent in the output 4D filter tensor
+		for (int i = 0; i < dim1; ++i) {
+			for (int j = 0; j < dim2; ++j) {
+				for (int k = 0; k < dim_1; ++k) { // dim_1 is rows of input matrix
+					for (int l = 0; l < dim_2; ++l) { // dim_2 is cols of input matrix
+						this->val[(i * dim4 * dim3 * dim2) + (j * dim4 * dim3) + (k * dim4) + l] = kernel_2D[k][l];
+					}
+				}
+			}
+		}
+	}
+
+	void copy_tensor_to_1D(float* arr)
+	{
+		// Copy the pixel data in the 4D tensor to a 1D array
+		for (int i = 0; i < dim1; ++i) {
+			for (int j = 0; j < dim2; ++j) {
+				for (int k = 0; k < dim3; ++k) { // dim_1 is rows of input matrix
+					for (int l = 0; l < dim4; ++l) { // dim_2 is cols of input matrix
+						arr[(i * dim4 * dim3 * dim2) + (j * dim4 * dim3) + (k * dim4) + l] = this->val[(i * dim4 * dim3 * dim2) + (j * dim4 * dim3) + (k * dim4) + l];
+					}
+				}
+			}
+		}
+	}
 };
 //-------------------------------------
 FeatureMap conv(FeatureMap x, Tensor h)
@@ -260,6 +306,23 @@ FeatureMap conv(FeatureMap x, Tensor h)
 				}
 			}
 		}
+	}
+	return y;
+}
+//-----------------------------
+Vector conv(Vector x, Vector h)
+{
+	Vector y(x.length);
+	for (int i = 0; i < x.length; ++i)
+	{
+		float Pvalue = 0.0f;
+		int N_start_point = i - h.length / 2;
+		for (int j = 0; j < h.length; j++)
+		{
+			if (N_start_point + j >= 0 && N_start_point + j < x.length)
+				Pvalue += x.val[N_start_point + j] * h.val[j];
+		}
+		y.val[i] = Pvalue;
 	}
 	return y;
 }
@@ -351,91 +414,85 @@ FeatureMap relu(FeatureMap z)
 	return z;
 }
 //=============================================================================
-__global__ void addKernel(int *c, const int *a, const int *b)
+__global__ void convKernel_serial(float* y, const float* x, const float* h)
 {
-	int i = threadIdx.x;
-	c[i] = a[i] + b[i];
+	// Remove these hard-coded contants!
+	const int signal_length = 4;
+	const int filter_length = 3;
+
+	for (int i = 0; i < signal_length; ++i)
+	{
+		float Pvalue = 0.0f;
+		int N_start_point = i - filter_length / 2;
+		for (int j = 0; j < filter_length; j++)
+		{
+			if (N_start_point + j >= 0 && N_start_point + j < signal_length)
+				Pvalue += x[N_start_point + j] * h[j];
+		}
+		y[i] = Pvalue;
+	}
 }
 //-----------------------------------------------------------------------------
-cudaError_t addWithCuda(int *c, const int *a, const int *b, unsigned int size)
+cudaError_t convWithCuda(float* y, const float* x, const float* h, const int signal_length, const int filter_length)
 {
-	int *dev_a = 0;
-	int *dev_b = 0;
-	int *dev_c = 0;
+	float *dev_x = 0;
+	float *dev_h = 0;
+	float *dev_y = 0;
 	cudaError_t cudaStatus;
 
+#define checkCUDA(expression)					\
+  {												\
+    cudaStatus = (expression);					\
+    if (cudaStatus != cudaSuccess) {			\
+		fprintf(stderr, "CUDA Error! (josh)");	\
+		goto Error;								\
+												\
+    }											\
+  }
+	
 	// Choose which GPU to run on, change this on a multi-GPU system.
-	cudaStatus = cudaSetDevice(0);
-	if (cudaStatus != cudaSuccess) {
-		fprintf(stderr, "cudaSetDevice failed!  Do you have a CUDA-capable GPU installed?");
-		goto Error;
-	}
+	checkCUDA(cudaSetDevice(0));
 
-	// Allocate GPU buffers for three vectors (two input, one output)    .
-	cudaStatus = cudaMalloc((void**)&dev_c, size * sizeof(int));
-	if (cudaStatus != cudaSuccess) {
-		fprintf(stderr, "cudaMalloc failed!");
-		goto Error;
-	}
-
-	cudaStatus = cudaMalloc((void**)&dev_a, size * sizeof(int));
-	if (cudaStatus != cudaSuccess) {
-		fprintf(stderr, "cudaMalloc failed!");
-		goto Error;
-	}
-
-	cudaStatus = cudaMalloc((void**)&dev_b, size * sizeof(int));
-	if (cudaStatus != cudaSuccess) {
-		fprintf(stderr, "cudaMalloc failed!");
-		goto Error;
-	}
+	// Allocate GPU buffers for three vectors (two input, one output)    
+	checkCUDA(cudaMalloc((void**)&dev_y, signal_length * sizeof(float)));
+	checkCUDA(cudaMalloc((void**)&dev_x, signal_length * sizeof(float)));
+	checkCUDA(cudaMalloc((void**)&dev_h, filter_length * sizeof(float)));
 
 	// Copy input vectors from host memory to GPU buffers.
-	cudaStatus = cudaMemcpy(dev_a, a, size * sizeof(int), cudaMemcpyHostToDevice);
+	cudaStatus = cudaMemcpy(dev_x, x, signal_length * sizeof(float), cudaMemcpyHostToDevice);
 	if (cudaStatus != cudaSuccess) {
 		fprintf(stderr, "cudaMemcpy failed!");
 		goto Error;
 	}
 
-	cudaStatus = cudaMemcpy(dev_b, b, size * sizeof(int), cudaMemcpyHostToDevice);
+	cudaStatus = cudaMemcpy(dev_h, h, filter_length * sizeof(float), cudaMemcpyHostToDevice);
 	if (cudaStatus != cudaSuccess) {
 		fprintf(stderr, "cudaMemcpy failed!");
 		goto Error;
 	}
 
 	// Launch a kernel on the GPU with one thread for each element.
-	addKernel << <1, size >> >(dev_c, dev_a, dev_b);
+	dim3 gridSize(1,1,1);
+	dim3 blockSize(1,1,1);
+	convKernel_serial << <gridSize, blockSize >> >(dev_y, dev_x, dev_h);
 
 	// Check for any errors launching the kernel
-	cudaStatus = cudaGetLastError();
-	if (cudaStatus != cudaSuccess) {
-		fprintf(stderr, "addKernel launch failed: %s\n", cudaGetErrorString(cudaStatus));
-		goto Error;
-	}
+	checkCUDA(cudaGetLastError());
 
 	// cudaDeviceSynchronize waits for the kernel to finish, and returns
 	// any errors encountered during the launch.
-	cudaStatus = cudaDeviceSynchronize();
-	if (cudaStatus != cudaSuccess) {
-		fprintf(stderr, "cudaDeviceSynchronize returned error code %d after launching addKernel!\n", cudaStatus);
-		goto Error;
-	}
+	checkCUDA(cudaDeviceSynchronize());
 
 	// Copy output vector from GPU buffer to host memory.
-	cudaStatus = cudaMemcpy(c, dev_c, size * sizeof(int), cudaMemcpyDeviceToHost);
-	if (cudaStatus != cudaSuccess) {
-		fprintf(stderr, "cudaMemcpy failed!");
-		goto Error;
-	}
+	checkCUDA(cudaMemcpy(y, dev_y, signal_length * sizeof(float), cudaMemcpyDeviceToHost));  // DEVICE -> HOST
 
 Error:
-	cudaFree(dev_c);
-	cudaFree(dev_a);
-	cudaFree(dev_b);
+	cudaFree(dev_y);
+	cudaFree(dev_x);
+	cudaFree(dev_h);
 
 	return cudaStatus;
 }
-//--------
 //--------------------------------------
 void save_image(const char* output_filename,
 	float* buffer,
@@ -451,6 +508,13 @@ void save_image(const char* output_filename,
 	cv::normalize(output_image, output_image, 0.0, 255.0, cv::NORM_MINMAX);
 	output_image.convertTo(output_image, CV_8UC3);
 	cv::imwrite(output_filename, output_image);
+}
+//--------------------------------
+void copy(float* arr, Vector vect)
+{
+	// copy pixel data from Vector into float array
+	for (int i = 0; i < vect.length; ++i)
+		arr[i] = vect.val[i];
 }
 //--------------------------------------
 int kernel_wrapper(const cv::Mat& image)
@@ -638,50 +702,27 @@ int kernel_wrapper(const cv::Mat& image)
 
 	cudnnDestroy(cudnn);
 
-
+/*
 	// Custom CNN
 	const size_t R[26] = { 416, 416, 208, 208, 104, 104, 104, 104, 52, 52, 52, 52, 26, 26, 26, 26, 26, 26,13,13,13,13,13,13,13,13 }; // Rows    in each 2D matrix slice in each 3D feature map
 	const size_t C[26] = { 416, 416, 208, 208, 104, 104, 104, 104, 52, 52, 52, 52, 26, 26, 26, 26, 26, 26,13,13,13,13,13,13,13,13 }; // Columns in each 2D matrix slice in each 3D feature map
 	const size_t K = 3; // Filter size
 
-	size_t D[25];
-	D[0] = 3;
-	D[1] = 32;
-	D[2] = 32;
-	D[3] = 64;
-	D[4] = 64;
-	D[5] = 128;
-	D[6] = 64;
-	D[7] = 128;
-	D[8] = 128;
-	D[9] = 256;
-	D[10] = 128;
-	D[11] = 256;
-	D[12] = 256;
-	D[13] = 512;
-	D[14] = 256;
-	D[15] = 512;
-	D[16] = 256;
-	D[17] = 512;
-	D[18] = 512;
-	D[19] = 1024;
-	D[20] = 512;
-	D[21] = 1024;
-	D[22] = 512;
-	D[23] = 1024;
-	D[24] = 1024;
-	D[25] = 1024;
+	size_t D[25];D[0] = 3;D[1] = 32;D[2] = 32;D[3] = 64;D[4] = 64;
+	D[5] = 128;D[6] = 64;D[7] = 128;D[8] = 128;D[9] = 256;
+	D[10] = 128;D[11] = 256;D[12] = 256;D[13] = 512;D[14] = 256;
+	D[15] = 512;D[16] = 256;D[17] = 512;D[18] = 512;D[19] = 1024;
+	D[20] = 512;D[21] = 1024;	D[22] = 512;	D[23] = 1024;	D[24] = 1024;	D[25] = 1024;
 
 	/// Section 1 - layers 1,2: conv-pool
 	FeatureMap X(R[0], C[0], D[0]);     X.count();
-	Tensor H1(D[1], D[0], K, K); /* */ H1.ones(); // Layer 1
-	//Tensor H2(D[2], D[1], K, K); /* */ H2.ones(); // Layer 2 - Pool
+	Tensor H1(D[1], D[0], K, K);  H1.ones(); // Layer 1
+	//Tensor H2(D[2], D[1], K, K);  H2.ones(); // Layer 2 - Pool
 
 	/// Section 2 - layers 3,4: conv-pool
-	Tensor H3(D[3], D[2], K, K); /* */ H3.ones(); // Layer 3
-	//Tensor H4(D[4], D[3], K, K); /* */ H4.ones(); // Layer 4 - Pool
+	Tensor H3(D[3], D[2], K, K);  H3.ones(); // Layer 3
+	//Tensor H4(D[4], D[3], K, K);  H4.ones(); // Layer 4 - Pool
 
-/*
 	/// Section 3 - layers 5-8: conv(x3)-pool
 	Tensor H5(D[5], D[4], K, K);  H5.ones(); // Layer 5
 	Tensor H6(D[6], D[5], K, K);  H6.ones(); // Layer 6
@@ -708,7 +749,7 @@ int kernel_wrapper(const cv::Mat& image)
 	Tensor H21(D[20], D[19], K, K);  H21.ones(); // Layer 21 
 	Tensor H22(D[21], D[20], K, K);  H22.ones(); // Layer 22
 	Tensor H23(D[22], D[21], K, K);  H23.ones(); // Layer 23
-*/
+
 	// Start CPU Timing
 	LARGE_INTEGER start_CPU, end_CPU, frequency_CPU;
 	double milliseconds_CPU, seconds_CPU, minutes_CPU;
@@ -720,7 +761,7 @@ int kernel_wrapper(const cv::Mat& image)
 	//         conv           max           conv          max           conv           conv          conv            max          conv         conv        conv          max         conv          conv         conv         conv         conv         max 
 	// 416x416x3 -> 416x416x32 -> 208x208x32 -> 208x208x64 -> 104x104x64 -> 104x104x128 -> 104x104x64 ->  104x104x128 -> 52x52x128 -> 52x52x256 -> 52x52x128 -> 52x52x256 -> 26x26x256 -> 26x26x512 -> 26x26x256 -> 26x26x512 -> 26x26x256 -> 26x26x512 -> ...
 	//  D[0]=3       D[1]=32        D[2]=32       D[3]=64       D[4]=64       D[5]=128       D[6]=64        D[7]=128     D[8]=128      D[9]=256    D[10]=128    D[11]=256    D[12]=256    D[13]=512    D[14]=256    D[15]=512    D[16]=256    D[17]=512
-	
+	//
 	//                                                         FEATURE-EXTRACTION   | DETECTION
 	//                conv         conv          conv          conv         conv          conv          conv          route conv reorg route conv conv detection
 	// ...-> 13x13x512 -> 13x13x1024 -> 13x13x512 -> 13x13x1024 -> 13x13x512 -> 13x13x1024 -> 13x13x1024 -> 13x13x1024 -> 
@@ -741,7 +782,7 @@ int kernel_wrapper(const cv::Mat& image)
 	cout << "From Darknet: 208x208x32 -> 208x208x64 -> 104x104x64 \n";
 	FeatureMap A3 = pool_max(relu(conv(A1, H3)));
 
-	/*
+
 
 	// -----------
 	// Section 3:
@@ -801,33 +842,63 @@ int kernel_wrapper(const cv::Mat& image)
 	fprintf(stderr, "\nCPU Time = %.3f milliseconds", milliseconds_CPU);
 	fprintf(stderr, "\nCPU Time = %.3f seconds", seconds_CPU);
 	fprintf(stderr, "\nCPU Time = %.3f minutes\n\n", minutes_CPU);
-	*/
+
 	cout << "\n\nCompleted CNN\n\n";
 	getchar();
+*/
+
+	// let's modify this to do conv with these arrays
+	const int filter_length = 3;
+	const int signal_length = 4;
+	const float h[filter_length] = { 1, 1, 1 };
+	const float x[signal_length] = { 1, 2, 3, 4 };
+	float y[signal_length] = { 0 };
+	
+#define checkCUDA(expression)					\
+  {												\
+    cudaError_t cudaStatus = (expression);		\
+    if (cudaStatus != cudaSuccess) {			\
+		fprintf(stderr, "CUDA error! (josh)");	\
+		return 1;								\
+												\
+    }											\
+  }
+
+	// Conv vectors
+	checkCUDA(convWithCuda(y, x, h, signal_length, filter_length));
+
+	printf("conv( {1,2,3,4}, {1,1,1} ) = {%f,%f,%f,%f}\n",
+		y[0], y[1], y[2], y[3]);
 
 
-    const int arraySize = 5;
-    const int a[arraySize] = { 1, 2, 3, 4, 5 };
-    const int b[arraySize] = { 10, 20, 30, 40, 50 };
-    int c[arraySize] = { 0 };
 
-    // Add vectors in parallel.
-    cudaError_t cudaStatus = addWithCuda(c, a, b, arraySize);
-    if (cudaStatus != cudaSuccess) {
-        fprintf(stderr, "addWithCuda failed!");
-        return 1;
-    }
+	// Do the full tensor conv here analogous to the cuDNN implementation
 
-    printf("{1,2,3,4,5} + {10,20,30,40,50} = {%d,%d,%d,%d,%d}\n",
-        c[0], c[1], c[2], c[3], c[4]);
+	// Step 1: Copy the kernel_template into a Tensor object
+	// Step 2: Copy the pixel data from the Tensor object into a 1D host float array
+	// Step 3: Copy this host array into a device array
+	// Step 4: Launch kernel
+	// Step 5: Return results
+	
+	// Step 1:
+	Tensor h_kernel_tensor(3,3,3,3);
+	h_kernel_tensor.copy_4D_to_tensor(kernel_template, 
+		h_kernel_tensor.dim4, h_kernel_tensor.dim3, h_kernel_tensor.dim2, h_kernel_tensor.dim1);
+
+	// Step 2:
+	float H[3 * 3 * 3 * 3] = { 0 };
+	h_kernel_tensor.copy_tensor_to_1D(H);
+
+	// Step 3:
+
+
+	// Step 4:
+
 
     // cudaDeviceReset must be called before exiting in order for profiling and
     // tracing tools such as Nsight and Visual Profiler to show complete traces.
-    cudaStatus = cudaDeviceReset();
-    if (cudaStatus != cudaSuccess) {
-        fprintf(stderr, "cudaDeviceReset failed!");
-        return 1;
-    }
+    checkCUDA(cudaDeviceReset());
 
+	getchar();
     return 0;
 }
