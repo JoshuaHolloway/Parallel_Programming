@@ -467,6 +467,12 @@ class Layer
     }                                                        \
   }
 
+public:
+	cudnnTensorDescriptor_t input_descriptor;
+	cudnnTensorDescriptor_t output_descriptor;
+	cudnnFilterDescriptor_t kernel_descriptor;
+	cudnnConvolutionDescriptor_t convolution_descriptor;
+	cudnnConvolutionFwdAlgo_t convolution_algorithm;
 
 };
 //--------------------------------------
@@ -485,11 +491,14 @@ class Network
 private:
 	cv::Mat image;
 	cudnnHandle_t cudnn;
-	vector<cudnnTensorDescriptor_t> input_descriptor_vect;
-	vector<cudnnTensorDescriptor_t> output_descriptor_vect;
-	vector<cudnnFilterDescriptor_t> kernel_descriptor_vect;
-	vector<cudnnConvolutionDescriptor_t> convolution_descriptor_vect;
-	vector<cudnnConvolutionFwdAlgo_t> convolution_algorithm_vect;
+
+	vector<Layer> layers;
+
+	//vector<cudnnTensorDescriptor_t> input_descriptor_vect;
+	//vector<cudnnTensorDescriptor_t> output_descriptor_vect;
+	//vector<cudnnFilterDescriptor_t> kernel_descriptor_vect;
+	//vector<cudnnConvolutionDescriptor_t> convolution_descriptor_vect;
+	//vector<cudnnConvolutionFwdAlgo_t> convolution_algorithm_vect;
 		 
 public:
 	Network(const cv::Mat& image)
@@ -511,11 +520,13 @@ public:
 		/// cuDNN Step 2: Create objects to store input tensor, output tensor, and output tensor
 
 		// Input tensor - 1
-		input_descriptor_vect.push_back(cudnnTensorDescriptor_t{}); // place new one in vector
+		layers.push_back(Layer{});
 
-		checkCUDNN(cudnnCreateTensorDescriptor(&input_descriptor_vect[0]));
+		// input_descriptor_vect.push_back(cudnnTensorDescriptor_t{}); // place new one in vector
+		//checkCUDNN(cudnnCreateTensorDescriptor(&input_descriptor_vect[0]));
+		checkCUDNN(cudnnCreateTensorDescriptor(&layers[0].input_descriptor));
 
-		checkCUDNN(cudnnSetTensor4dDescriptor(input_descriptor_vect[0], //input_descriptor_1,
+		checkCUDNN(cudnnSetTensor4dDescriptor(layers[0].input_descriptor, //input_descriptor_1,
 			/*format=*/CUDNN_TENSOR_NHWC,
 			/*dataType=*/CUDNN_DATA_FLOAT,
 			/*batch_size=*/1,
@@ -524,9 +535,10 @@ public:
 			/*image_width=*/image.cols));
 
 		// Output tensor - 1
-		output_descriptor_vect.push_back(cudnnTensorDescriptor_t{}); // place new one in vector
-		checkCUDNN(cudnnCreateTensorDescriptor(&output_descriptor_vect[0]));// output_descriptor_1));
-		checkCUDNN(cudnnSetTensor4dDescriptor(output_descriptor_vect[0],//output_descriptor_1,
+		//output_descriptor_vect.push_back(cudnnTensorDescriptor_t{}); // place new one in vector
+		
+		checkCUDNN(cudnnCreateTensorDescriptor(&layers[0].output_descriptor));//output_descriptor_vect[0]));// output_descriptor_1));
+		checkCUDNN(cudnnSetTensor4dDescriptor(layers[0].output_descriptor, // output_descriptor_vect[0],//output_descriptor_1,
 			/*format=*/CUDNN_TENSOR_NHWC,
 			/*dataType=*/CUDNN_DATA_FLOAT,
 			/*batch_size=*/1,
@@ -536,10 +548,11 @@ public:
 
 		// Input tensor - 2
 		//cudnnTensorDescriptor_t input_descriptor_2;
-		input_descriptor_vect.push_back(cudnnTensorDescriptor_t{}); // place new one in vector
+		//input_descriptor_vect.push_back(cudnnTensorDescriptor_t{}); // place new one in vector
+		layers.push_back(Layer{});
 
-		checkCUDNN(cudnnCreateTensorDescriptor(&input_descriptor_vect[1]));
-		checkCUDNN(cudnnSetTensor4dDescriptor(input_descriptor_vect[1],
+		checkCUDNN(cudnnCreateTensorDescriptor(&layers[1].input_descriptor));//input_descriptor_vect[1]));
+		checkCUDNN(cudnnSetTensor4dDescriptor(layers[1].input_descriptor, //input_descriptor_vect[1],
 			/*format=*/CUDNN_TENSOR_NHWC,
 			/*dataType=*/CUDNN_DATA_FLOAT,
 			/*batch_size=*/1,
@@ -548,13 +561,16 @@ public:
 			/*image_width=*/image.cols));
 
 		// Copy output of 1 descriptor into input of 2 descriptor:
-		input_descriptor_vect[1] = input_descriptor_vect[0];
+		//input_descriptor_vect[1] = input_descriptor_vect[0];
+		layers[1].input_descriptor = layers[0].input_descriptor;
 
 		// Filter tensor
 		//cudnnFilterDescriptor_t kernel_descriptor_1;
-		kernel_descriptor_vect.push_back(cudnnFilterDescriptor_t{});
-		checkCUDNN(cudnnCreateFilterDescriptor(&kernel_descriptor_vect[0]));//kernel_descriptor_1));
-		checkCUDNN(cudnnSetFilter4dDescriptor(kernel_descriptor_vect[0],
+		//kernel_descriptor_vect.push_back(cudnnFilterDescriptor_t{});
+
+
+		checkCUDNN(cudnnCreateFilterDescriptor(&layers[0].kernel_descriptor));//kernel_descriptor_vect[0]));//kernel_descriptor_1));
+		checkCUDNN(cudnnSetFilter4dDescriptor(layers[0].kernel_descriptor,//kernel_descriptor_vect[0],
 			/*dataType=*/CUDNN_DATA_FLOAT,
 			/*format=*/CUDNN_TENSOR_NCHW,
 			/*out_channels=*/3,
@@ -564,9 +580,9 @@ public:
 
 		// Describe the conv kernel
 		//cudnnConvolutionDescriptor_t convolution_descriptor_1;
-		convolution_descriptor_vect.push_back(cudnnConvolutionDescriptor_t{});
-		checkCUDNN(cudnnCreateConvolutionDescriptor(&convolution_descriptor_vect[0]));//convolution_descriptor_1));
-		checkCUDNN(cudnnSetConvolution2dDescriptor(convolution_descriptor_vect[0],//convolution_descriptor_1,
+		//convolution_descriptor_vect.push_back(cudnnConvolutionDescriptor_t{});
+		checkCUDNN(cudnnCreateConvolutionDescriptor(&layers[0].convolution_descriptor));//convolution_descriptor_vect[0]));//convolution_descriptor_1));
+		checkCUDNN(cudnnSetConvolution2dDescriptor(layers[0].convolution_descriptor, //convolution_descriptor_vect[0],//convolution_descriptor_1,
 			/*pad_height=*/1,
 			/*pad_width=*/1,
 			/*vertical_stride=*/1,
@@ -578,25 +594,25 @@ public:
 
 		// More detailed description of the convolution algorithm we want to use:
 		//cudnnConvolutionFwdAlgo_t convolution_algorithm_1;
-		convolution_algorithm_vect.push_back(cudnnConvolutionFwdAlgo_t{});
+		//convolution_algorithm_vect.push_back(cudnnConvolutionFwdAlgo_t{});
 		checkCUDNN(
 			cudnnGetConvolutionForwardAlgorithm(cudnn,
-				input_descriptor_vect[0], //input_descriptor_1,
-				kernel_descriptor_vect[0],//kernel_descriptor_1,			
-				convolution_descriptor_vect[0], //convolution_descriptor_1,
-				output_descriptor_vect[0], //output_descriptor_1,
+				layers[0].input_descriptor,//input_descriptor_vect[0], //input_descriptor_1,
+				layers[0].kernel_descriptor,//kernel_descriptor_vect[0],//kernel_descriptor_1,			
+				layers[0].convolution_descriptor,//convolution_descriptor_vect[0], //convolution_descriptor_1,
+				layers[0].output_descriptor, //output_descriptor_vect[0], //output_descriptor_1,
 				CUDNN_CONVOLUTION_FWD_PREFER_FASTEST,
 				/*memoryLimitInBytes=*/0,
-				&convolution_algorithm_vect[0]));// convolution_algorithm_1));
+				&layers[0].convolution_algorithm));//convolution_algorithm_vect[0]));// convolution_algorithm_1));
 
 		// Physical memory to operate on
 		size_t workspace_bytes = 0;
 		checkCUDNN(cudnnGetConvolutionForwardWorkspaceSize(cudnn,
-			input_descriptor_vect[0], //input_descriptor_1,
-			kernel_descriptor_vect[0],// kernel_descriptor_1,
-			convolution_descriptor_vect[0], //convolution_descriptor_1,
-			output_descriptor_vect[0], //output_descriptor_1,
-			convolution_algorithm_vect[0], // convolution_algorithm_1,
+			layers[0].input_descriptor,//input_descriptor_vect[0], //input_descriptor_1,
+			layers[0].kernel_descriptor,//kernel_descriptor_vect[0],// kernel_descriptor_1,
+			layers[0].convolution_descriptor,//convolution_descriptor_vect[0], //convolution_descriptor_1,
+			layers[0].output_descriptor,//output_descriptor_vect[0], //output_descriptor_1,
+			layers[0].convolution_algorithm,//convolution_algorithm_vect[0], // convolution_algorithm_1,
 			&workspace_bytes));
 		std::cerr << "Workspace size: " << (workspace_bytes / 1048576.0) << "MB"
 			<< std::endl;
@@ -610,9 +626,9 @@ public:
 
 		// Dimensions from cuDNN for confirmation
 		cudnnGetConvolution2dForwardOutputDim(
-			convolution_descriptor_vect[0], //convolution_descriptor_1,
-			input_descriptor_vect[0], //input_descriptor_1,
-			kernel_descriptor_vect[0],//kernel_descriptor_1,
+			layers[0].convolution_descriptor,//convolution_descriptor_vect[0], //convolution_descriptor_1,
+			layers[0].input_descriptor, //input_descriptor_vect[0], //input_descriptor_1,
+			layers[0].kernel_descriptor,//kernel_descriptor_vect[0],//kernel_descriptor_1,
 			&batch_size,
 			&channels,
 			&height,
@@ -675,16 +691,16 @@ public:
 		const float alpha = 1, beta = 0;
 		checkCUDNN(cudnnConvolutionForward(cudnn,
 			&alpha,
-			input_descriptor_vect[0], //input_descriptor_1,
+			layers[0].input_descriptor,//input_descriptor_vect[0], //input_descriptor_1,
 			d_input_1,
-			kernel_descriptor_vect[0],//kernel_descriptor_1,
+			layers[0].kernel_descriptor, //kernel_descriptor_vect[0],//kernel_descriptor_1,
 			d_kernel_1,
-			convolution_descriptor_vect[0],//convolution_descriptor_1,
-			convolution_algorithm_vect[0], //convolution_algorithm_1,
+			layers[0].convolution_descriptor, //convolution_descriptor_vect[0],//convolution_descriptor_1,
+			layers[0].convolution_algorithm, //convolution_algorithm_vect[0], //convolution_algorithm_1,
 			d_workspace,
 			workspace_bytes,
 			&beta,
-			output_descriptor_vect[0], //output_descriptor_1,
+			layers[0].output_descriptor, //output_descriptor_vect[0], //output_descriptor_1,
 			d_output_1));
 
 
@@ -708,16 +724,16 @@ public:
 		
 		checkCUDNN(cudnnConvolutionForward(cudnn,
 			&alpha,
-			input_descriptor_vect[1], //input_descriptor_2,
+			layers[1].input_descriptor,//input_descriptor_vect[1], //input_descriptor_2,
 			d_input_2,
-			kernel_descriptor_vect[0], //kernel_descriptor_1, // change to 2
+			layers[0].kernel_descriptor, //kernel_descriptor_vect[0], //kernel_descriptor_1, // change to 2
 			d_kernel_1,
-			convolution_descriptor_vect[0], //convolution_descriptor_1,
-			convolution_algorithm_vect[0], //convolution_algorithm_1,
+			layers[0].convolution_descriptor, //convolution_descriptor_vect[0], //convolution_descriptor_1,
+			layers[0].convolution_algorithm,// convolution_algorithm_vect[0], //convolution_algorithm_1,
 			d_workspace,
 			workspace_bytes,
 			&beta,
-			output_descriptor_vect[0], //output_descriptor_1, // change to 2
+			layers[0].output_descriptor, //output_descriptor_vect[0], //output_descriptor_1, // change to 2
 			d_output_2));
 
 
