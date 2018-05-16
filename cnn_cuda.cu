@@ -1,17 +1,7 @@
 #include "header.h"
+#include <vector>
+using std::vector;
 //===============
-//-----------
-struct Vector
-{
-	float* val = nullptr;
-	size_t length;
-	Vector(size_t length)
-	{
-		val = new float[length];
-		this->length = length;
-	}
-};
-//---------------
 struct FeatureMap
 {
 	float* val = nullptr;
@@ -103,6 +93,7 @@ struct FeatureMap
 //---------------
 struct Tensor
 {
+
 	size_t dim1;
 	size_t dim2;
 	size_t dim3;
@@ -117,7 +108,7 @@ struct Tensor
 	size_t rows;			// dim 3
 	size_t cols;			// dim 4
 
-	// total number of pixels
+										// total number of pixels
 	size_t num_elems;
 
 
@@ -234,41 +225,6 @@ struct Tensor
 			}
 		}
 	}
-
-	template <class T, size_t dim_1, size_t dim_2>
-	void copy_4D_to_tensor(T(&kernel_2D)[dim_1][dim_2],
-		int filters, int channels, int rows, int cols)
-	{
-		assert(dim3 == dim_1); // rows
-		assert(dim4 == dim_2); // cols
-
-		// Copy the 2D filter template into the 4D tensor
-		// Replicate the matrices across channels in each filter
-		// Each 3D tensor is equivalent in the output 4D filter tensor
-		for (int i = 0; i < dim1; ++i) {
-			for (int j = 0; j < dim2; ++j) {
-				for (int k = 0; k < dim_1; ++k) { // dim_1 is rows of input matrix
-					for (int l = 0; l < dim_2; ++l) { // dim_2 is cols of input matrix
-						this->val[(i * dim4 * dim3 * dim2) + (j * dim4 * dim3) + (k * dim4) + l] = kernel_2D[k][l];
-					}
-				}
-			}
-		}
-	}
-
-	void copy_tensor_to_1D(float* arr)
-	{
-		// Copy the pixel data in the 4D tensor to a 1D array
-		for (int i = 0; i < dim1; ++i) {
-			for (int j = 0; j < dim2; ++j) {
-				for (int k = 0; k < dim3; ++k) { // dim_1 is rows of input matrix
-					for (int l = 0; l < dim4; ++l) { // dim_2 is cols of input matrix
-						arr[(i * dim4 * dim3 * dim2) + (j * dim4 * dim3) + (k * dim4) + l] = this->val[(i * dim4 * dim3 * dim2) + (j * dim4 * dim3) + (k * dim4) + l];
-					}
-				}
-			}
-		}
-	}
 };
 //-------------------------------------
 FeatureMap conv(FeatureMap x, Tensor h)
@@ -306,23 +262,6 @@ FeatureMap conv(FeatureMap x, Tensor h)
 				}
 			}
 		}
-	}
-	return y;
-}
-//-----------------------------
-Vector conv(Vector x, Vector h)
-{
-	Vector y(x.length);
-	for (int i = 0; i < x.length; ++i)
-	{
-		float Pvalue = 0.0f;
-		int N_start_point = i - h.length / 2;
-		for (int j = 0; j < h.length; j++)
-		{
-			if (N_start_point + j >= 0 && N_start_point + j < x.length)
-				Pvalue += x.val[N_start_point + j] * h.val[j];
-		}
-		y.val[i] = Pvalue;
 	}
 	return y;
 }
@@ -389,7 +328,7 @@ FeatureMap pool_max(FeatureMap x)
 						} // end if-else
 					}// end for over kk
 				} // end for over jj
-				  //y[i][j / 2][k / 2] = max;
+					//y[i][j / 2][k / 2] = max;
 				y.set(i, j / 2, k / 2, max);
 			} // end for over k
 		} // end for over j
@@ -414,85 +353,91 @@ FeatureMap relu(FeatureMap z)
 	return z;
 }
 //=============================================================================
-__global__ void convKernel_serial(float* y, const float* x, const float* h)
+__global__ void addKernel(int *c, const int *a, const int *b)
 {
-	// Remove these hard-coded contants!
-	const int signal_length = 4;
-	const int filter_length = 3;
-
-	for (int i = 0; i < signal_length; ++i)
-	{
-		float Pvalue = 0.0f;
-		int N_start_point = i - filter_length / 2;
-		for (int j = 0; j < filter_length; j++)
-		{
-			if (N_start_point + j >= 0 && N_start_point + j < signal_length)
-				Pvalue += x[N_start_point + j] * h[j];
-		}
-		y[i] = Pvalue;
-	}
+	int i = threadIdx.x;
+	c[i] = a[i] + b[i];
 }
 //-----------------------------------------------------------------------------
-cudaError_t convWithCuda(float* y, const float* x, const float* h, const int signal_length, const int filter_length)
+cudaError_t addWithCuda(int *c, const int *a, const int *b, unsigned int size)
 {
-	float *dev_x = 0;
-	float *dev_h = 0;
-	float *dev_y = 0;
+	int *dev_a = 0;
+	int *dev_b = 0;
+	int *dev_c = 0;
 	cudaError_t cudaStatus;
 
-#define checkCUDA(expression)					\
-  {												\
-    cudaStatus = (expression);					\
-    if (cudaStatus != cudaSuccess) {			\
-		fprintf(stderr, "CUDA Error! (josh)");	\
-		goto Error;								\
-												\
-    }											\
-  }
-	
 	// Choose which GPU to run on, change this on a multi-GPU system.
-	checkCUDA(cudaSetDevice(0));
+	cudaStatus = cudaSetDevice(0);
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "cudaSetDevice failed!  Do you have a CUDA-capable GPU installed?");
+		goto Error;
+	}
 
-	// Allocate GPU buffers for three vectors (two input, one output)    
-	checkCUDA(cudaMalloc((void**)&dev_y, signal_length * sizeof(float)));
-	checkCUDA(cudaMalloc((void**)&dev_x, signal_length * sizeof(float)));
-	checkCUDA(cudaMalloc((void**)&dev_h, filter_length * sizeof(float)));
+	// Allocate GPU buffers for three vectors (two input, one output)    .
+	cudaStatus = cudaMalloc((void**)&dev_c, size * sizeof(int));
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "cudaMalloc failed!");
+		goto Error;
+	}
+
+	cudaStatus = cudaMalloc((void**)&dev_a, size * sizeof(int));
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "cudaMalloc failed!");
+		goto Error;
+	}
+
+	cudaStatus = cudaMalloc((void**)&dev_b, size * sizeof(int));
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "cudaMalloc failed!");
+		goto Error;
+	}
 
 	// Copy input vectors from host memory to GPU buffers.
-	cudaStatus = cudaMemcpy(dev_x, x, signal_length * sizeof(float), cudaMemcpyHostToDevice);
+	cudaStatus = cudaMemcpy(dev_a, a, size * sizeof(int), cudaMemcpyHostToDevice);
 	if (cudaStatus != cudaSuccess) {
 		fprintf(stderr, "cudaMemcpy failed!");
 		goto Error;
 	}
 
-	cudaStatus = cudaMemcpy(dev_h, h, filter_length * sizeof(float), cudaMemcpyHostToDevice);
+	cudaStatus = cudaMemcpy(dev_b, b, size * sizeof(int), cudaMemcpyHostToDevice);
 	if (cudaStatus != cudaSuccess) {
 		fprintf(stderr, "cudaMemcpy failed!");
 		goto Error;
 	}
 
 	// Launch a kernel on the GPU with one thread for each element.
-	dim3 gridSize(1,1,1);
-	dim3 blockSize(1,1,1);
-	convKernel_serial << <gridSize, blockSize >> >(dev_y, dev_x, dev_h);
+	addKernel << <1, size >> >(dev_c, dev_a, dev_b);
 
 	// Check for any errors launching the kernel
-	checkCUDA(cudaGetLastError());
+	cudaStatus = cudaGetLastError();
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "addKernel launch failed: %s\n", cudaGetErrorString(cudaStatus));
+		goto Error;
+	}
 
 	// cudaDeviceSynchronize waits for the kernel to finish, and returns
 	// any errors encountered during the launch.
-	checkCUDA(cudaDeviceSynchronize());
+	cudaStatus = cudaDeviceSynchronize();
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "cudaDeviceSynchronize returned error code %d after launching addKernel!\n", cudaStatus);
+		goto Error;
+	}
 
 	// Copy output vector from GPU buffer to host memory.
-	checkCUDA(cudaMemcpy(y, dev_y, signal_length * sizeof(float), cudaMemcpyDeviceToHost));  // DEVICE -> HOST
+	cudaStatus = cudaMemcpy(c, dev_c, size * sizeof(int), cudaMemcpyDeviceToHost);
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "cudaMemcpy failed!");
+		goto Error;
+	}
 
 Error:
-	cudaFree(dev_y);
-	cudaFree(dev_x);
-	cudaFree(dev_h);
+	cudaFree(dev_c);
+	cudaFree(dev_a);
+	cudaFree(dev_b);
 
 	return cudaStatus;
 }
+//--------
 //--------------------------------------
 void save_image(const char* output_filename,
 	float* buffer,
@@ -509,15 +454,8 @@ void save_image(const char* output_filename,
 	output_image.convertTo(output_image, CV_8UC3);
 	cv::imwrite(output_filename, output_image);
 }
-//--------------------------------
-void copy(float* arr, Vector vect)
-{
-	// copy pixel data from Vector into float array
-	for (int i = 0; i < vect.length; ++i)
-		arr[i] = vect.val[i];
-}
 //--------------------------------------
-int kernel_wrapper(const cv::Mat& image)
+class Layer
 {
 #define checkCUDNN(expression)                               \
   {                                                          \
@@ -529,376 +467,297 @@ int kernel_wrapper(const cv::Mat& image)
     }                                                        \
   }
 
-	// Create context object
+
+};
+//--------------------------------------
+class Network
+{
+#define checkCUDNN(expression)                               \
+  {                                                          \
+    cudnnStatus_t status = (expression);                     \
+    if (status != CUDNN_STATUS_SUCCESS) {                    \
+      std::cerr << "Error on line " << __LINE__ << ": "      \
+                << cudnnGetErrorString(status) << std::endl; \
+      std::exit(EXIT_FAILURE);                               \
+    }                                                        \
+  }
+
+private:
+	cv::Mat image;
 	cudnnHandle_t cudnn;
-	checkCUDNN(cudnnCreate(&cudnn));
+	vector<cudnnTensorDescriptor_t> input_descriptor_vect;
+	vector<cudnnTensorDescriptor_t> output_descriptor_vect;
+	vector<cudnnFilterDescriptor_t> kernel_descriptor_vect;
+	vector<cudnnConvolutionDescriptor_t> convolution_descriptor_vect;
+	vector<cudnnConvolutionFwdAlgo_t> convolution_algorithm_vect;
+		 
+public:
+	Network(const cv::Mat& image)
+	{
+		this->image = image;
 
-	// Input tensor
-	cudnnTensorDescriptor_t input_descriptor;
-	checkCUDNN(cudnnCreateTensorDescriptor(&input_descriptor));
-	checkCUDNN(cudnnSetTensor4dDescriptor(input_descriptor,
-		/*format=*/CUDNN_TENSOR_NHWC,
-		/*dataType=*/CUDNN_DATA_FLOAT,
-		/*batch_size=*/1,
-		/*channels=*/3,
-		/*image_height=*/image.rows,
-		/*image_width=*/image.cols));
+		/// cuDNN Step 1: Create context object
 
-	// Output tensor
-	cudnnTensorDescriptor_t output_descriptor;
-	checkCUDNN(cudnnCreateTensorDescriptor(&output_descriptor));
-	checkCUDNN(cudnnSetTensor4dDescriptor(output_descriptor,
-		/*format=*/CUDNN_TENSOR_NHWC,
-		/*dataType=*/CUDNN_DATA_FLOAT,
-		/*batch_size=*/1,
-		/*channels=*/3,
-		/*image_height=*/image.rows,
-		/*image_width=*/image.cols));
+		// Create context object
 
-	// Filter tensor
-	cudnnFilterDescriptor_t kernel_descriptor;
-	checkCUDNN(cudnnCreateFilterDescriptor(&kernel_descriptor));
-	checkCUDNN(cudnnSetFilter4dDescriptor(kernel_descriptor,
-		/*dataType=*/CUDNN_DATA_FLOAT,
-		/*format=*/CUDNN_TENSOR_NCHW,
-		/*out_channels=*/3,
-		/*in_channels=*/3,
-		/*kernel_height=*/3,
-		/*kernel_width=*/3));
+		checkCUDNN(cudnnCreate(&cudnn));
+	}
+	~Network()
+	{
+	}
 
-	// Describe the conv kernel
-	cudnnConvolutionDescriptor_t convolution_descriptor;
-	checkCUDNN(cudnnCreateConvolutionDescriptor(&convolution_descriptor));
-	checkCUDNN(cudnnSetConvolution2dDescriptor(convolution_descriptor,
-		/*pad_height=*/1,
-		/*pad_width=*/1,
-		/*vertical_stride=*/1,
-		/*horizontal_stride=*/1,
-		/*dilation_height=*/1,
-		/*dilation_width=*/1,
-		/*mode=*/CUDNN_CROSS_CORRELATION,
-		/*computeType=*/CUDNN_DATA_FLOAT));
+	void do_stuff()
+	{
+		/// cuDNN Step 2: Create objects to store input tensor, output tensor, and output tensor
 
-	// More detailed description of the convolution algorithm we want to use:
-	cudnnConvolutionFwdAlgo_t convolution_algorithm;
-	checkCUDNN(
-		cudnnGetConvolutionForwardAlgorithm(cudnn,
-			input_descriptor,
-			kernel_descriptor,
-			convolution_descriptor,
-			output_descriptor,
-			CUDNN_CONVOLUTION_FWD_PREFER_FASTEST,
-			/*memoryLimitInBytes=*/0,
-			&convolution_algorithm));
+		// Input tensor - 1
+		input_descriptor_vect.push_back(cudnnTensorDescriptor_t{}); // place new one in vector
 
-	// Physical memory to operate on
-	size_t workspace_bytes = 0;
-	checkCUDNN(cudnnGetConvolutionForwardWorkspaceSize(cudnn,
-		input_descriptor,
-		kernel_descriptor,
-		convolution_descriptor,
-		output_descriptor,
-		convolution_algorithm,
-		&workspace_bytes));
-	std::cerr << "Workspace size: " << (workspace_bytes / 1048576.0) << "MB"
-		<< std::endl;
+		checkCUDNN(cudnnCreateTensorDescriptor(&input_descriptor_vect[0]));
 
-	// Dimensions from OpenCV input image
-	int batch_size = 1;
-	int channels = image.channels();
-	int height = image.rows;
-	int width = image.cols;
-	cout << "\n batch_size = " << batch_size << " channels = " << channels << " rows = " << height << " cols = " << width << "\n";
+		checkCUDNN(cudnnSetTensor4dDescriptor(input_descriptor_vect[0], //input_descriptor_1,
+			/*format=*/CUDNN_TENSOR_NHWC,
+			/*dataType=*/CUDNN_DATA_FLOAT,
+			/*batch_size=*/1,
+			/*channels=*/3,
+			/*image_height=*/image.rows,
+			/*image_width=*/image.cols));
 
-	// Dimensions from cuDNN for confirmation
-	cudnnGetConvolution2dForwardOutputDim(
-		convolution_descriptor, 
-		input_descriptor,
-		kernel_descriptor,
-		&batch_size,
-		&channels,
-		&height,
-		&width);
-	cout << "\n batch_size = " << batch_size << " channels = " << channels << " rows = " << height << " cols = " << width << "\n";
-	
+		// Output tensor - 1
+		output_descriptor_vect.push_back(cudnnTensorDescriptor_t{}); // place new one in vector
+		checkCUDNN(cudnnCreateTensorDescriptor(&output_descriptor_vect[0]));// output_descriptor_1));
+		checkCUDNN(cudnnSetTensor4dDescriptor(output_descriptor_vect[0],//output_descriptor_1,
+			/*format=*/CUDNN_TENSOR_NHWC,
+			/*dataType=*/CUDNN_DATA_FLOAT,
+			/*batch_size=*/1,
+			/*channels=*/3,
+			/*image_height=*/image.rows,
+			/*image_width=*/image.cols));
 
-	// Allocate device memory
-	void* d_workspace{ nullptr };
-	cudaMalloc(&d_workspace, workspace_bytes);
+		// Input tensor - 2
+		//cudnnTensorDescriptor_t input_descriptor_2;
+		input_descriptor_vect.push_back(cudnnTensorDescriptor_t{}); // place new one in vector
 
-	int image_bytes = batch_size * channels * height * width * sizeof(float);
+		checkCUDNN(cudnnCreateTensorDescriptor(&input_descriptor_vect[1]));
+		checkCUDNN(cudnnSetTensor4dDescriptor(input_descriptor_vect[1],
+			/*format=*/CUDNN_TENSOR_NHWC,
+			/*dataType=*/CUDNN_DATA_FLOAT,
+			/*batch_size=*/1,
+			/*channels=*/3,
+			/*image_height=*/image.rows,
+			/*image_width=*/image.cols));
 
-	float* d_input{ nullptr };
-	cudaMalloc(&d_input, image_bytes);
-	cudaMemcpy(d_input, image.ptr<float>(0), image_bytes, cudaMemcpyHostToDevice);
+		// Copy output of 1 descriptor into input of 2 descriptor:
+		input_descriptor_vect[1] = input_descriptor_vect[0];
 
-	float* d_output{ nullptr };
-	cudaMalloc(&d_output, image_bytes);
-	cudaMemset(d_output, 0, image_bytes);
+		// Filter tensor
+		//cudnnFilterDescriptor_t kernel_descriptor_1;
+		kernel_descriptor_vect.push_back(cudnnFilterDescriptor_t{});
+		checkCUDNN(cudnnCreateFilterDescriptor(&kernel_descriptor_vect[0]));//kernel_descriptor_1));
+		checkCUDNN(cudnnSetFilter4dDescriptor(kernel_descriptor_vect[0],
+			/*dataType=*/CUDNN_DATA_FLOAT,
+			/*format=*/CUDNN_TENSOR_NCHW,
+			/*out_channels=*/3,
+			/*in_channels=*/3,
+			/*kernel_height=*/3,
+			/*kernel_width=*/3));
 
-	// Mystery kernel
-	const float kernel_template[3][3] = {
-		{ 1,  1, 1 },
-		{ 1, -8, 1 },
-		{ 1,  1, 1 }
-	};
+		// Describe the conv kernel
+		//cudnnConvolutionDescriptor_t convolution_descriptor_1;
+		convolution_descriptor_vect.push_back(cudnnConvolutionDescriptor_t{});
+		checkCUDNN(cudnnCreateConvolutionDescriptor(&convolution_descriptor_vect[0]));//convolution_descriptor_1));
+		checkCUDNN(cudnnSetConvolution2dDescriptor(convolution_descriptor_vect[0],//convolution_descriptor_1,
+			/*pad_height=*/1,
+			/*pad_width=*/1,
+			/*vertical_stride=*/1,
+			/*horizontal_stride=*/1,
+			/*dilation_height=*/1,
+			/*dilation_width=*/1,
+			/*mode=*/CUDNN_CROSS_CORRELATION,
+			/*computeType=*/CUDNN_DATA_FLOAT));
 
-	float h_kernel[3][3][3][3];
-	for (int kernel = 0; kernel < 3; ++kernel) {
-		for (int channel = 0; channel < 3; ++channel) {
-			for (int row = 0; row < 3; ++row) {
-				for (int column = 0; column < 3; ++column) {
-					h_kernel[kernel][channel][row][column] = kernel_template[row][column];
+		// More detailed description of the convolution algorithm we want to use:
+		//cudnnConvolutionFwdAlgo_t convolution_algorithm_1;
+		convolution_algorithm_vect.push_back(cudnnConvolutionFwdAlgo_t{});
+		checkCUDNN(
+			cudnnGetConvolutionForwardAlgorithm(cudnn,
+				input_descriptor_vect[0], //input_descriptor_1,
+				kernel_descriptor_vect[0],//kernel_descriptor_1,			
+				convolution_descriptor_vect[0], //convolution_descriptor_1,
+				output_descriptor_vect[0], //output_descriptor_1,
+				CUDNN_CONVOLUTION_FWD_PREFER_FASTEST,
+				/*memoryLimitInBytes=*/0,
+				&convolution_algorithm_vect[0]));// convolution_algorithm_1));
+
+		// Physical memory to operate on
+		size_t workspace_bytes = 0;
+		checkCUDNN(cudnnGetConvolutionForwardWorkspaceSize(cudnn,
+			input_descriptor_vect[0], //input_descriptor_1,
+			kernel_descriptor_vect[0],// kernel_descriptor_1,
+			convolution_descriptor_vect[0], //convolution_descriptor_1,
+			output_descriptor_vect[0], //output_descriptor_1,
+			convolution_algorithm_vect[0], // convolution_algorithm_1,
+			&workspace_bytes));
+		std::cerr << "Workspace size: " << (workspace_bytes / 1048576.0) << "MB"
+			<< std::endl;
+
+		// Dimensions from OpenCV input image
+		int batch_size = 1;
+		int channels = image.channels();
+		int height = image.rows;
+		int width = image.cols;
+		cout << "\n batch_size = " << batch_size << " channels = " << channels << " rows = " << height << " cols = " << width << "\n";
+
+		// Dimensions from cuDNN for confirmation
+		cudnnGetConvolution2dForwardOutputDim(
+			convolution_descriptor_vect[0], //convolution_descriptor_1,
+			input_descriptor_vect[0], //input_descriptor_1,
+			kernel_descriptor_vect[0],//kernel_descriptor_1,
+			&batch_size,
+			&channels,
+			&height,
+			&width);
+		cout << "\n batch_size = " << batch_size << " channels = " << channels << " rows = " << height << " cols = " << width << "\n";
+
+
+		// Allocate device memory
+		void* d_workspace{ nullptr };
+		cudaMalloc(&d_workspace, workspace_bytes);
+
+		int image_bytes = batch_size * channels * height * width * sizeof(float);
+
+		float* d_input_1{ nullptr };
+		cudaMalloc(&d_input_1, image_bytes);
+		cudaMemcpy(d_input_1, image.ptr<float>(0), image_bytes, cudaMemcpyHostToDevice);
+
+		float* d_input_2{ nullptr };
+		cudaMalloc(&d_input_2, image_bytes);
+		cudaMemcpy(d_input_2, image.ptr<float>(0), image_bytes, cudaMemcpyHostToDevice);
+
+		
+		
+		float* d_output_1{ nullptr };
+		cudaMalloc(&d_output_1, image_bytes);
+		cudaMemset(d_output_1, 0, image_bytes);
+
+
+
+		float* d_output_2{ nullptr };
+		cudaMalloc(&d_output_2, image_bytes);
+		cudaMemset(d_output_2, 0, image_bytes);
+
+
+
+
+		// Mystery kernel
+		const float kernel_template[3][3] = {
+			{ 1,  1, 1 },
+			{ 1, -8, 1 },
+			{ 1,  1, 1 }
+		};
+
+		float h_kernel[3][3][3][3];
+		for (int kernel = 0; kernel < 3; ++kernel) {
+			for (int channel = 0; channel < 3; ++channel) {
+				for (int row = 0; row < 3; ++row) {
+					for (int column = 0; column < 3; ++column) {
+						h_kernel[kernel][channel][row][column] = kernel_template[row][column];
+					}
 				}
 			}
 		}
+
+		float* d_kernel_1{ nullptr };
+		cudaMalloc(&d_kernel_1, sizeof(h_kernel));
+		cudaMemcpy(d_kernel_1, h_kernel, sizeof(h_kernel), cudaMemcpyHostToDevice);
+
+		// Do conv
+		const float alpha = 1, beta = 0;
+		checkCUDNN(cudnnConvolutionForward(cudnn,
+			&alpha,
+			input_descriptor_vect[0], //input_descriptor_1,
+			d_input_1,
+			kernel_descriptor_vect[0],//kernel_descriptor_1,
+			d_kernel_1,
+			convolution_descriptor_vect[0],//convolution_descriptor_1,
+			convolution_algorithm_vect[0], //convolution_algorithm_1,
+			d_workspace,
+			workspace_bytes,
+			&beta,
+			output_descriptor_vect[0], //output_descriptor_1,
+			d_output_1));
+
+
+		// Copy output of first layer into input of second layer
+		cudaMemcpy(d_input_2, d_output_1, image_bytes, cudaMemcpyDeviceToDevice);
+
+
+		// Copy DEVICE -> HOST
+		float* h_output = new float[image_bytes];
+		cudaMemcpy(h_output, d_output_1, image_bytes, cudaMemcpyDeviceToHost);
+
+		// Do something with h_output ...
+		save_image("convolved_img.jpg",
+			h_output,
+			height,
+			width);
+
+		cv::imshow("After first conv", cv::imread("convolved_img.jpg"));
+
+
+		
+		checkCUDNN(cudnnConvolutionForward(cudnn,
+			&alpha,
+			input_descriptor_vect[1], //input_descriptor_2,
+			d_input_2,
+			kernel_descriptor_vect[0], //kernel_descriptor_1, // change to 2
+			d_kernel_1,
+			convolution_descriptor_vect[0], //convolution_descriptor_1,
+			convolution_algorithm_vect[0], //convolution_algorithm_1,
+			d_workspace,
+			workspace_bytes,
+			&beta,
+			output_descriptor_vect[0], //output_descriptor_1, // change to 2
+			d_output_2));
+
+
+
+
+		// Copy DEVICE -> HOST
+		//float* h_output = new float[image_bytes];
+		cudaMemcpy(h_output, d_output_2, image_bytes, cudaMemcpyDeviceToHost);
+
+		// Do something with h_output ...
+		save_image("convolved_img.jpg",
+			h_output,
+			height,
+			width);
+
+		cv::imshow("After second conv", cv::imread("convolved_img.jpg"));
+		cv::waitKey(0);
+
+		// Free memory
+		delete[] h_output;
+		cudaFree(d_kernel_1);
+		cudaFree(d_input_1);
+		cudaFree(d_output_1);
+		cudaFree(d_workspace);
+
+		//cudnnDestroyTensorDescriptor(input_descriptor_vect[0]); //input_descriptor_1);
+		//cudnnDestroyTensorDescriptor(input_descriptor_vect[1]); //input_descriptor_1);
+		//cudnnDestroyTensorDescriptor(output_descriptor_1);
+		//cudnnDestroyFilterDescriptor(kernel_descriptor_1);
+		//cudnnDestroyConvolutionDescriptor(convolution_descriptor_1);
+
+		cudnnDestroy(cudnn);
 	}
+};
+//--------------------------------------
+int kernel_wrapper(const cv::Mat& image)
+{
 
-	float* d_kernel{ nullptr };
-	cudaMalloc(&d_kernel, sizeof(h_kernel));
-	cudaMemcpy(d_kernel, h_kernel, sizeof(h_kernel), cudaMemcpyHostToDevice);
+	Network net(image);
+	net.do_stuff();
 
-	// Do conv
-	const float alpha = 1, beta = 0;
-	checkCUDNN(cudnnConvolutionForward(cudnn,
-		&alpha,
-		input_descriptor,
-		d_input,
-		kernel_descriptor,
-		d_kernel,
-		convolution_descriptor,
-		convolution_algorithm,
-		d_workspace,
-		workspace_bytes,
-		&beta,
-		output_descriptor,
-		d_output));
-
-	// Copy DEVICE -> HOST
-	float* h_output = new float[image_bytes];
-	cudaMemcpy(h_output, d_output, image_bytes, cudaMemcpyDeviceToHost);
-
-	// Do something with h_output ...
-	save_image("convolved_img.jpg",
-		h_output,
-		height,
-		width);
-	//void save_image(const char* output_filename,
-	//	float* buffer,
-	//	int height,
-	//	int width);
-
-	// Free memory
-	delete[] h_output;
-	cudaFree(d_kernel);
-	cudaFree(d_input);
-	cudaFree(d_output);
-	cudaFree(d_workspace);
-
-	cudnnDestroyTensorDescriptor(input_descriptor);
-	cudnnDestroyTensorDescriptor(output_descriptor);
-	cudnnDestroyFilterDescriptor(kernel_descriptor);
-	cudnnDestroyConvolutionDescriptor(convolution_descriptor);
-
-	cudnnDestroy(cudnn);
-
-/*
-	// Custom CNN
-	const size_t R[26] = { 416, 416, 208, 208, 104, 104, 104, 104, 52, 52, 52, 52, 26, 26, 26, 26, 26, 26,13,13,13,13,13,13,13,13 }; // Rows    in each 2D matrix slice in each 3D feature map
-	const size_t C[26] = { 416, 416, 208, 208, 104, 104, 104, 104, 52, 52, 52, 52, 26, 26, 26, 26, 26, 26,13,13,13,13,13,13,13,13 }; // Columns in each 2D matrix slice in each 3D feature map
-	const size_t K = 3; // Filter size
-
-	size_t D[25];D[0] = 3;D[1] = 32;D[2] = 32;D[3] = 64;D[4] = 64;
-	D[5] = 128;D[6] = 64;D[7] = 128;D[8] = 128;D[9] = 256;
-	D[10] = 128;D[11] = 256;D[12] = 256;D[13] = 512;D[14] = 256;
-	D[15] = 512;D[16] = 256;D[17] = 512;D[18] = 512;D[19] = 1024;
-	D[20] = 512;D[21] = 1024;	D[22] = 512;	D[23] = 1024;	D[24] = 1024;	D[25] = 1024;
-
-	/// Section 1 - layers 1,2: conv-pool
-	FeatureMap X(R[0], C[0], D[0]);     X.count();
-	Tensor H1(D[1], D[0], K, K);  H1.ones(); // Layer 1
-	//Tensor H2(D[2], D[1], K, K);  H2.ones(); // Layer 2 - Pool
-
-	/// Section 2 - layers 3,4: conv-pool
-	Tensor H3(D[3], D[2], K, K);  H3.ones(); // Layer 3
-	//Tensor H4(D[4], D[3], K, K);  H4.ones(); // Layer 4 - Pool
-
-	/// Section 3 - layers 5-8: conv(x3)-pool
-	Tensor H5(D[5], D[4], K, K);  H5.ones(); // Layer 5
-	Tensor H6(D[6], D[5], K, K);  H6.ones(); // Layer 6
-	Tensor H7(D[7], D[6], K, K);  H7.ones(); // Layer 7
-	//Tensor H8(D[8], D[7], K, K);  H8.ones(); // Layer 8 - Pool
-
-	/// Section 4 - layers 9-12: conv(x3)-pool
-	Tensor H9(D[9], D[8], K, K);     H9.ones(); // Layer 9
-	Tensor H10(D[10], D[9], K, K);   H10.ones(); // Layer 10
-	Tensor H11(D[11], D[10], K, K);  H11.ones(); // Layer 11
-	//Tensor H12(D[12], D[11], K, K);  H12.ones(); // Layer 12 - Pool
-
-	/// Section 5 - layers 13-18: conv(5x)-pool
-	Tensor H13(D[13], D[12], K, K);  H13.ones(); // Layer 13
-	Tensor H14(D[14], D[13], K, K);  H14.ones(); // Layer 14
-	Tensor H15(D[15], D[14], K, K);  H15.ones(); // Layer 15
-	Tensor H16(D[16], D[15], K, K);  H16.ones(); // Layer 16
-	Tensor H17(D[17], D[16], K, K);  H17.ones(); // Layer 17
-	//Tensor H18(D[18], D[17], K, K);  H18.ones(); // Layer 18 - Pool
-
-/// Section 6 - layers 19-23: conv(5x)
-	Tensor H19(D[18], D[17], K, K);  H19.ones(); // Layer 19
-	Tensor H20(D[19], D[18], K, K);  H20.ones(); // Layer 20
-	Tensor H21(D[20], D[19], K, K);  H21.ones(); // Layer 21 
-	Tensor H22(D[21], D[20], K, K);  H22.ones(); // Layer 22
-	Tensor H23(D[22], D[21], K, K);  H23.ones(); // Layer 23
-
-	// Start CPU Timing
-	LARGE_INTEGER start_CPU, end_CPU, frequency_CPU;
-	double milliseconds_CPU, seconds_CPU, minutes_CPU;
-	QueryPerformanceFrequency(&frequency_CPU);
-	QueryPerformanceCounter(&start_CPU);
-
-	// |-----------section 1-----------|--------section 2---------|------------------------section 3------------------------|------------------section 4------------------------|------------------------------section 5------------------------------------|
-	// Layer:   1              2              3            4              5              6             7              8             9           10          11            12          13            14           15           16           17           18
-	//         conv           max           conv          max           conv           conv          conv            max          conv         conv        conv          max         conv          conv         conv         conv         conv         max 
-	// 416x416x3 -> 416x416x32 -> 208x208x32 -> 208x208x64 -> 104x104x64 -> 104x104x128 -> 104x104x64 ->  104x104x128 -> 52x52x128 -> 52x52x256 -> 52x52x128 -> 52x52x256 -> 26x26x256 -> 26x26x512 -> 26x26x256 -> 26x26x512 -> 26x26x256 -> 26x26x512 -> ...
-	//  D[0]=3       D[1]=32        D[2]=32       D[3]=64       D[4]=64       D[5]=128       D[6]=64        D[7]=128     D[8]=128      D[9]=256    D[10]=128    D[11]=256    D[12]=256    D[13]=512    D[14]=256    D[15]=512    D[16]=256    D[17]=512
-	//
-	//                                                         FEATURE-EXTRACTION   | DETECTION
-	//                conv         conv          conv          conv         conv          conv          conv          route conv reorg route conv conv detection
-	// ...-> 13x13x512 -> 13x13x1024 -> 13x13x512 -> 13x13x1024 -> 13x13x512 -> 13x13x1024 -> 13x13x1024 -> 13x13x1024 -> 
-	//       D[18]=512    D[19]=1024    D[20]=512    D[21]=1024    D[22]=512    D[23]=1024    D[24]=1024    D[25]=1024
-	//  |---------------------------section 6---------------------------------------|------------------------------section 5------------------------------------|
-
-	// -----------
-	// Section 1:
-	// -----------
-	cout << "Section 1: layers 1-2" << R[0] << "x" << C[0] << "x" << D[0] << " -> " << R[1] << "x" << C[1] << "x" << D[1] << " -> " << R[2] << "x" << C[2] << "x" << D[2] << "\n";
-	cout << "From Darknet: 416x416x3 -> 416x416x32 -> 208x208x32 \n";
-	FeatureMap A1 = pool_max(relu(conv(X, H1)));
-
-	// -----------
-	// Section 2:
-	// -----------
-	cout << "\nSection 2: layers 3-4" << R[2] << "x" << C[2] << "x" << D[2] << " -> " << R[3] << "x" << C[3] << "x" << D[3] << " -> " << R[4] << "x" << C[4] << "x" << D[4] << "\n";
-	cout << "From Darknet: 208x208x32 -> 208x208x64 -> 104x104x64 \n";
-	FeatureMap A3 = pool_max(relu(conv(A1, H3)));
-
-
-
-	// -----------
-	// Section 3:
-	// -----------
-	cout << "\nSection 3: layers 5-8" << R[4] << "x" << C[4] << "x" << D[4] << " -> " << R[5] << "x" << C[5] << "x" << D[5] << " -> " << R[6] << "x" << C[6] << "x" << D[6]
-		<< " -> " << R[7] << "x" << C[7] << "x" << D[7] << " -> " << R[8] << "x" << C[8] << "x" << D[8] << "\n";
-	cout << "From Darknet: 104x104x64 -> 104x104x128 -> 104x104x64 ->  104x104x128 -> 52x52x128 \n";
-	FeatureMap A5 = relu(conv(A3, H5));
-	FeatureMap A6 = relu(conv(A5, H6));
-	FeatureMap A7 = relu(conv(A6, H7));
-	FeatureMap A8 = pool_max(A7);
-
-	// -----------
-	// Section 4:
-	// -----------
-	cout << "\nSection 4: layers 9-12" << R[8] << "x" << C[8] << "x" << D[8] << " -> " << R[9] << "x" << C[9] << "x" << D[9] << " -> " << R[10] << "x" << C[10] << "x" << D[10]
-		<< " -> " << R[11] << "x" << C[11] << "x" << D[11] << " -> " << R[12] << "x" << C[12] << "x" << D[12] << "\n";
-	cout << "From Darknet: 52x52x128 -> 52x52x256 -> 52x52x128 -> 52x52x256 -> 26x26x256 \n";
-	FeatureMap A9 = relu(conv(A8, H9));
-	FeatureMap A10 = relu(conv(A9, H10));
-	FeatureMap A11 = relu(conv(A10, H11));
-	FeatureMap A12 = pool_max(A11);
-
-	// -----------
-	// Section 5:
-	// -----------
-	cout << "\nSection 5: layers 13-18" << R[12] << "x" << C[12] << "x" << D[12] << " -> " << R[13] << "x" << C[13] << "x" << D[13] << " -> " << R[14] << "x" << C[14] << "x" << D[14]
-		<< " -> " << R[15] << "x" << C[15] << "x" << D[15] << " -> " << R[16] << "x" << C[16] << "x" << D[16]
-		<< " -> " << R[17] << "x" << C[17] << "x" << D[17] << " -> " << R[18] << "x" << C[18] << "x" << D[18] << "\n";
-	cout << "From Darknet: 26x26x256 -> 26x26x512 -> 26x26x256 -> 26x26x512 -> 26x26x256 -> 26x26x512 -> 13x13x512 \n";
-	FeatureMap A13 = relu(conv(A12, H13));
-	FeatureMap A14 = relu(conv(A13, H14));
-	FeatureMap A15 = relu(conv(A14, H15));
-	FeatureMap A16 = relu(conv(A15, H16));
-	FeatureMap A17 = relu(conv(A16, H17));
-	FeatureMap A18 = pool_max(A17);
-
-	// -----------
-	// Section 6:
-	// -----------
-	cout << "\nSection 6: layers 19-23" << R[18] << "x" << C[18] << "x" << D[18] << " -> " << R[19] << "x" << C[19] << "x" << D[19] << " -> "
-		<< " -> " << R[20] << "x" << C[20] << "x" << D[20] << " -> " << R[21] << "x" << C[21] << "x" << D[21]
-		<< " -> " << R[22] << "x" << C[22] << "x" << D[22] << " -> " << R[23] << "x" << C[23] << "x" << D[23] << "\n";
-	cout << "From Darknet: 13x13x512 -> 13x13x1024 -> 13x13x512 -> 13x13x1024 -> 13x13x512 -> 13x13x1024 \n";
-	FeatureMap A19 = relu(conv(A18, H19));
-	FeatureMap A20 = relu(conv(A19, H20));
-	FeatureMap A21 = relu(conv(A20, H21));
-	FeatureMap A22 = relu(conv(A21, H22));
-	FeatureMap A23 = relu(conv(A22, H23));
-
-	// End CPU Timing
-	QueryPerformanceCounter(&end_CPU);
-	milliseconds_CPU = (end_CPU.QuadPart - start_CPU.QuadPart) *
-		1000.0 / frequency_CPU.QuadPart;
-	seconds_CPU = milliseconds_CPU / 1000;
-	minutes_CPU = seconds_CPU / 60;
-	fprintf(stderr, "\nCPU Time = %.3f milliseconds", milliseconds_CPU);
-	fprintf(stderr, "\nCPU Time = %.3f seconds", seconds_CPU);
-	fprintf(stderr, "\nCPU Time = %.3f minutes\n\n", minutes_CPU);
-
-	cout << "\n\nCompleted CNN\n\n";
-	getchar();
-*/
-
-	// let's modify this to do conv with these arrays
-	const int filter_length = 3;
-	const int signal_length = 4;
-	const float h[filter_length] = { 1, 1, 1 };
-	const float x[signal_length] = { 1, 2, 3, 4 };
-	float y[signal_length] = { 0 };
-	
-#define checkCUDA(expression)					\
-  {												\
-    cudaError_t cudaStatus = (expression);		\
-    if (cudaStatus != cudaSuccess) {			\
-		fprintf(stderr, "CUDA error! (josh)");	\
-		return 1;								\
-												\
-    }											\
-  }
-
-	// Conv vectors
-	checkCUDA(convWithCuda(y, x, h, signal_length, filter_length));
-
-	printf("conv( {1,2,3,4}, {1,1,1} ) = {%f,%f,%f,%f}\n",
-		y[0], y[1], y[2], y[3]);
-
-
-
-	// Do the full tensor conv here analogous to the cuDNN implementation
-
-	// Step 1: Copy the kernel_template into a Tensor object
-	// Step 2: Copy the pixel data from the Tensor object into a 1D host float array
-	// Step 3: Copy this host array into a device array
-	// Step 4: Launch kernel
-	// Step 5: Return results
-	
-	// Step 1:
-	Tensor h_kernel_tensor(3,3,3,3);
-	h_kernel_tensor.copy_4D_to_tensor(kernel_template, 
-		h_kernel_tensor.dim4, h_kernel_tensor.dim3, h_kernel_tensor.dim2, h_kernel_tensor.dim1);
-
-	// Step 2:
-	float H[3 * 3 * 3 * 3] = { 0 };
-	h_kernel_tensor.copy_tensor_to_1D(H);
-
-	// Step 3:
-
-
-	// Step 4:
-
-
-    // cudaDeviceReset must be called before exiting in order for profiling and
-    // tracing tools such as Nsight and Visual Profiler to show complete traces.
-    checkCUDA(cudaDeviceReset());
-
-	getchar();
-    return 0;
+	return 0;
 }
